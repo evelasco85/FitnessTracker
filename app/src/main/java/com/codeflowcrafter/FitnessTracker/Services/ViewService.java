@@ -1,9 +1,18 @@
 package com.codeflowcrafter.FitnessTracker.Services;
 
+import android.app.Activity;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Shared.Gender;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
 /**
  * Created by enric on 06/02/2018.
@@ -39,5 +48,20 @@ public class ViewService {
         String display = String.format("%s bpm", String.valueOf(maximumHeartRate));
 
         txtMHR.setText(display);
+    }
+
+    public static void InitializeGenderSpinner(Activity activity, Spinner spinGender)
+    {
+        List<String> genderArray =  new ArrayList<String>();
+
+        genderArray.add(Gender.MALE);
+        genderArray.add(Gender.FEMALE);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                activity,
+                android.R.layout.simple_spinner_item,
+                genderArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinGender.setAdapter(adapter);
     }
 }

@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.BMI_BMR;
+package com.codeflowcrafter.FitnessTracker.HeartRate;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,12 +9,12 @@ import android.view.View;
 
 import com.codeflowcrafter.FitnessTracker.R;
 
-public class Activity_Main extends AppCompatActivity {
+public class Activity_HeartRate_Resting_Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmi_bmr_main);
+        setContentView(R.layout.activity_heartrate_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

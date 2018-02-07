@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.RepMax;
+package com.codeflowcrafter.FitnessTracker.Height;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,12 +9,12 @@ import android.view.View;
 
 import com.codeflowcrafter.FitnessTracker.R;
 
-public class Activity_Main extends AppCompatActivity {
+public class Activity_Height_Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_repmax_main);
+        setContentView(R.layout.activity_height_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

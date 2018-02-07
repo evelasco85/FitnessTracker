@@ -2,11 +2,12 @@
     <string name="app_name">Fitness Tracker</string>
     <string name="title_activity_main">Fitness Tracker</string>
     <string name="title_activity_main_profile">Profiles</string>
-    <string name="title_activity_main_bmi_bmr">Body Mass Index and Basal Metabolic Rate</string>
     <string name="title_activity_main_exercise">Exercises</string>
     <string name="title_activity_main_heartrate">Heart Rate Tracker</string>
-    <string name="title_activity_main_weeklyprogram">Weekly Program</string>
+    <string name="title_activity_main_program">Program</string>
     <string name="title_activity_main_repmax">Rep Max</string>
+    <string name="title_activity_weight_main">Weight</string>
+    <string name="title_activity_height_main">Height</string>
 
     <string name="label_ellipses">...</string>
 
@@ -15,4 +16,5 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
 </resources>

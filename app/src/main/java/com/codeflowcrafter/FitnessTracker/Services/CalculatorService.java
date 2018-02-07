@@ -1,5 +1,7 @@
 package com.codeflowcrafter.FitnessTracker.Services;
 
+import com.codeflowcrafter.FitnessTracker.Shared.Gender;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,13 +71,13 @@ public class CalculatorService {
         double heightMultiplier = 0;
         double ageMultiplier = 0;
 
-        if(gender.toLowerCase() == "male")
+        if(gender == Gender.MALE)
         {
             weightMultiplier = 6.3;
             heightMultiplier = 12.9;
             ageMultiplier = 6.8;
         }
-        else if(gender.toLowerCase() == "female")
+        else if(gender == Gender.FEMALE)
         {
             weightMultiplier = 4.3;
             heightMultiplier = 4.7;

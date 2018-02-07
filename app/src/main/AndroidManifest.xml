@@ -24,30 +24,34 @@
             android:label="@string/title_activity_main_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BMI_BMR.Activity_Main"
-            android:label="@string/title_activity_main_bmi_bmr"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Exercise.Activity_Exercise_Main"
             android:label="@string/title_activity_main_exercise"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HeartRate.Activity_Main"
+            android:name=".HeartRate.Activity_HeartRate_Resting_Main"
             android:label="@string/title_activity_main_heartrate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".WeeklyProgram.Activity_Main"
-            android:label="@string/title_activity_main_weeklyprogram"
+            android:name=".Program.Activity_Program_Main"
+            android:label="@string/title_activity_main_program"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RepMax.Activity_Main"
+            android:name=".RepMax.Activity_RepMax_Main"
             android:label="@string/title_activity_main_repmax"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".Profile.Implementation.ContentProvider.ProfileProvider"
-            android:authorities="com.codeflowcrafter.FitnessTrackerApp.ProfileProvider"
-            />
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.ProfileProvider" />
+
+        <activity
+            android:name=".Weight.Activity_Weight_Main"
+            android:label="@string/title_activity_weight_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Height.Activity_Height_Main"
+            android:label="@string/title_activity_height_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

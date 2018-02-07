@@ -71,6 +71,10 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
     }
 
     public void SetViewHandlers(final View view, final String selectedAction){
+        Spinner spinGender = GetConcreteView(Spinner.class, view, R.id.spinGender);
+
+        ViewService.InitializeGenderSpinner(this.getActivity(), spinGender);
+
         if(selectedAction == ACTION_READ)
         {
             //Disable input contols
@@ -78,9 +82,7 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
             txtName.setEnabled(false);
             txtName.setInputType(InputType.TYPE_NULL);
-
-            GetConcreteView(Spinner.class, view, R.id.spinGender)
-                    .setEnabled(false);
+            spinGender.setEnabled(false);
 
             return;
         }
