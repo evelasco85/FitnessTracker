@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.codeflowcrafter.FitnessTracker">
+
+    <application
+        android:name=".FitnessTrackerApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".DashboardActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Profile.Activity_Profile_Main"
+            android:label="@string/title_activity_main_profile"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BMI_BMR.Activity_Main"
+            android:label="@string/title_activity_main_bmi_bmr"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Exercise.Activity_Main"
+            android:label="@string/title_activity_main_exercise"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HeartRate.Activity_Main"
+            android:label="@string/title_activity_main_heartrate"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".WeeklyProgram.Activity_Main"
+            android:label="@string/title_activity_main_weeklyprogram"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RepMax.Activity_Main"
+            android:label="@string/title_activity_main_repmax"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:name=".Profile.Implementation.ContentProvider.ProfileProvider"
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.ProfileProvider"
+            />
+    </application>
+
+</manifest>

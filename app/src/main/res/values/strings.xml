@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Fitness Tracker</string>
+    <string name="title_activity_main">Fitness Tracker</string>
+    <string name="title_activity_main_profile">Profiles</string>
+    <string name="title_activity_main_bmi_bmr">Body Mass Index and Basal Metabolic Rate</string>
+    <string name="title_activity_main_exercise">Exercises</string>
+    <string name="title_activity_main_heartrate">Heart Rate Tracker</string>
+    <string name="title_activity_main_weeklyprogram">Weekly Program</string>
+    <string name="title_activity_main_repmax">Rep Max</string>
+
+    <string name="label_ellipses">...</string>
+
+    <string name="prompt_gender">Choose a gender</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+</resources>
