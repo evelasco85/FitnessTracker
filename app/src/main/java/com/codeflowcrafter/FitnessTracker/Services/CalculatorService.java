@@ -55,4 +55,47 @@ public class CalculatorService {
     {
         return 220 - age;
     }
+
+    public static double GetBMI(double weightInPounds, int heightInInches)
+    {
+        double bmi = (703 * weightInPounds) / (heightInInches * heightInInches);
+
+        return bmi;
+    }
+
+    public static double GetBMR(String gender, int age, double weightInPounds, int heightInInches)
+    {
+        double weightMultiplier = 0;
+        double heightMultiplier = 0;
+        double ageMultiplier = 0;
+
+        if(gender.toLowerCase() == "male")
+        {
+            weightMultiplier = 6.3;
+            heightMultiplier = 12.9;
+            ageMultiplier = 6.8;
+        }
+        else if(gender.toLowerCase() == "female")
+        {
+            weightMultiplier = 4.3;
+            heightMultiplier = 4.7;
+            ageMultiplier = 4.7;
+        }
+
+        double bmr = (weightMultiplier * weightInPounds) + (heightMultiplier * heightInInches) -
+                (ageMultiplier * age);
+
+        return bmr;
+    }
+
+    public static int CalculateZonedHeartRate(
+            int maximumHeartRate,
+            int restingHeartRate,
+            int percent)
+    {
+        int zone = (maximumHeartRate - restingHeartRate) * (percent / 100);
+        int zonedHeartRate = zone + restingHeartRate;
+
+        return zonedHeartRate;
+    }
 }

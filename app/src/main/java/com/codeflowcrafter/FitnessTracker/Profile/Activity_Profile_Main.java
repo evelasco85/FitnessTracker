@@ -18,6 +18,7 @@ import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
 
+import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
 public class Activity_Profile_Main extends Base_Activity_Main<
         Profile,
@@ -30,8 +31,6 @@ public class Activity_Profile_Main extends Base_Activity_Main<
     private Profile_IRequests _viewRequest;
     public Profile_IRequests GetViewRequest(){return _viewRequest;}
     public void SetViewRequest(Profile_IRequests viewRequest){_viewRequest = viewRequest;}
-
-    private Button _btnAdd;
 
     public Activity_Profile_Main()
     {
@@ -60,20 +59,17 @@ public class Activity_Profile_Main extends Base_Activity_Main<
     }
 
     @Override
-    public void AssociateViewToLocalVar()
-    {
-        _btnAdd = (Button)findViewById(R.id.btnAddProfile);
-    }
-
-    @Override
     public void SetViewHandlers()
     {
-        _btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _viewRequest.Prompt_AddEntry();
-            }
-        });
+        View view = findViewById(android.R.id.content);
+
+        GetConcreteView(Button.class, view, R.id.btnAddProfile)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        _viewRequest.Prompt_AddEntry();
+                    }
+                });
     }
 
     public void OnPromptExecution_Detail(Profile entity){

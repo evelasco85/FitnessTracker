@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import com.codeflowcrafter.FitnessTracker.Exercise.Activity_Exercise_Main;
 import com.codeflowcrafter.FitnessTracker.Profile.Activity_Profile_Main;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     void OpenExercises(){
-        Intent amountListIntent = new Intent(this, com.codeflowcrafter.FitnessTracker.Exercise.Activity_Main.class);
+        Intent amountListIntent = new Intent(this, Activity_Exercise_Main.class);
 
         this.startActivity(amountListIntent);
     }

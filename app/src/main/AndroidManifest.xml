@@ -28,7 +28,7 @@
             android:label="@string/title_activity_main_bmi_bmr"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Exercise.Activity_Main"
+            android:name=".Exercise.Activity_Exercise_Main"
             android:label="@string/title_activity_main_exercise"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

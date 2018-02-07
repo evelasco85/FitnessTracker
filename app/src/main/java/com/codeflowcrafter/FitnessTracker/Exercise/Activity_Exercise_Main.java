@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.codeflowcrafter.FitnessTracker.R;
 
-public class Activity_Main extends AppCompatActivity {
+public class Activity_Exercise_Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

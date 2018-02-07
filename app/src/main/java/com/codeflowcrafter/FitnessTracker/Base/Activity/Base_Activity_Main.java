@@ -46,13 +46,11 @@ public abstract class Base_Activity_Main<
         _container.SetListFragment(getFragmentManager(), _listFragmentId);
         _container.PerformListBinding();
 
-        AssociateViewToLocalVar();
         SetViewHandlers();
         SetDefaultMainViewData();
     }
 
     public abstract TListItem GetListItem(DataContainer<TEntity> container);
-    public abstract void AssociateViewToLocalVar();
     public abstract void SetViewHandlers();
 
     private void SetDefaultMainViewData()
