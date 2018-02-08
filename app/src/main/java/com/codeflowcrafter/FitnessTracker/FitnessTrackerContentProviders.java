@@ -24,8 +24,12 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private static FitnessTrackerContentProviders _instance = new FitnessTrackerContentProviders();
     public static FitnessTrackerContentProviders GetInstance(){ return _instance;}
 
-    private com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider _profileProvider = new com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider();
-    private Provider _exerciseProvider = new Provider();
+    private com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider
+            _profileProvider = new com.codeflowcrafter.FitnessTracker.Profile.Implementation
+            .ContentProvider.Provider();
+    private com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider
+            _exerciseProvider = new com.codeflowcrafter.FitnessTracker.Exercise.Implementation
+            .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
 
@@ -47,7 +51,7 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         return _profileProvider;
     }
 
-    public Provider GetExerciseProvider()
+    public com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider GetExerciseProvider()
     {
         return _exerciseProvider;
     }
