@@ -11,9 +11,9 @@ import android.widget.Toast;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Profile_IRequests;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Profile_IView;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Profile_Presenter;
+import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
+import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IView;
+import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
@@ -22,15 +22,15 @@ import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetCon
 
 public class Activity_Profile_Main extends Base_Activity_Main<
         Profile,
-        Profile_IRequests,
+        IRequests,
         Activity_Profile_List_Item>
-        implements Profile_IView
+        implements IView
 {
-    private Profile_Presenter _presenter;
+    private Presenter _presenter;
 
-    private Profile_IRequests _viewRequest;
-    public Profile_IRequests GetViewRequest(){return _viewRequest;}
-    public void SetViewRequest(Profile_IRequests viewRequest){_viewRequest = viewRequest;}
+    private IRequests _viewRequest;
+    public IRequests GetViewRequest(){return _viewRequest;}
+    public void SetViewRequest(IRequests viewRequest){_viewRequest = viewRequest;}
 
     public Activity_Profile_Main()
     {
@@ -39,7 +39,7 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 R.id.fragment_profileList
         );
 
-        _presenter = new Profile_Presenter(
+        _presenter = new Presenter(
                 this,
                 TranslatorService.GetInstance().GetProfileTranslator()
         );

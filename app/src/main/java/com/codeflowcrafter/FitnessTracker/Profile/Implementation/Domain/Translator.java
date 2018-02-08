@@ -11,7 +11,7 @@ import com.codeflowcrafter.PEAA.DataSynchronizationManager;
  * Created by enric on 04/02/2018.
  */
 
-public class ProfileTranslator implements IEntityTranslator<Profile> {
+public class Translator implements IEntityTranslator<Profile> {
     int _indexId = 0;
     int _indexName = 0;
     int _indexGender = 0;

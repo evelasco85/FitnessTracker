@@ -15,9 +15,9 @@ import java.util.Map;
  * Created by enric on 04/02/2018.
  */
 
-public class ProfileTable extends BaseTable {
+public class Table extends BaseTable {
 
-    public ProfileTable()
+    public Table()
     {
         _search_projection_map = new HashMap<String, String>();
 

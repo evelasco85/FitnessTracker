@@ -6,15 +6,9 @@
     <string name="title_activity_main_heartrate">Heart Rate Tracker</string>
     <string name="title_activity_main_program">Program</string>
     <string name="title_activity_main_repmax">Rep Max</string>
-    <string name="title_activity_weight_main">Weight</string>
-    <string name="title_activity_height_main">Height</string>
 
     <string name="label_ellipses">...</string>
 
     <string name="prompt_gender">Choose a gender</string>
-    <string-array name="gender_array">
-        <item>Male</item>
-        <item>Female</item>
-    </string-array>
 
 </resources>

@@ -8,12 +8,12 @@ import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
  * Created by enric on 04/02/2018.
  */
 
-public class ProfileProvider extends ContentProviderTemplate {
-    public ProfileProvider() {
+public class Provider extends ContentProviderTemplate {
+    public Provider() {
         super(
                 FitnessTrackerContentProviders.APPLICATION_NAME,
                 FitnessTrackerContentProviders.GetInstance(),
                 Profile.PROVIDER_NAME, Profile.TABLE_NAME,
-                new ProfileTable());
+                new Table());
     }
 }

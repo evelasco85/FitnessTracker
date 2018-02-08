@@ -6,7 +6,7 @@ import com.codeflowcrafter.DatabaseAccess.BaseContentProviders;
 import com.codeflowcrafter.DatabaseAccess.DatabaseHelper;
 import com.codeflowcrafter.DatabaseAccess.DatabaseHelperBuilder;
 import com.codeflowcrafter.DatabaseAccess.Interfaces.IDatabaseHelperBuilder_Setup;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.*;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider;
 
 /**
  * Created by aiko on 5/1/17.
@@ -24,25 +24,32 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private static FitnessTrackerContentProviders _instance = new FitnessTrackerContentProviders();
     public static FitnessTrackerContentProviders GetInstance(){ return _instance;}
 
-    private ProfileProvider _profileProvider = new ProfileProvider();
+    private com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider _profileProvider = new com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider();
+    private Provider _exerciseProvider = new Provider();
 
     private FitnessTrackerContentProviders() {
 
         _dbHelperSetup = DatabaseHelperBuilder.GetInstance()
                 .SetDatabase(DATABASE_TAG_NAME, DATABASE_FILENAME)
-//                .AddTable(
-//                        _projectProvider.GetUnderlyingTable().GetTableName(),
-//                        _projectProvider.GetUnderlyingTable().GetTableCreationScript()
-//                )
                 .AddTable(
                         _profileProvider.GetUnderlyingTable().GetTableName(),
                         _profileProvider.GetUnderlyingTable().GetTableCreationScript()
-                );
+                )
+                .AddTable(
+                        _exerciseProvider.GetUnderlyingTable().GetTableName(),
+                        _exerciseProvider.GetUnderlyingTable().GetTableCreationScript()
+                )
+                ;
     }
 
-    public ProfileProvider GetProfileProvider()
+    public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider GetProfileProvider()
     {
         return _profileProvider;
+    }
+
+    public Provider GetExerciseProvider()
+    {
+        return _exerciseProvider;
     }
 
     public DatabaseHelper GetDatabaseHelper(Context context)

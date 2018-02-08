@@ -1,6 +1,6 @@
 package com.codeflowcrafter.FitnessTracker;
 
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.ProfileTranslator;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Translator;
 
 /**
  * Created by enric on 06/02/2018.
@@ -13,9 +13,15 @@ public class TranslatorService {
         return s_instance;
     }
 
-    private ProfileTranslator _profileTranslator = new ProfileTranslator();
-    public ProfileTranslator GetProfileTranslator()
+    private com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator _profileTranslator = new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator();
+    public com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator GetProfileTranslator()
     {
         return _profileTranslator;
+    }
+
+    private Translator _exerciseTranslator = new Translator();
+    public Translator GetExerciseTranslator()
+    {
+        return _exerciseTranslator;
     }
 }

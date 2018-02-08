@@ -17,13 +17,13 @@ import com.codeflowcrafter.LogManagement.Status;
  * Created by enric on 04/02/2018.
  */
 
-public class Profile_Presenter extends Crud_Presenter<Profile, Profile_IRequests, Profile_IView>
-    implements Profile_IRequests
+public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
+    implements IRequests
 {
-    private Profile_IView _view;
+    private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Profile_Presenter(Profile_IView view, IEntityTranslator<Profile> translator)
+    public Presenter(IView view, IEntityTranslator<Profile> translator)
     {
         super(view,
                 translator,

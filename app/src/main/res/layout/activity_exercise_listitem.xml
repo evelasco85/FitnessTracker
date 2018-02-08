@@ -34,6 +34,7 @@
                 android:text="Name: "
                 />
             <TextView
+                android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Treadmill"
@@ -45,8 +46,8 @@
                 android:layout_height="match_parent"
                 android:text="Duration(Minutes): "
                 />
-
             <TextView
+                android:id="@+id/txtDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="30" />
@@ -58,6 +59,7 @@
                 android:text="Type: "
                 />
             <TextView
+                android:id="@+id/txtType"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Car. | Strengt."
@@ -67,9 +69,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Intensity of Exercise: "
+                android:text="Intensity: "
                 />
             <TextView
+                android:id="@+id/txtIntensity"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Light/Mode/Vigo"

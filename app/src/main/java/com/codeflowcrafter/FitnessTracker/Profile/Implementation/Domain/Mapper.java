@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.net.Uri;
 
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
+import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocationDelegates;
 
@@ -13,16 +14,18 @@ import java.util.Hashtable;
  * Created by enric on 06/02/2018.
  */
 
-public class ProfileMapper extends BaseMapper<Profile> {
+public class Mapper extends BaseMapper<Profile> {
     public final static String KEY_MAPPER_NAME = "[Mapper Name]";
     public final static String KEY_OPERATION = "[Operation]";
     public final static String KEY_COUNT = "[Count]";
 
     private ContentResolver _resolver;
     private Uri _uri;
-    private IEntityTranslator<Profile> _translator = new ProfileTranslator();
+    private IEntityTranslator<Profile> _translator = TranslatorService
+            .GetInstance()
+            .GetProfileTranslator();
 
-    public ProfileMapper(ContentResolver resolver, Uri uri)
+    public Mapper(ContentResolver resolver, Uri uri)
     {
         super(Profile.class);
 

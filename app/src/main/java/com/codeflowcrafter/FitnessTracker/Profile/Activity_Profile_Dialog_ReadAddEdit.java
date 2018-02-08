@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Dialog_ReadAddEdit;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Profile_IRequests;
+import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
@@ -33,7 +33,7 @@ import static com.codeflowcrafter.FitnessTracker.Services.ViewService.SetSpinner
  * Created by enric on 05/02/2018.
  */
 
-public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAddEdit<Profile, Profile_IRequests> {
+public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAddEdit<Profile, IRequests> {
     private final static int _fragmentId = R.layout.activity_profile_fragment_read_add_edit;
     private final static int _saveCancelConcreteViewId = R.id.saveCancelFragmentPlaceholder;
     public static final String FRAGMENT_NAME = "Add/Edit Profile";
@@ -55,7 +55,7 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
     }
 
     public static void Show(
-            FragmentManager manager, Profile_IRequests request,
+            FragmentManager manager, IRequests request,
             String action, Profile entity)
     {
         Activity_Profile_Dialog_ReadAddEdit dialog = Activity_Profile_Dialog_ReadAddEdit

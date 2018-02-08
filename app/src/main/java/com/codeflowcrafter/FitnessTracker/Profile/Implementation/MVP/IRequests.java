@@ -9,5 +9,5 @@ import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
  * Created by enric on 04/02/2018.
  */
 
-public interface Profile_IRequests extends Crud_IRequests<Profile> {
+public interface IRequests extends Crud_IRequests<Profile> {
 }

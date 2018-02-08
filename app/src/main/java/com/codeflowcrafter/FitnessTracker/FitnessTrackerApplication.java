@@ -7,9 +7,9 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Mapper;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.ProfileMapper;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.QueryObjects.*;
 import com.codeflowcrafter.LogManagement.Interfaces.ILogEmitter;
 import com.codeflowcrafter.LogManagement.Interfaces.ILogEntry;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
@@ -146,23 +146,38 @@ public class FitnessTrackerApplication
             Log.i(String.format("Event[%s] Param", event), String.format("%s = %s", entry.getKey(), entry.getValue()));
         }
     }
+
     @Override
     public final void onCreate()
     {
+        s_instance = this;
+
         LogManager.GetInstance().SetEmitter(this);
         super.onCreate();
 
         FitnessTrackerContentProviders contentProviders = FitnessTrackerContentProviders
                 .GetInstance();
+        Context context = getApplicationContext();
+        ContentResolver resolver = getContentResolver();
+        TranslatorService translatorService = TranslatorService.GetInstance();
 
-        RegisterProfileDomain(_dsManager,
+        RegisterProfileDomain(
+                context,
+                resolver,
+                _dsManager,
                 contentProviders,
-                TranslatorService.GetInstance().GetProfileTranslator());
-
-        s_instance = this;
+                translatorService.GetProfileTranslator());
+        RegisterExerciseDomain(
+                context,
+                resolver,
+                _dsManager,
+                contentProviders,
+                translatorService.GetExerciseTranslator());
     }
 
     private void RegisterProfileDomain(
+            Context context,
+            ContentResolver resolver,
             IDataSynchronizationManager dsManager,
             FitnessTrackerContentProviders contentProviders,
             IEntityTranslator<Profile> translator)
@@ -170,16 +185,36 @@ public class FitnessTrackerApplication
         Uri uri = contentProviders
                 .GetProfileProvider()
                 .GetContentUri();
-        ContentResolver resolver = getContentResolver();
-        ProfileMapper mapper = new ProfileMapper(resolver, uri);
-        Context context = this.getApplicationContext();
+        com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Mapper mapper = new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Mapper(resolver, uri);
         List<IBaseQueryObjectConcrete<Profile>> queryObjects = new ArrayList<>();
 
-        queryObjects.add(new QueryAllProfiles(context, uri, translator));
-        queryObjects.add(new QueryById(context, uri, translator));
-
+        queryObjects.add(new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain
+                .QueryObjects.QueryAll(context, uri, translator));
+        queryObjects.add(new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain
+                .QueryObjects.QueryById(context, uri, translator));
         dsManager.RegisterEntity(
                 Profile.class,
+                mapper,
+                queryObjects);
+    }
+
+    private void RegisterExerciseDomain(
+            Context context,
+            ContentResolver resolver,
+            IDataSynchronizationManager dsManager,
+            FitnessTrackerContentProviders contentProviders,
+            IEntityTranslator<Exercise> translator)
+    {
+        Uri uri = contentProviders
+                .GetExerciseProvider()
+                .GetContentUri();
+        Mapper mapper = new Mapper(resolver, uri);
+        List<IBaseQueryObjectConcrete<Exercise>> queryObjects = new ArrayList<>();
+
+        queryObjects.add(new com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain
+                .QueryObjects.QueryAll(context, uri, translator));
+        dsManager.RegisterEntity(
+                Exercise.class,
                 mapper,
                 queryObjects);
     }

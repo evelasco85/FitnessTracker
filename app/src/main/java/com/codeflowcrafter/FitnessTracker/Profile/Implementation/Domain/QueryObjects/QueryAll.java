@@ -16,7 +16,7 @@ import java.util.List;
  * Created by enric on 06/02/2018.
  */
 
-public class QueryAllProfiles extends BaseQueryObject<Profile, QueryAllProfiles.Criteria> {
+public class QueryAll extends BaseQueryObject<Profile, QueryAll.Criteria> {
     private Context _context;
     private Uri _uri;
     private IEntityTranslator<Profile> _translator;
@@ -26,8 +26,8 @@ public class QueryAllProfiles extends BaseQueryObject<Profile, QueryAllProfiles.
         }
     }
 
-    public QueryAllProfiles(Context context, Uri uri, IEntityTranslator<Profile> translator) {
-        super(QueryAllProfiles.Criteria.class);
+    public QueryAll(Context context, Uri uri, IEntityTranslator<Profile> translator) {
+        super(QueryAll.Criteria.class);
 
         _context = context;
         _uri = uri;
@@ -35,7 +35,7 @@ public class QueryAllProfiles extends BaseQueryObject<Profile, QueryAllProfiles.
     }
 
     @Override
-    public List<Profile> PerformSearchOperation(QueryAllProfiles.Criteria criteria) {
+    public List<Profile> PerformSearchOperation(QueryAll.Criteria criteria) {
 
         CursorLoader loader = new CursorLoader(_context, _uri,
                 null, null, null, null

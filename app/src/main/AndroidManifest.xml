@@ -15,7 +15,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,17 +40,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
-            android:name=".Profile.Implementation.ContentProvider.ProfileProvider"
+            android:name=".Profile.Implementation.ContentProvider.Provider"
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.ProfileProvider" />
-
-        <activity
-            android:name=".Weight.Activity_Weight_Main"
-            android:label="@string/title_activity_weight_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Height.Activity_Height_Main"
-            android:label="@string/title_activity_height_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <provider
+            android:name=".Exercise.Implementation.ContentProvider.Provider"
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.ExerciseProvider" />
     </application>
 
 </manifest>
