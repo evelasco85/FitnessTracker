@@ -38,14 +38,14 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     void OpenProfiles(){
-        Intent amountListIntent = new Intent(this, Activity_Profile_Main.class);
+        Intent intent = new Intent(this, Activity_Profile_Main.class);
 
-        this.startActivity(amountListIntent);
+        this.startActivity(intent);
     }
 
     void OpenExercises(){
-        Intent amountListIntent = new Intent(this, Activity_Exercise_Main.class);
+        Intent intent = new Intent(this, Activity_Exercise_Main.class);
 
-        this.startActivity(amountListIntent);
+        this.startActivity(intent);
     }
 }

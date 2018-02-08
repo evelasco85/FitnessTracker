@@ -59,7 +59,7 @@ public class Activity_Exercise_Main extends Base_Activity_Main<
     {
         View view = findViewById(android.R.id.content);
 
-        GetConcreteView(Button.class, view, R.id.btnAddProfile)
+        GetConcreteView(Button.class, view, R.id.btnAddExercise)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
