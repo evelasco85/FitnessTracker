@@ -12,14 +12,15 @@ import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvide
  * Created by aiko on 5/1/17.
  */
 
-
 public class FitnessTrackerContentProviders extends BaseContentProviders {
 
     public static final String APPLICATION_NAME = "FitnessTrackerApp";
     public static final String DATABASE_TAG_NAME = "FitnessTrackerDB";
     private static final String DATABASE_FILENAME = "fitnessTracker.db";
 
-    private IDatabaseHelperBuilder_Setup _dbHelperSetup;
+    private IDatabaseHelperBuilder_Setup _dbHelperSetup = DatabaseHelperBuilder
+            .GetInstance()
+            .SetDatabase(DATABASE_TAG_NAME, DATABASE_FILENAME);
 
     private static FitnessTrackerContentProviders _instance = new FitnessTrackerContentProviders();
     public static FitnessTrackerContentProviders GetInstance(){ return _instance;}
@@ -32,18 +33,8 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
             .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
-
-        _dbHelperSetup = DatabaseHelperBuilder.GetInstance()
-                .SetDatabase(DATABASE_TAG_NAME, DATABASE_FILENAME)
-                .AddTable(
-                        _profileProvider.GetUnderlyingTable().GetTableName(),
-                        _profileProvider.GetUnderlyingTable().GetTableCreationScript()
-                )
-                .AddTable(
-                        _exerciseProvider.GetUnderlyingTable().GetTableName(),
-                        _exerciseProvider.GetUnderlyingTable().GetTableCreationScript()
-                )
-                ;
+        _profileProvider.SetupTable(_dbHelperSetup);
+        _exerciseProvider.SetupTable(_dbHelperSetup);
     }
 
     public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider GetProfileProvider()

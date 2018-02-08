@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.codeflowcrafter.DatabaseAccess.Interfaces.IContentProviderTemplate;
+import com.codeflowcrafter.DatabaseAccess.Interfaces.IDatabaseHelperBuilder_Setup;
 
 public class ContentProviderTemplate extends ContentProvider
         implements IContentProviderTemplate
@@ -181,5 +182,13 @@ public class ContentProviderTemplate extends ContentProvider
         getContext().getContentResolver().notifyChange(uri, null);
 
         return  count;
+    }
+
+    public void SetupTable(IDatabaseHelperBuilder_Setup dbSetup)
+    {
+        dbSetup.AddTable(
+                _tableTemplate.GetTableName(),
+                _tableTemplate.GetTableCreationScript()
+        );
     }
 }
