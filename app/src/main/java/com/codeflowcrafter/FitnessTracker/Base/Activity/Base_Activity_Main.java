@@ -25,8 +25,9 @@ public abstract class Base_Activity_Main<
         implements IView<TRequest>, LoaderManager.LoaderCallbacks<Cursor> {
     private DataContainer<TEntity> _container = new DataContainer();
 
-    public abstract TRequest GetViewRequest();
-    public abstract void SetViewRequest(TRequest viewRequest);
+    private TRequest _viewRequest;
+    public TRequest GetViewRequest(){return _viewRequest;}
+    public void SetViewRequest(TRequest viewRequest){_viewRequest = viewRequest;}
 
     private int _layoutId;
     private int _listFragmentId;
@@ -60,7 +61,7 @@ public abstract class Base_Activity_Main<
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args)
     {
-        CursorLoader loader = new CursorLoader(this, GetViewRequest().GetContentUri(),
+        CursorLoader loader = new CursorLoader(this, _viewRequest.GetContentUri(),
                 null, null, null, null
         );
 
@@ -69,7 +70,7 @@ public abstract class Base_Activity_Main<
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
     {
-        GetViewRequest().LoadEntitiesViaLoader((CursorLoader)loader);
+        _viewRequest.LoadEntitiesViaLoader((CursorLoader)loader);
     }
 
     public void OnLoadEntitiesViaLoaderCompletion(List<TEntity> entityList){

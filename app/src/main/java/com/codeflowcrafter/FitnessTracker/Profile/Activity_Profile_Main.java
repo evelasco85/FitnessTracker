@@ -28,10 +28,6 @@ public class Activity_Profile_Main extends Base_Activity_Main<
 {
     private Presenter _presenter;
 
-    private IRequests _viewRequest;
-    public IRequests GetViewRequest(){return _viewRequest;}
-    public void SetViewRequest(IRequests viewRequest){_viewRequest = viewRequest;}
-
     public Activity_Profile_Main()
     {
         super(
@@ -55,7 +51,7 @@ public class Activity_Profile_Main extends Base_Activity_Main<
     @Override
     public Activity_Profile_List_Item GetListItem(DataContainer<Profile> container)
     {
-        return new Activity_Profile_List_Item(this, _viewRequest, container);
+        return new Activity_Profile_List_Item(this, GetViewRequest(), container);
     }
 
     @Override
@@ -67,26 +63,26 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        _viewRequest.Prompt_AddEntry();
+                        GetViewRequest().Prompt_AddEntry();
                     }
                 });
     }
 
     public void OnPromptExecution_Detail(Profile entity){
         Activity_Profile_Dialog_ReadAddEdit.Show(
-                getFragmentManager(), _viewRequest,
+                getFragmentManager(), GetViewRequest(),
                 Activity_Profile_Dialog_ReadAddEdit.ACTION_READ, entity);
     }
 
     public void OnPromptExecution_AddEntry(){
         Activity_Profile_Dialog_ReadAddEdit.Show(
-                getFragmentManager(), _viewRequest,
+                getFragmentManager(), GetViewRequest(),
                 Activity_Profile_Dialog_ReadAddEdit.ACTION_ADD, null);
     }
 
     public void OnPromptExecution_EditEntry(Profile entity){
         Activity_Profile_Dialog_ReadAddEdit.Show(
-                getFragmentManager(), _viewRequest,
+                getFragmentManager(), GetViewRequest(),
                 Activity_Profile_Dialog_ReadAddEdit.ACTION_EDIT, entity);
     }
 
@@ -97,7 +93,7 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 "Yes",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg) {
-                        _viewRequest.Delete(entity);
+                        GetViewRequest().Delete(entity);
                         String message = "'" + entity.GetName() + "' profile deleted";
                         Toast
                                 .makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
