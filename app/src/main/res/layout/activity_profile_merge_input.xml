@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:tools="http://schemas.android.com/tools"
+<merge
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -74,32 +74,7 @@
             android:padding="5dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
-            <TextView
-                android:text="Height:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-            <EditText
-                android:id="@+id/txtFeet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-            <TextView
-                android:text="ft."
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-            <EditText
-                android:id="@+id/txtInches"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-            <TextView
-                android:text="in."
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <include layout="@layout/merge_height"/>
         </TableRow>
     </TableLayout>
 </merge>

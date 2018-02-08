@@ -37,11 +37,11 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
     public void SetItemViewHandler(Context activityContext, LinearLayout itemLayout,
                                    IRequests viewRequest, Profile item)
     {
-        Button btnProfileMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
-
         final Context fActivityContext = activityContext;
         final IRequests fViewRequest = viewRequest;
         final Profile fItem = item;
+
+        final Button btnProfileMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
         final PopupMenu popMenu = new PopupMenu(activityContext, btnProfileMenu);
 
         popMenu.inflate(R.menu.mnu_edit_delete);
