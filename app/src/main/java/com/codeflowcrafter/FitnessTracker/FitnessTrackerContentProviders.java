@@ -13,7 +13,6 @@ import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvide
  */
 
 public class FitnessTrackerContentProviders extends BaseContentProviders {
-
     public static final String APPLICATION_NAME = "FitnessTrackerApp";
     public static final String DATABASE_TAG_NAME = "FitnessTrackerDB";
     private static final String DATABASE_FILENAME = "fitnessTracker.db";

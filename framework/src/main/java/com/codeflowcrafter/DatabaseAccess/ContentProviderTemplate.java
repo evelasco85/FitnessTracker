@@ -2,6 +2,7 @@ package com.codeflowcrafter.DatabaseAccess;
 
 import android.app.SearchManager;
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,8 +15,9 @@ import android.text.TextUtils;
 
 import com.codeflowcrafter.DatabaseAccess.Interfaces.IContentProviderTemplate;
 import com.codeflowcrafter.DatabaseAccess.Interfaces.IDatabaseHelperBuilder_Setup;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 
-public class ContentProviderTemplate extends ContentProvider
+public abstract class ContentProviderTemplate extends ContentProvider
         implements IContentProviderTemplate
 {
     private static final String ROOT_AUTHORITY_BASE = "com.codeflowcrafter";
@@ -191,4 +193,9 @@ public class ContentProviderTemplate extends ContentProvider
                 _tableTemplate.GetTableCreationScript()
         );
     }
+
+    public abstract void RegisterDomain(
+            Context context,
+            ContentResolver resolver,
+            IDataSynchronizationManager dsManager);
 }

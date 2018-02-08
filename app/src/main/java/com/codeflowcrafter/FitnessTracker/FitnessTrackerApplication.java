@@ -3,19 +3,13 @@ package com.codeflowcrafter.FitnessTracker;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
-import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
-import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Mapper;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
 import com.codeflowcrafter.LogManagement.Interfaces.ILogEmitter;
 import com.codeflowcrafter.LogManagement.Interfaces.ILogEntry;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.LogManager;
 import com.codeflowcrafter.LogManagement.StaticLogEntryWrapper;
-import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObjectInterfaces.IBaseQueryObjectConcrete;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 import com.codeflowcrafter.Utilities.DateHelper;
@@ -23,9 +17,7 @@ import com.codeflowcrafter.Utilities.DateHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -159,63 +151,12 @@ public class FitnessTrackerApplication
                 .GetInstance();
         Context context = getApplicationContext();
         ContentResolver resolver = getContentResolver();
-        TranslatorService translatorService = TranslatorService.GetInstance();
 
-        RegisterProfileDomain(
-                context,
-                resolver,
-                _dsManager,
-                contentProviders,
-                translatorService.GetProfileTranslator());
-        RegisterExerciseDomain(
-                context,
-                resolver,
-                _dsManager,
-                contentProviders,
-                translatorService.GetExerciseTranslator());
-    }
-
-    private void RegisterProfileDomain(
-            Context context,
-            ContentResolver resolver,
-            IDataSynchronizationManager dsManager,
-            FitnessTrackerContentProviders contentProviders,
-            IEntityTranslator<Profile> translator)
-    {
-        Uri uri = contentProviders
+        contentProviders
                 .GetProfileProvider()
-                .GetContentUri();
-        com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Mapper mapper = new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Mapper(resolver, uri);
-        List<IBaseQueryObjectConcrete<Profile>> queryObjects = new ArrayList<>();
-
-        queryObjects.add(new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain
-                .QueryObjects.QueryAll(context, uri, translator));
-        queryObjects.add(new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain
-                .QueryObjects.QueryById(context, uri, translator));
-        dsManager.RegisterEntity(
-                Profile.class,
-                mapper,
-                queryObjects);
-    }
-
-    private void RegisterExerciseDomain(
-            Context context,
-            ContentResolver resolver,
-            IDataSynchronizationManager dsManager,
-            FitnessTrackerContentProviders contentProviders,
-            IEntityTranslator<Exercise> translator)
-    {
-        Uri uri = contentProviders
+                .RegisterDomain(context, resolver, _dsManager);
+        contentProviders
                 .GetExerciseProvider()
-                .GetContentUri();
-        Mapper mapper = new Mapper(resolver, uri);
-        List<IBaseQueryObjectConcrete<Exercise>> queryObjects = new ArrayList<>();
-
-        queryObjects.add(new com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain
-                .QueryObjects.QueryAll(context, uri, translator));
-        dsManager.RegisterEntity(
-                Exercise.class,
-                mapper,
-                queryObjects);
+                .RegisterDomain(context, resolver, _dsManager);
     }
 }
