@@ -17,6 +17,7 @@ public class ProfileTranslator implements IEntityTranslator<Profile> {
     int _indexGender = 0;
     int _indexDoB = 0;
     int _indexCreatedAt = 0;
+    int _indexHeighInches = 0;
 
     public void UpdateColumnOrdinals(Cursor cursor)
     {
@@ -25,6 +26,7 @@ public class ProfileTranslator implements IEntityTranslator<Profile> {
         _indexGender = cursor.getColumnIndexOrThrow(Profile.COLUMN_GENDER);
         _indexDoB = cursor.getColumnIndexOrThrow(Profile.COLUMN_DOB);
         _indexCreatedAt = cursor.getColumnIndexOrThrow(Profile.COLUMN_CREATED_AT);
+        _indexHeighInches = cursor.getColumnIndexOrThrow(Profile.COLUMN_HEIGHT_INCHES);
     }
 
     //non-static to avoid race condition
@@ -37,7 +39,8 @@ public class ProfileTranslator implements IEntityTranslator<Profile> {
                 cursor.getString(_indexName),
                 cursor.getString(_indexGender),
                 cursor.getString(_indexDoB),
-                cursor.getString(_indexCreatedAt)
+                cursor.getString(_indexCreatedAt),
+                cursor.getInt(_indexHeighInches)
         );
     }
 
@@ -52,6 +55,7 @@ public class ProfileTranslator implements IEntityTranslator<Profile> {
         values.put(Profile.COLUMN_GENDER, entity.GetGender());
         values.put(Profile.COLUMN_DOB, entity.GetDateOfBirth());
         values.put(Profile.COLUMN_CREATED_AT, entity.GetCreatedAt());
+        values.put(Profile.COLUMN_HEIGHT_INCHES, entity.GetHeightInches());
 
         return values;
     }

@@ -2,7 +2,6 @@ package com.codeflowcrafter.FitnessTracker.Base.Activity;
 
 import android.app.DialogFragment;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -52,7 +51,7 @@ public abstract class Base_Activity_Dialog_ReadAddEdit<TEntity, TRequest>
         View view = inflater.inflate(_fragmentId, container, false);
         String selectedAction = getArguments().getString(KEY_ACTION);
 
-        SetViewHandlers(view, selectedAction);
+        SetConcreteViews(view, selectedAction);
 
         switch (selectedAction)
         {
@@ -92,7 +91,7 @@ public abstract class Base_Activity_Dialog_ReadAddEdit<TEntity, TRequest>
         super.onDestroyView();
     }
 
-    public abstract void SetViewHandlers(final View view, final String selectedAction);
+    public abstract void SetConcreteViews(final View view, final String selectedAction);
     public abstract TEntity ViewDataToModel(View view);
     public abstract void SetModelToViewData(View view, TEntity entity);
 }

@@ -69,8 +69,6 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, Profile_IR
                 .setText(item.GetGender());
         GetConcreteView(TextView.class, itemLayout, R.id.txtBirthday)
                 .setText(item.GetDateOfBirth());
-        GetConcreteView(TextView.class, itemLayout, R.id.txtMhr)
-                .setText(String.valueOf(item.GetMaximumHeartRate()));
 
         TextView txtAge = GetConcreteView(TextView.class, itemLayout, R.id.txtAge);
         TextView txtMhr = GetConcreteView(TextView.class, itemLayout, R.id.txtMhr);

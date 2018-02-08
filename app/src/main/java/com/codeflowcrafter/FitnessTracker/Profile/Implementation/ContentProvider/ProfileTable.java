@@ -37,13 +37,7 @@ public class ProfileTable extends BaseTable {
 
     public String GetTableCreationScript()
     {
-        HashMap<String, String> tableColumns = new HashMap<String, String>();
-
-        tableColumns.put(Profile.COLUMN_ID, "integer primary key autoincrement");
-        tableColumns.put(Profile.COLUMN_NAME, "TEXT");
-        tableColumns.put(Profile.COLUMN_GENDER, "integer");
-        tableColumns.put(Profile.COLUMN_DOB, "DATETIME");
-        tableColumns.put(Profile.COLUMN_CREATED_AT, "DATETIME default CURRENT_DATE");
+        HashMap<String, String> tableColumns = Profile.GetTableColumns();
 
         String fields = "";
         String terminator = ", ";

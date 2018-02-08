@@ -7,6 +7,7 @@ import com.codeflowcrafter.PEAA.Domain.DomainObject;
 import com.codeflowcrafter.Utilities.DateHelper;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * Created by enric on 04/02/2018.
@@ -39,12 +40,18 @@ public class Profile extends DomainObject {
     private String _created_at;
     public String GetCreatedAt() {return _created_at;}
     public void SetCreatedAt(String created_at){_created_at = created_at;}
+
+    public static final String COLUMN_HEIGHT_INCHES = "heightInches";
+    private int _heightInches;
+    public int GetHeightInches() {return _heightInches;}
+    public void SetHeightInches(int heightInches){ _heightInches = heightInches;}
     /**********************/
 
     public Profile(IBaseMapper mapper,
                    int id,
                    String name, String gender,
-                   String date_of_birth, String created_at)
+                   String date_of_birth, String created_at,
+                   int heightInches)
     {
         super(mapper);
 
@@ -52,13 +59,24 @@ public class Profile extends DomainObject {
         _name = name;
         _gender = gender;
         _date_of_birth = date_of_birth;
+        _heightInches = heightInches;
         _created_at = created_at;
 
         if(TextUtils.isEmpty(created_at))
             _created_at = DateHelper.DateToString(new Date(), "yyyy-MM-dd HH:mm");
     }
 
-    public int GetMaximumHeartRate() {
-        return 0;///Calculate MHR here
+    public static HashMap<String, String> GetTableColumns()
+    {
+        HashMap<String, String> tableColumns = new HashMap<String, String>();
+
+        tableColumns.put(COLUMN_ID, "integer primary key autoincrement");
+        tableColumns.put(COLUMN_NAME, "TEXT");
+        tableColumns.put(COLUMN_GENDER, "integer");
+        tableColumns.put(COLUMN_DOB, "DATETIME");
+        tableColumns.put(COLUMN_CREATED_AT, "DATETIME default CURRENT_DATE");
+        tableColumns.put(COLUMN_HEIGHT_INCHES, "integer");
+
+        return tableColumns;
     }
 }

@@ -70,7 +70,7 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
         super(_fragmentId, _saveCancelConcreteViewId);
     }
 
-    public void SetViewHandlers(final View view, final String selectedAction){
+    public void SetConcreteViews(final View view, final String selectedAction){
         Spinner spinGender = GetConcreteView(Spinner.class, view, R.id.spinGender);
 
         ViewService.InitializeGenderSpinner(this.getActivity(), spinGender);
@@ -82,6 +82,17 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
             txtName.setEnabled(false);
             txtName.setInputType(InputType.TYPE_NULL);
+
+            EditText txtFeet = GetConcreteView(EditText.class, view, R.id.txtFeet);
+
+            txtFeet.setEnabled(false);
+            txtFeet.setInputType(InputType.TYPE_NULL);
+
+            EditText txtInches = GetConcreteView(EditText.class, view, R.id.txtInches);
+
+            txtInches.setEnabled(false);
+            txtInches.setInputType(InputType.TYPE_NULL);
+
             spinGender.setEnabled(false);
 
             return;
@@ -176,13 +187,18 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
         });
 
         String gender = (String)genderSpinner.getSelectedItem();
+        int heightInches = ViewService.GetHeightInches(
+                GetConcreteView(EditText.class, view, R.id.txtFeet),
+                GetConcreteView(EditText.class, view, R.id.txtInches)
+        );
 
         return new Profile(mapper,
                 _id,
                 GetConcreteView(EditText.class, view, R.id.txtName).getText().toString(),
                 gender,
                 GetConcreteView(TextView.class, view, R.id.txtDateOfBirth).getText().toString(),
-                ""
+                "",
+                heightInches
                 );
     }
 
@@ -192,9 +208,6 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
         _id = entity.GetId();
 
         GetConcreteView(EditText.class, view, R.id.txtName).setText(entity.GetName());
-        GetConcreteView(TextView.class, view, R.id.txtMhr).setText(
-                String.valueOf(entity.GetMaximumHeartRate())
-        );
 
         String dateOfBirth = entity.GetDateOfBirth();
 
@@ -217,5 +230,11 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
             SetSpinnerValue(genderSpinner, gender);
         }
+
+        ViewService.InitializeHeight(
+                entity.GetHeightInches(),
+                GetConcreteView(EditText.class, view, R.id.txtFeet),
+                GetConcreteView(EditText.class, view, R.id.txtInches)
+        );
     }
 }

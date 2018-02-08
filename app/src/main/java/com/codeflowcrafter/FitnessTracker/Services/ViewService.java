@@ -1,7 +1,9 @@
 package com.codeflowcrafter.FitnessTracker.Services;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -63,5 +65,30 @@ public class ViewService {
                 genderArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinGender.setAdapter(adapter);
+    }
+
+    public static void InitializeHeight(int totalInches, EditText txtFeet, EditText txtInches)
+    {
+        int feet = totalInches / 12;
+        int inches = totalInches - (feet * 12);
+
+        txtFeet.setText(String.valueOf(feet));
+        txtInches.setText(String.valueOf(inches));
+    }
+
+    public static int GetHeightInches(EditText txtFeet, EditText txtInches)
+    {
+        String ft = txtFeet.getText().toString();
+        String in = txtInches.getText().toString();
+
+        int feet = 0;
+        int inches = 0;
+
+        if(!TextUtils.isEmpty(ft)) feet = Integer.parseInt(ft);
+        if(!TextUtils.isEmpty(in)) inches = Integer.parseInt(in);
+
+        int totalInches = (feet * 12) + inches;
+
+        return totalInches;
     }
 }
