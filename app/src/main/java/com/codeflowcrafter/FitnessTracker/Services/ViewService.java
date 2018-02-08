@@ -1,14 +1,19 @@
 package com.codeflowcrafter.FitnessTracker.Services;
 
 import android.app.Activity;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Shared.ExerciseType;
 import com.codeflowcrafter.FitnessTracker.Shared.Gender;
+import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExerciseService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,5 +95,54 @@ public class ViewService {
         int totalInches = (feet * 12) + inches;
 
         return totalInches;
+    }
+
+    public static void InitializeIntensitySpinner(Activity activity, Spinner spinIntensity)
+    {
+        List<String> intensityDescriptionArray = IntensityOfExerciseService
+                .GetInstance()
+                .GetIntensityDescriptions();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                activity,
+                android.R.layout.simple_spinner_item,
+                intensityDescriptionArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinIntensity.setAdapter(adapter);
+    }
+
+    public static void InitializeExerciseTypeSpinner(Activity activity, Spinner spinType)
+    {
+        List<String> exerciseTypeArray =  new ArrayList<String>();
+
+        exerciseTypeArray.add(ExerciseType.TYPE_CARDIO);
+        exerciseTypeArray.add(ExerciseType.TYPE_STRENGTHENING);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                activity,
+                android.R.layout.simple_spinner_item,
+                exerciseTypeArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinType.setAdapter(adapter);
+    }
+
+    public static void DisableConcreteView(EditText editText)
+    {
+        editText.setEnabled(false);
+        editText.setInputType(InputType.TYPE_NULL);
+    }
+
+    public static void SetDefaultSpinnerItemSelectedListener(final Spinner spinner)
+    {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinner.setSelection(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 }

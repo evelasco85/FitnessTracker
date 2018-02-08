@@ -70,44 +70,32 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
         super(_fragmentId, _saveCancelConcreteViewId);
     }
 
-    public void SetConcreteViews(final View view, final String selectedAction){
-        Spinner spinGender = GetConcreteView(Spinner.class, view, R.id.spinGender);
+    public void SetConcreteViews(final View fView, final String selectedAction){
+        final Spinner spinGender = GetConcreteView(Spinner.class, fView, R.id.spinGender);
 
         ViewService.InitializeGenderSpinner(this.getActivity(), spinGender);
 
         if(selectedAction == ACTION_READ)
         {
             //Disable input contols
-            EditText txtName = GetConcreteView(EditText.class, view, R.id.txtName);
-
-            txtName.setEnabled(false);
-            txtName.setInputType(InputType.TYPE_NULL);
-
-            EditText txtFeet = GetConcreteView(EditText.class, view, R.id.txtFeet);
-
-            txtFeet.setEnabled(false);
-            txtFeet.setInputType(InputType.TYPE_NULL);
-
-            EditText txtInches = GetConcreteView(EditText.class, view, R.id.txtInches);
-
-            txtInches.setEnabled(false);
-            txtInches.setInputType(InputType.TYPE_NULL);
-
+            ViewService.DisableConcreteView(GetConcreteView(EditText.class, fView, R.id.txtName));
+            ViewService.DisableConcreteView(GetConcreteView(EditText.class, fView, R.id.txtFeet));
+            ViewService.DisableConcreteView(GetConcreteView(EditText.class, fView, R.id.txtInches));
             spinGender.setEnabled(false);
 
             return;
         }
 
-        GetConcreteView(Button.class, view, R.id.btnSave)
+        ViewService.SetDefaultSpinnerItemSelectedListener(spinGender);
+        GetConcreteView(Button.class, fView, R.id.btnSave)
                 .setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        InvokeActionBasedPersistency(view, selectedAction);
+                        InvokeActionBasedPersistency(fView, selectedAction);
                         dismiss();
                     }
                 });
-
-        GetConcreteView(Button.class, view, R.id.btnCancel)
+        GetConcreteView(Button.class, fView, R.id.btnCancel)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -117,9 +105,7 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
             }
         });
 
-        final TextView txtDateOfBirth = GetConcreteView(TextView.class, view, R.id.txtDateOfBirth);
-        final TextView txtAge = GetConcreteView(TextView.class, view, R.id.txtAge);
-        final TextView txtMhr = GetConcreteView(TextView.class, view, R.id.txtMhr);
+        final TextView txtDateOfBirth = GetConcreteView(TextView.class, fView, R.id.txtDateOfBirth);
 
         txtDateOfBirth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,19 +118,21 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day)
                     {
-                        Calendar dateOfBirthCalendar = Calendar.getInstance();
+                        Calendar calendar = Calendar.getInstance();
 
-                        dateOfBirthCalendar.set(Calendar.YEAR, year);
-                        dateOfBirthCalendar.set(Calendar.MONTH, month);
-                        dateOfBirthCalendar.set(Calendar.DAY_OF_MONTH, day);
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
 
                         txtDateOfBirth
                                 .setText(
                                         (new SimpleDateFormat(CalculatorService.DateFormat))
-                                                .format(dateOfBirthCalendar.getTime())
+                                                .format(calendar.getTime())
                                 );
 
-                        int age = CalculatorService.CalculateAge(dateOfBirthCalendar);
+                        int age = CalculatorService.CalculateAge(calendar);
+                        TextView txtAge = GetConcreteView(TextView.class, fView, R.id.txtAge);
+                        TextView txtMhr = GetConcreteView(TextView.class, fView, R.id.txtMhr);
 
                         ViewService.SetAge(txtAge, age);
                         ViewService.SetMHR(txtMhr, age);
@@ -172,21 +160,8 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
     public Profile ViewDataToModel(View view){
         IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(Profile.class);
-        final Spinner genderSpinner = GetConcreteView(Spinner.class, view, R.id.spinGender);
-
-        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                genderSpinner.setSelection(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-        String gender = (String)genderSpinner.getSelectedItem();
+        String gender = (String)GetConcreteView(Spinner.class, view, R.id.spinGender)
+                .getSelectedItem();
         int heightInches = ViewService.GetHeightInches(
                 GetConcreteView(EditText.class, view, R.id.txtFeet),
                 GetConcreteView(EditText.class, view, R.id.txtInches)

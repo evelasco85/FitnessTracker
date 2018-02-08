@@ -41,8 +41,8 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
         final IRequests fViewRequest = viewRequest;
         final Profile fItem = item;
 
-        final Button btnProfileMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
-        final PopupMenu popMenu = new PopupMenu(activityContext, btnProfileMenu);
+        final Button btnMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
+        final PopupMenu popMenu = new PopupMenu(activityContext, btnMenu);
 
         popMenu.inflate(R.menu.mnu_edit_delete);
         popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -61,6 +61,19 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
             }
         });
 
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popMenu.show();
+            }
+        });
+        itemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fViewRequest.Prompt_Detail(fItem);
+            }
+        });
+
         GetConcreteView(TextView.class, itemLayout, R.id.txtProfileId)
                 .setText(String.valueOf(item.GetId()));
         GetConcreteView(TextView.class, itemLayout, R.id.txtName)
@@ -70,26 +83,14 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
         GetConcreteView(TextView.class, itemLayout, R.id.txtBirthday)
                 .setText(item.GetDateOfBirth());
 
-        TextView txtAge = GetConcreteView(TextView.class, itemLayout, R.id.txtAge);
-        TextView txtMhr = GetConcreteView(TextView.class, itemLayout, R.id.txtMhr);
         Calendar dobCalendar = CalculatorService.ConvertToCalendar(item.GetDateOfBirth());
         int age = CalculatorService.CalculateAge(dobCalendar);
 
-        ViewService.SetAge(txtAge, age);
-        ViewService.SetMHR(txtMhr, age);
-
-        btnProfileMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popMenu.show();
-            }
-        });
-
-        itemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fViewRequest.Prompt_Detail(fItem);
-            }
-        });
+        ViewService.SetAge(
+                GetConcreteView(TextView.class, itemLayout, R.id.txtAge),
+                age);
+        ViewService.SetMHR(
+                GetConcreteView(TextView.class, itemLayout, R.id.txtMhr),
+                age);
     }
 }

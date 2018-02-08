@@ -3,11 +3,17 @@ package com.codeflowcrafter.FitnessTracker.Exercise;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Dialog_ReadAddEdit;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+
+import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
 /**
  * Created by enric on 08/02/2018.
@@ -51,6 +57,55 @@ public class Activity_Exercise_Dialog_ReadAddEdit  extends Base_Activity_Dialog_
     }
 
     public void SetConcreteViews(final View view, final String selectedAction){
+        Spinner spinIntensity = GetConcreteView(Spinner.class, view, R.id.spinIntensity);
+        Spinner spinType = GetConcreteView(Spinner.class, view, R.id.spinType);
+
+        ViewService.InitializeIntensitySpinner(this.getActivity(), spinIntensity);
+        ViewService.InitializeExerciseTypeSpinner(this.getActivity(), spinType);
+
+        if(selectedAction == ACTION_READ)
+        {
+            ViewService.DisableConcreteView(GetConcreteView(EditText.class, view, R.id.txtName));
+            ViewService.DisableConcreteView(GetConcreteView(EditText.class, view, R.id.txtDuration));
+            spinIntensity.setEnabled(false);
+            spinType.setEnabled(false);
+
+            return;
+        }
+
+        GetConcreteView(Button.class, view, R.id.btnSave)
+                .setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        InvokeActionBasedPersistency(view, selectedAction);
+                        dismiss();
+                    }
+                });
+
+        GetConcreteView(Button.class, view, R.id.btnCancel)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GetViewRequest()
+                                .CancelEntry();
+                        dismiss();
+                    }
+                });
+    }
+
+    private void InvokeActionBasedPersistency(View view, String selectedAction)
+    {
+        switch (selectedAction)
+        {
+            case ACTION_ADD:
+                GetViewRequest().Add(ViewDataToModel(view));
+                break;
+            case ACTION_EDIT:
+                GetViewRequest().Update(ViewDataToModel(view));
+                break;
+            default:
+                break;
+        }
     }
 
     public Exercise ViewDataToModel(View view){

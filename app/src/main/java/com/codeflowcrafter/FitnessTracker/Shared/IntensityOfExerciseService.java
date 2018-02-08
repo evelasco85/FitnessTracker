@@ -8,6 +8,10 @@ import java.util.List;
  */
 
 public class IntensityOfExerciseService {
+    private static final String INTENSITY_1 = "Light to moderate";
+    private static final String INTENSITY_2 = "Moderate to vigorous";
+    private static final String INTENSITY_3 = "Very vigorous";
+
     private List<IntensityOfExercise> _intensities =  new ArrayList<>();
 
     private static IntensityOfExerciseService s_instance = new IntensityOfExerciseService();
@@ -16,15 +20,15 @@ public class IntensityOfExerciseService {
     private IntensityOfExerciseService()
     {
         IntensityOfExercise intensity1 = new IntensityOfExercise(
-                "Light to moderate",
+                INTENSITY_1,
                 55,
                 65);
         IntensityOfExercise intensity2 = new IntensityOfExercise(
-                "Moderate to vigorous",
+                INTENSITY_2,
                 65,
                 85);
         IntensityOfExercise intensity3 = new IntensityOfExercise(
-                "Very vigorous",
+                INTENSITY_3,
                 85,
                 100);
 

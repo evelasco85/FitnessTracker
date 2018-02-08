@@ -4,19 +4,19 @@
     android:layout_height="match_parent"
     >
     <Button
+        android:id="@+id/btnExerciseMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/btnExerciseMenu"
         android:text="@string/label_ellipses"
         android:layout_alignParentRight="true"
         />
     <TextView
+        android:id="@+id/txtExerciseId"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:fadingEdge="vertical"
         android:padding="10dp"
-        android:id="@+id/exerciseId"
         android:layout_toLeftOf="@id/btnExerciseMenu"
         android:visibility="invisible"
         />
@@ -25,7 +25,7 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/exerciseId"
+        android:layout_toLeftOf="@+id/txtExerciseId"
         android:stretchColumns="0,1">
         <TableRow>
             <TextView
@@ -37,7 +37,6 @@
                 android:id="@+id/txtName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Treadmill"
                 />
         </TableRow>
         <TableRow>
@@ -50,7 +49,7 @@
                 android:id="@+id/txtDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="30" />
+                />
         </TableRow>
         <TableRow>
             <TextView
@@ -62,7 +61,6 @@
                 android:id="@+id/txtType"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Car. | Strengt."
                 />
         </TableRow>
         <TableRow>
@@ -75,7 +73,6 @@
                 android:id="@+id/txtIntensity"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Light/Mode/Vigo"
                 />
         </TableRow>
     </TableLayout>
