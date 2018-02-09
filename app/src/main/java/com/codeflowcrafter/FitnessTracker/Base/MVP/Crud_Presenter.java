@@ -23,8 +23,10 @@ public abstract class Crud_Presenter<
         >
         implements Crud_IRequests<TEntity> {
     private TIView _view;
-    private IEntityTranslator<TEntity> _translator;
     private IInvocationDelegates _invocationDelegate;
+
+    private IEntityTranslator<TEntity> _translator;
+    public IEntityTranslator<TEntity> GetTranslator() { return _translator; }
 
     public Crud_Presenter(TIView view,
                           IEntityTranslator<TEntity> translator,
@@ -35,28 +37,13 @@ public abstract class Crud_Presenter<
         _invocationDelegate = invocationDelegate;
     }
 
-    public int LoadEntitiesViaLoader(CursorLoader loader)
+    public int LoadEntities(List<TEntity> entityList)
     {
-        Cursor cursor = loader.loadInBackground();
-        List<TEntity> entityList = new ArrayList();
+        int entityCount = (entityList == null) ? 0 : entityList.size();
 
-        if(cursor == null) {
-            _view.OnLoadEntitiesViaLoaderCompletion(entityList);
-
-            return 0;
-        }
-
-        _translator.UpdateColumnOrdinals(cursor);
-
-        while (cursor.moveToNext())
-        {
-            entityList.add(_translator.CursorToEntity(cursor));
-        }
-
-        cursor.close();
         _view.OnLoadEntitiesViaLoaderCompletion(entityList);
 
-        return entityList.size();
+        return entityCount;
     }
 
     public void Prompt_AddEntry()

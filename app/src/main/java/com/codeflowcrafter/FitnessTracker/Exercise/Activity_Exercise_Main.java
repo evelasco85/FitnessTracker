@@ -2,6 +2,8 @@ package com.codeflowcrafter.FitnessTracker.Exercise;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,12 +13,16 @@ import android.widget.Toast;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.IView;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -52,6 +58,16 @@ public class Activity_Exercise_Main extends Base_Activity_Main<
     public Activity_Exercise_List_Item GetListItem(DataContainer<Exercise> container)
     {
         return new Activity_Exercise_List_Item(this, GetViewRequest(), container);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursorY)
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<Exercise> repository = manager.GetRepository(Exercise.class);
+        QueryAll.Criteria criteria = new QueryAll.Criteria();
+
+        GetViewRequest().LoadEntities(repository.Matching(criteria));
     }
 
     @Override

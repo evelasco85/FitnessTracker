@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_IRequests;
 import com.codeflowcrafter.MVP.IView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,6 +54,7 @@ public abstract class Base_Activity_Main<
 
     public abstract TListItem GetListItem(DataContainer<TEntity> container);
     public abstract void SetViewHandlers();
+    public abstract void onLoadFinished(Loader<Cursor> loader, Cursor cursor);
 
     private void SetDefaultMainViewData()
     {
@@ -66,11 +68,6 @@ public abstract class Base_Activity_Main<
         );
 
         return  loader;
-    }
-
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
-    {
-        _viewRequest.LoadEntitiesViaLoader((CursorLoader)loader);
     }
 
     public void OnLoadEntitiesViaLoaderCompletion(List<TEntity> entityList){

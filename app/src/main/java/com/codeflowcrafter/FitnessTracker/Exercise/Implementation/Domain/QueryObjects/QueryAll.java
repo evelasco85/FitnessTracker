@@ -54,6 +54,8 @@ public class QueryAll extends BaseQueryObject<Exercise, QueryAll.Criteria> {
             entityList.add(_translator.CursorToEntity(cursor));
         }
 
+        cursor.close();
+
         return  entityList;
     }
 }

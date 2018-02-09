@@ -57,6 +57,8 @@ public class QueryByProfileId  extends BaseQueryObject<BodyMassIndex, QueryByPro
             entityList.add(_translator.CursorToEntity(cursor));
         }
 
+        cursor.close();
+
         return  entityList;
     }
 }

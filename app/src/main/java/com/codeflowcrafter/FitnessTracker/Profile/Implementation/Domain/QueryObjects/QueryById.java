@@ -50,8 +50,9 @@ public class QueryById extends BaseQueryObject<Profile, QueryById.Criteria> {
 
         if(cursor.moveToFirst()) {
             entityList.add(_translator.CursorToEntity(cursor));
-            cursor.close();
         }
+
+        cursor.close();
 
         return entityList;
     }

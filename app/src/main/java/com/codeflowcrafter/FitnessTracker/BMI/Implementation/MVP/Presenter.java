@@ -13,6 +13,8 @@ import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
 
+import java.util.List;
+
 /**
  * Created by enric on 09/02/2018.
  */
@@ -43,9 +45,9 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
     }
 
     @Override
-    public int LoadEntitiesViaLoader(CursorLoader loader)
+    public int LoadEntities(List<BodyMassIndex> entityList)
     {
-        int size = super.LoadEntitiesViaLoader(loader);
+        int size = super.LoadEntities(entityList);
 
         _slc
                 .SetEvent(String.format("Loaded BMI count %d", size))

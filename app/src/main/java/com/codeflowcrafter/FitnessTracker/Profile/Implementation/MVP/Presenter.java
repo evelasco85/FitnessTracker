@@ -13,6 +13,8 @@ import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
 
+import java.util.List;
+
 /**
  * Created by enric on 04/02/2018.
  */
@@ -44,9 +46,9 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
     }
 
     @Override
-    public int LoadEntitiesViaLoader(CursorLoader loader)
+    public int LoadEntities(List<Profile> entityList)
     {
-        int size = super.LoadEntitiesViaLoader(loader);
+        int size = super.LoadEntities(entityList);
 
         _slc
                 .SetEvent(String.format("Loaded project count %d", size))
