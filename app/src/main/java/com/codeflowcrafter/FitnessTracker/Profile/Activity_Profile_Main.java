@@ -136,11 +136,12 @@ public class Activity_Profile_Main extends Base_Activity_Main<
         verify.show();
     }
 
-    public void OnPromptExecution_BMI(int profileId)
+    public void OnPromptExecution_BMI(int profileId, int heightInches)
     {
         Intent intent = new Intent(this, Activity_BMI_Main.class);
 
         intent.putExtra(Activity_BMI_Main.KEY_PROFILE_ID, profileId);
+        intent.putExtra(Activity_BMI_Main.KEY_HEIGHT_INCHES, heightInches);
 
         this.startActivity(intent);
     }

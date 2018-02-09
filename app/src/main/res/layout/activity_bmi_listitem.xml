@@ -41,9 +41,6 @@
                 />
         </TableRow>
         <TableRow>
-            <include layout="@layout/merge_height"/>
-        </TableRow>
-        <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -56,10 +53,13 @@
                 />
         </TableRow>
         <TableRow>
+            <include layout="@layout/merge_height"/>
+        </TableRow>
+        <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Classification: "
+                android:text="Class.: "
                 />
             <TextView
                 android:id="@+id/txtClassification"

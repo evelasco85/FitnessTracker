@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.FitnessTracker.Shared.ExerciseType;
 import com.codeflowcrafter.FitnessTracker.Shared.Gender;
 import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExerciseService;
@@ -72,7 +73,7 @@ public class ViewService {
         spinGender.setAdapter(adapter);
     }
 
-    public static void InitializeHeight(int totalInches, EditText txtFeet, EditText txtInches)
+    public static void SetHeight(int totalInches, EditText txtFeet, EditText txtInches)
     {
         int feet = totalInches / 12;
         int inches = totalInches - (feet * 12);
@@ -131,6 +132,12 @@ public class ViewService {
         editText.setInputType(InputType.TYPE_NULL);
     }
 
+    public static void DisableConcreteView(TextView editText)
+    {
+        editText.setEnabled(false);
+        editText.setInputType(InputType.TYPE_NULL);
+    }
+
     public static void SetDefaultSpinnerItemSelectedListener(final Spinner spinner)
     {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -144,5 +151,16 @@ public class ViewService {
                 // TODO Auto-generated method stub
             }
         });
+    }
+
+    public static void SetClassification(TextView txtClassification,
+                                         double weightsLbs, int heightInches)
+    {
+        double bmiScore = CalculatorService.GetBMI(weightsLbs, heightInches);
+        String classification = BMICategoryService
+                .GetInstance()
+                .GetBMICategory(bmiScore);
+
+        txtClassification.setText(classification);
     }
 }

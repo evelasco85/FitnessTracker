@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Activity_BMI_List_Item;
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.QueryObjects.QueryByProfileId;
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP.IRequests;
@@ -33,8 +32,11 @@ public class Activity_BMI_Main extends Base_Activity_Main<
         Activity_BMI_List_Item>
         implements IView {
     public static final String KEY_PROFILE_ID = "Profile Id";
+    public static final String KEY_HEIGHT_INCHES = "Height in Inches";
 
     private Presenter _presenter;
+    private int _profileId = 0;
+    private int _heightInches = 0;
 
     public Activity_BMI_Main()
     {
@@ -54,6 +56,13 @@ public class Activity_BMI_Main extends Base_Activity_Main<
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent invoker = getIntent();
+
+        if (invoker != null) {
+            _profileId = invoker.getIntExtra(KEY_PROFILE_ID, 0);
+            _heightInches = invoker.getIntExtra(KEY_HEIGHT_INCHES, 0);
+        }
     }
 
     @Override
@@ -65,16 +74,9 @@ public class Activity_BMI_Main extends Base_Activity_Main<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
     {
-        Intent invoker = getIntent();
-        int profileId = 0;
-
-        if (invoker != null) {
-            profileId = invoker.getIntExtra(KEY_PROFILE_ID, 0);
-        }
-
         IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
         IRepository<BodyMassIndex> repository = manager.GetRepository(BodyMassIndex.class);
-        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
+        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(_profileId);
 
         GetViewRequest().LoadEntities(repository.Matching(criteria));
     }
@@ -97,19 +99,22 @@ public class Activity_BMI_Main extends Base_Activity_Main<
     public void OnPromptExecution_Detail(BodyMassIndex entity){
         Activity_BMI_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
-                Activity_BMI_Dialog_ReadAddEdit.ACTION_READ, entity);
+                Activity_BMI_Dialog_ReadAddEdit.ACTION_READ, entity,
+                _profileId, _heightInches);
     }
 
     public void OnPromptExecution_AddEntry(){
         Activity_BMI_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
-                Activity_BMI_Dialog_ReadAddEdit.ACTION_ADD, null);
+                Activity_BMI_Dialog_ReadAddEdit.ACTION_ADD, null,
+                _profileId, _heightInches);
     }
 
     public void OnPromptExecution_EditEntry(BodyMassIndex entity){
         Activity_BMI_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
-                Activity_BMI_Dialog_ReadAddEdit.ACTION_EDIT, entity);
+                Activity_BMI_Dialog_ReadAddEdit.ACTION_EDIT, entity,
+                _profileId, _heightInches);
     }
 
     public void OnPromptExecution_DeleteEntry(final BodyMassIndex entity){

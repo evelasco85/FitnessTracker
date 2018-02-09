@@ -194,7 +194,7 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
             ViewService.SetSpinnerValue(genderSpinner, gender);
         }
 
-        ViewService.InitializeHeight(
+        ViewService.SetHeight(
                 entity.GetHeightInches(),
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)

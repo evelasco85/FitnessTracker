@@ -60,7 +60,9 @@ public class CalculatorService {
 
     public static double GetBMI(double weightInPounds, int heightInInches)
     {
-        double bmi = (703 * weightInPounds) / (heightInInches * heightInInches);
+        int safeHeightInInches = (heightInInches == 0) ? 1 : heightInInches;
+
+        double bmi = (703 * weightInPounds) / (safeHeightInInches * safeHeightInInches);
 
         return bmi;
     }

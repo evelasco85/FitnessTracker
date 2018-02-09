@@ -118,9 +118,9 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
     }
 
     @Override
-    public void Prompt_BMI(int profileId)
+    public void Prompt_BMI(int profileId, int heightInches)
     {
-        _view.OnPromptExecution_BMI(profileId);
+        _view.OnPromptExecution_BMI(profileId, heightInches);
         _slc
                 .SetEvent(String.format("Showing BMI list"))
                 .EmitLog(Priority.Info, Status.Success);
