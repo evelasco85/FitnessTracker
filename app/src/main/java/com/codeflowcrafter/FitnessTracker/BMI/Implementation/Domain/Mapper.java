@@ -78,14 +78,14 @@ public class Mapper extends BaseMapper<BodyMassIndex> {
 
     @Override
     public boolean ConcreteDelete(BodyMassIndex entity, IInvocationDelegates invocationDelegates) {
-        String projectWhere = BodyMassIndex.COLUMN_ID + "=" +  entity.GetId();
-        int deletedProjectRecords = _resolver.delete(_uri, projectWhere, null );
+        String where = BodyMassIndex.COLUMN_ID + "=" +  entity.GetId();
+        int deletedRecords = _resolver.delete(_uri, where, null );
 
         Hashtable results = new Hashtable();
 
         results.put(KEY_MAPPER_NAME, this.getClass().getName());
         results.put(KEY_OPERATION, "Deletion");
-        results.put(KEY_COUNT, String.valueOf(deletedProjectRecords));
+        results.put(KEY_COUNT, String.valueOf(deletedRecords));
 
         invocationDelegates.SetResults(results);
         invocationDelegates.SuccessfulInvocation(entity);

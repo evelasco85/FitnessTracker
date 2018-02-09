@@ -3,7 +3,9 @@ package com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain;
 import android.content.ContentResolver;
 import android.net.Uri;
 
+import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
+import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocationDelegates;
@@ -78,18 +80,37 @@ public class Mapper extends BaseMapper<Profile> {
 
     @Override
     public boolean ConcreteDelete(Profile entity, IInvocationDelegates invocationDelegates) {
-        String projectWhere = Profile.COLUMN_ID + "=" +  entity.GetId();
-        int deletedProjectRecords = _resolver.delete(_uri, projectWhere, null );
+        String where = Profile.COLUMN_ID + "=" +  entity.GetId();
+        int deletedRecords = _resolver.delete(_uri, where, null );
 
         Hashtable results = new Hashtable();
 
         results.put(KEY_MAPPER_NAME, this.getClass().getName());
         results.put(KEY_OPERATION, "Deletion");
-        results.put(KEY_COUNT, String.valueOf(deletedProjectRecords));
+        results.put(KEY_COUNT, String.valueOf(deletedRecords));
+
+        if(deletedRecords > 0)
+        {
+            DeleteBMI(results, entity.GetId());
+        }
 
         invocationDelegates.SetResults(results);
         invocationDelegates.SuccessfulInvocation(entity);
 
         return true;
+    }
+
+    private void DeleteBMI(Hashtable results, int id)
+    {
+        String keyColumn = BodyMassIndex.COLUMN_PROFILE_ID;
+        String where = keyColumn + "=" +  id;
+        Uri uri = FitnessTrackerContentProviders
+                .GetInstance()
+                .GetBmiProvider()
+                .GetContentUri();
+        int deletedRecords = _resolver.delete(uri, where, null );
+
+        results.put("[Operation]", "Deletion BMI(s)");
+        results.put("[Count]", String.valueOf(deletedRecords));
     }
 }
