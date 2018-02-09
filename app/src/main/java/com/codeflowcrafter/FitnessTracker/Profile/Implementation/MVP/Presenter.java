@@ -116,4 +116,13 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
                 .SetEvent(String.format("Showing details of profile id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
+
+    @Override
+    public void Prompt_BMI(int profileId)
+    {
+        _view.OnPromptExecution_BMI(profileId);
+        _slc
+                .SetEvent(String.format("Showing BMI list"))
+                .EmitLog(Priority.Info, Status.Success);
+    }
 }

@@ -2,6 +2,7 @@ package com.codeflowcrafter.FitnessTracker.BMI;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,16 +26,15 @@ import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
-import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
 public class Activity_BMI_Main extends Base_Activity_Main<
         BodyMassIndex,
         IRequests,
         Activity_BMI_List_Item>
         implements IView {
+    public static final String KEY_PROFILE_ID = "Profile Id";
 
     private Presenter _presenter;
-    private int _profileId;
 
     public Activity_BMI_Main()
     {
@@ -65,9 +65,16 @@ public class Activity_BMI_Main extends Base_Activity_Main<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
     {
+        Intent invoker = getIntent();
+        int profileId = 0;
+
+        if (invoker != null) {
+            profileId = invoker.getIntExtra(KEY_PROFILE_ID, 0);
+        }
+
         IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
         IRepository<BodyMassIndex> repository = manager.GetRepository(BodyMassIndex.class);
-        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(_profileId);
+        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
 
         GetViewRequest().LoadEntities(repository.Matching(criteria));
     }
@@ -77,7 +84,8 @@ public class Activity_BMI_Main extends Base_Activity_Main<
     {
         View view = findViewById(android.R.id.content);
 
-        GetConcreteView(Button.class, view, R.id.btnAddWeight)
+        ActivityService
+                .GetConcreteView(Button.class, view, R.id.btnAddWeight)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

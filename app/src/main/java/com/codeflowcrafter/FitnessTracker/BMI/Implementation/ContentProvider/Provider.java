@@ -27,7 +27,7 @@ public class Provider  extends ContentProviderTemplate {
                 FitnessTrackerContentProviders.APPLICATION_NAME,
                 FitnessTrackerContentProviders.GetInstance(),
                 BodyMassIndex.PROVIDER_NAME, BodyMassIndex.TABLE_NAME,
-                new com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Table());
+                new Table());
     }
 
     @Override

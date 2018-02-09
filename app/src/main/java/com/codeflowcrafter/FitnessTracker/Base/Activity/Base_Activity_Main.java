@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_IRequests;
 import com.codeflowcrafter.MVP.IView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

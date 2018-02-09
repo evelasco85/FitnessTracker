@@ -12,43 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:stretchColumns="0,1">
-        <TableRow
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <android.support.design.widget.AppBarLayout
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
-            </android.support.design.widget.AppBarLayout>
-        </TableRow>
-        <TableRow
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.AppBarLayout>
+        <Button
+            android:id="@+id/btnAddWeight"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <Button
-                android:id="@+id/btnAddWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Weight"
-                tools:text="Add Weight" />
-        </TableRow>
-        <TableRow
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <fragment
-                android:name="android.app.ListFragment"
-                tools:layout="@layout/activity_bmi_listitem"
-                android:id="@+id/fragment_bmiList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="bottom"
-                />
-        </TableRow>
+            android:text="Add Weight"
+            tools:text="Add Weight" />
+        <fragment
+            android:name="android.app.ListFragment"
+            tools:layout="@layout/activity_bmi_listitem"
+            android:id="@+id/fragment_bmiList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            />
     </TableLayout>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -44,11 +44,14 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
         final Button btnMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
         final PopupMenu popMenu = new PopupMenu(activityContext, btnMenu);
 
-        popMenu.inflate(R.menu.mnu_edit_delete);
+        popMenu.inflate(R.menu.mnu_profile_edit_delete);
         popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem mnuItem) {
                 switch (mnuItem.getItemId()) {
+                    case (R.id.mnuBmi):
+                        fViewRequest.Prompt_BMI(fItem.GetId());
+                        return true;
                     case (R.id.mnuEdit):
                         fViewRequest.Prompt_EditEntry(fItem);
                         return true;

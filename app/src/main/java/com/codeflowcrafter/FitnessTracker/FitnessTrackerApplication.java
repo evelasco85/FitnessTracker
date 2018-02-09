@@ -158,5 +158,8 @@ public class FitnessTrackerApplication
         contentProviders
                 .GetExerciseProvider()
                 .RegisterDomain(context, resolver, _dsManager);
+        contentProviders
+                .GetBmiProvider()
+                .RegisterDomain(context, resolver, _dsManager);
     }
 }
