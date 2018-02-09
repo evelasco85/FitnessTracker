@@ -24,9 +24,7 @@ public abstract class Crud_Presenter<
         implements Crud_IRequests<TEntity> {
     private TIView _view;
     private IInvocationDelegates _invocationDelegate;
-
     private IEntityTranslator<TEntity> _translator;
-    public IEntityTranslator<TEntity> GetTranslator() { return _translator; }
 
     public Crud_Presenter(TIView view,
                           IEntityTranslator<TEntity> translator,
