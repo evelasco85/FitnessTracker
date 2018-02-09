@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
     <Button
+        android:id="@+id/btnBmiMenu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/btnBmiBmrMenu"
         android:text="@string/label_ellipses"
         android:layout_alignParentRight="true"
         />
     <TextView
+        android:id="@+id/txtBmiId"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:fadingEdge="vertical"
         android:padding="10dp"
-        android:id="@+id/bmiId"
-        android:layout_toLeftOf="@id/btnBmiBmrMenu"
+        android:layout_toLeftOf="@id/btnBmiMenu"
         android:visibility="invisible"
         />
     <TableLayout
@@ -27,7 +26,7 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/bmiId"
+        android:layout_toLeftOf="@+id/txtBmiId"
         android:stretchColumns="0,1">
         <TableRow>
             <TextView
@@ -36,45 +35,36 @@
                 android:text="Date: "
                 />
             <TextView
+                android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="February 14, 2018"
+                />
+        </TableRow>
+        <TableRow>
+            <include layout="@layout/merge_height"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Weight (lbs.): "
+                />
+            <TextView
+                android:id="@+id/txtWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 />
         </TableRow>
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Height: "
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="5'3&quot;" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Weight: "
+                android:text="Classification: "
                 />
             <TextView
+                android:id="@+id/txtClassification"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="145 lb"
-                />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Calculated BMR: "
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="###"
                 />
         </TableRow>
     </TableLayout>

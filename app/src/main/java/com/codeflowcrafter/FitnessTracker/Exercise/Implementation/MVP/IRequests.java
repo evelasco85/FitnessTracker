@@ -7,5 +7,5 @@ import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercis
  * Created by enric on 08/02/2018.
  */
 
-public interface IRequests  extends Crud_IRequests<Exercise> {
+public interface IRequests extends Crud_IRequests<Exercise> {
 }

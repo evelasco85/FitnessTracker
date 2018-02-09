@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Fitness Tracker</string>
-    <string name="title_activity_main">Fitness Tracker</string>
+    <string name="title_dashboard">Fitness Tracker</string>
     <string name="title_activity_main_profile">Profiles</string>
     <string name="title_activity_main_exercise">Exercises</string>
     <string name="title_activity_main_heartrate">Heart Rate Tracker</string>
     <string name="title_activity_main_program">Program</string>
     <string name="title_activity_main_repmax">Rep Max</string>
+    <string name="title_activity_main_bmi">Body Mass Index</string>
 
     <string name="label_ellipses">...</string>
 
     <string name="prompt_gender">Choose a gender</string>
     <string name="prompt_intensity">Choose an intensity</string>
     <string name="prompt_type">Choose a type</string>
-
 </resources>

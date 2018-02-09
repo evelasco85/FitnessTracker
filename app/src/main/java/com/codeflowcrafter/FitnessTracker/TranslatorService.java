@@ -13,15 +13,30 @@ public class TranslatorService {
         return s_instance;
     }
 
-    private com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator _profileTranslator = new com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator();
-    public com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator GetProfileTranslator()
+    private com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator
+            _profileTranslator = new com.codeflowcrafter.FitnessTracker.Profile.Implementation
+            .Domain.Translator();
+    public com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Translator
+    GetProfileTranslator()
     {
         return _profileTranslator;
     }
 
-    private Translator _exerciseTranslator = new Translator();
-    public Translator GetExerciseTranslator()
+    private com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Translator
+            _exerciseTranslator = new com.codeflowcrafter.FitnessTracker.Exercise.Implementation
+            .Domain.Translator();
+    public com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Translator
+    GetExerciseTranslator()
     {
         return _exerciseTranslator;
+    }
+
+    private com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.Translator
+            _bmiTranslator = new com.codeflowcrafter.FitnessTracker.BMI.Implementation
+            .Domain.Translator();
+    public com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.Translator
+    GetBmiTranslator()
+    {
+        return _bmiTranslator;
     }
 }

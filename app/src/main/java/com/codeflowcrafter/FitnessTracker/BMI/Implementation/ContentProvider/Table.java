@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider;
+package com.codeflowcrafter.FitnessTracker.BMI.Implementation.ContentProvider;
 
 import android.app.SearchManager;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -6,38 +6,37 @@ import android.net.Uri;
 
 import com.codeflowcrafter.DatabaseAccess.BaseTable;
 import com.codeflowcrafter.DatabaseAccess.ContentProviderTemplate;
-import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
+import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by enric on 08/02/2018.
+ * Created by enric on 09/02/2018.
  */
 
 public class Table extends BaseTable {
-
     public Table()
     {
         _search_projection_map = new HashMap<String, String>();
 
-        _search_projection_map.put(SearchManager.SUGGEST_COLUMN_TEXT_1, Exercise.COLUMN_NAME + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1);
-        _search_projection_map.put("_id", Exercise.COLUMN_ID + " AS " + "_id");
+        _search_projection_map.put(SearchManager.SUGGEST_COLUMN_TEXT_1, BodyMassIndex.COLUMN_DATE + " AS " + SearchManager.SUGGEST_COLUMN_TEXT_1);
+        _search_projection_map.put("_id", BodyMassIndex.COLUMN_ID + " AS " + "_id");
     }
 
     public String GetRecordKeyColumnName()
     {
-        return Exercise.COLUMN_ID;
+        return BodyMassIndex.COLUMN_ID;
     }
 
     public String GetTableName()
     {
-        return Exercise.TABLE_NAME;
+        return BodyMassIndex.TABLE_NAME;
     }
 
     public String GetTableCreationScript()
     {
-        HashMap<String, String> tableColumns = Exercise.GetTableColumns();
+        HashMap<String, String> tableColumns = BodyMassIndex.GetTableColumns();
 
         String fields = "";
         String terminator = ", ";
@@ -46,7 +45,7 @@ public class Table extends BaseTable {
             fields += entry.getKey() + " " + entry.getValue() + terminator;
         }
 
-        return "create table " + Exercise.TABLE_NAME + " ( " +
+        return "create table " + BodyMassIndex.TABLE_NAME + " ( " +
                 ((fields.length() > 0) ? fields.substring(0, fields.length() - terminator.length()) : fields) +
                 " );";
     }
@@ -63,7 +62,7 @@ public class Table extends BaseTable {
                 queryBuilder.appendWhere(GetRecordKeyColumnName() + "=" + uri.getPathSegments().get(1));
                 break;
             case ContentProviderTemplate.URI_SEARCH_GLOBAL:
-                queryBuilder.appendWhere(Exercise.COLUMN_NAME + " LIKE \"% " + uri.getPathSegments().get(1) + "%\"");
+                queryBuilder.appendWhere(BodyMassIndex.COLUMN_DATE + " LIKE \"% " + uri.getPathSegments().get(1) + "%\"");
                 queryBuilder.setProjectionMap(GetSearchProjectionMap());
                 break;
             default:

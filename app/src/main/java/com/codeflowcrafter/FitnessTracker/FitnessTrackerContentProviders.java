@@ -30,20 +30,32 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider
             _exerciseProvider = new com.codeflowcrafter.FitnessTracker.Exercise.Implementation
             .ContentProvider.Provider();
+    private com.codeflowcrafter.FitnessTracker.BMI.Implementation.ContentProvider.Provider
+            _bmiProvider = new com.codeflowcrafter.FitnessTracker.BMI.Implementation
+            .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
         _profileProvider.SetupTable(_dbHelperSetup);
         _exerciseProvider.SetupTable(_dbHelperSetup);
+        _bmiProvider.SetupTable(_dbHelperSetup);
     }
 
-    public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider GetProfileProvider()
+    public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider
+    GetProfileProvider()
     {
         return _profileProvider;
     }
 
-    public com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider GetExerciseProvider()
+    public com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider
+    GetExerciseProvider()
     {
         return _exerciseProvider;
+    }
+
+    public com.codeflowcrafter.FitnessTracker.BMI.Implementation.ContentProvider.Provider
+    GetBmiProvider()
+    {
+        return _bmiProvider;
     }
 
     public DatabaseHelper GetDatabaseHelper(Context context)

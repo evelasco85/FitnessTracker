@@ -1,11 +1,11 @@
-package com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP;
+package com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP;
 
 import android.content.CursorLoader;
 import android.net.Uri;
 
+import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
-import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
@@ -14,21 +14,21 @@ import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
 
 /**
- * Created by enric on 08/02/2018.
+ * Created by enric on 09/02/2018.
  */
 
-public class Presenter extends Crud_Presenter<Exercise, IRequests, IView>
-        implements IRequests{
+public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
+        implements IRequests {
     private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Presenter(IView view, IEntityTranslator<Exercise> translator)
+    public Presenter(IView view, IEntityTranslator<BodyMassIndex> translator)
     {
         super(view,
                 translator,
                 new MapperInvocationDelegate(_slc));
 
-        _slc.SetComponent("Exercise");
+        _slc.SetComponent("BMI");
         view.SetViewRequest(this);
 
         _view = view;
@@ -38,7 +38,7 @@ public class Presenter extends Crud_Presenter<Exercise, IRequests, IView>
     public Uri GetContentUri() {
         return FitnessTrackerContentProviders
                 .GetInstance()
-                .GetExerciseProvider()
+                .GetBmiProvider()
                 .GetContentUri();
     }
 
@@ -48,7 +48,7 @@ public class Presenter extends Crud_Presenter<Exercise, IRequests, IView>
         int size = super.LoadEntitiesViaLoader(loader);
 
         _slc
-                .SetEvent(String.format("Loaded exercise count %d", size))
+                .SetEvent(String.format("Loaded BMI count %d", size))
                 .EmitLog(Priority.Info, Status.Success);
 
         return size;
@@ -59,58 +59,58 @@ public class Presenter extends Crud_Presenter<Exercise, IRequests, IView>
     {
         super.Prompt_AddEntry();
         _slc
-                .SetEvent("Open Exercise Entry")
+                .SetEvent("Open BMI Entry")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
     public void CancelEntry(){
         _slc
-                .SetEvent("Cancel exercise entry window")
+                .SetEvent("Cancel BMI entry window")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Add(Exercise entity)
+    public void Add(BodyMassIndex entity)
     {
         super.Add(entity);
         _slc
-                .SetEvent("Exercise Added")
+                .SetEvent("BMI Added")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Update(Exercise entity)
+    public void Update(BodyMassIndex entity)
     {
         super.Update(entity);
         _slc
-                .SetEvent(String.format("Updated exercise id %s", entity.GetId()))
+                .SetEvent(String.format("Updated BMI id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Prompt_EditEntry(Exercise entity) {
+    public void Prompt_EditEntry(BodyMassIndex entity) {
         super.Prompt_EditEntry(entity);
         _slc
-                .SetEvent("Open exercise editing")
+                .SetEvent("Open BMI editing")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Delete(Exercise entity)
+    public void Delete(BodyMassIndex entity)
     {
         super.Delete(entity);
         _slc
-                .SetEvent(String.format("Deleted exercise id %s", entity.GetId()))
+                .SetEvent(String.format("Deleted BMI id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Prompt_Detail(Exercise entity)
+    public void Prompt_Detail(BodyMassIndex entity)
     {
         super.Prompt_Detail(entity);
         _slc
-                .SetEvent(String.format("Showing details of exercise id %s", entity.GetId()))
+                .SetEvent(String.format("Showing details of BMI id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
 }
