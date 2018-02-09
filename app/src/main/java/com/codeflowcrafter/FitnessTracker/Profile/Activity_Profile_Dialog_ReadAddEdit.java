@@ -148,7 +148,8 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
     public Profile ViewDataToModel(View view){
         IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(Profile.class);
-        String gender = (String)ActivityService.GetConcreteView(Spinner.class, view, R.id.spinGender)
+        String gender = (String)ActivityService
+                .GetConcreteView(Spinner.class, view, R.id.spinGender)
                 .getSelectedItem();
         int heightInches = ViewService.GetHeightInches(
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
@@ -157,9 +158,15 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
         return new Profile(mapper,
                 _id,
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtName).getText().toString(),
+                ActivityService
+                        .GetConcreteView(EditText.class, view, R.id.txtName)
+                        .getText()
+                        .toString(),
                 gender,
-                ActivityService.GetConcreteView(TextView.class, view, R.id.txtDateOfBirth).getText().toString(),
+                ActivityService
+                        .GetConcreteView(TextView.class, view, R.id.txtDateOfBirth)
+                        .getText()
+                        .toString(),
                 "",
                 heightInches
                 );
@@ -181,7 +188,8 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
         String gender = entity.GetGender();
 
         if(!TextUtils.isEmpty(gender)) {
-            final Spinner genderSpinner = ActivityService.GetConcreteView(Spinner.class, view, R.id.spinGender);
+            final Spinner genderSpinner = ActivityService
+                    .GetConcreteView(Spinner.class, view, R.id.spinGender);
 
             ViewService.SetSpinnerValue(genderSpinner, gender);
         }

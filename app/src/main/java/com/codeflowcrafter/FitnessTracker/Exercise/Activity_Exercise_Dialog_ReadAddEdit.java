@@ -2,6 +2,7 @@ package com.codeflowcrafter.FitnessTracker.Exercise;
 
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,10 @@ import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Dialog_Rea
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -109,9 +113,60 @@ public class Activity_Exercise_Dialog_ReadAddEdit  extends Base_Activity_Dialog_
     }
 
     public Exercise ViewDataToModel(View view){
-        return null;
+        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(Exercise.class);
+        String type = (String)ActivityService
+                .GetConcreteView(Spinner.class, view, R.id.spinType)
+                .getSelectedItem();
+        String intensity = (String)ActivityService
+                .GetConcreteView(Spinner.class, view, R.id.spinIntensity)
+                .getSelectedItem();
+        String minutes = GetConcreteView(EditText.class, view, R.id.txtDuration)
+                .getText()
+                .toString();
+        int durationInMinutes = 0;
+
+        if(!TextUtils.isEmpty(minutes)) durationInMinutes = Integer
+                .parseInt(minutes);
+
+        return new Exercise(
+                mapper,
+                _id,
+                ActivityService
+                        .GetConcreteView(EditText.class, view, R.id.txtName)
+                        .getText()
+                        .toString(),
+                durationInMinutes,
+                type,
+                intensity
+        );
     }
 
     public void SetModelToViewData(View view, Exercise entity){
+        if(entity == null) return;
+
+        _id = entity.GetId();
+
+        ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtName)
+                .setText(entity.GetName());
+        ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtDuration)
+                .setText(String.valueOf(entity.GetDurationMinutes()));
+
+        String intensity = entity.GetIntensity();
+        if(!TextUtils.isEmpty(intensity)) {
+            final Spinner spinIntensity = ActivityService
+                    .GetConcreteView(Spinner.class, view, R.id.spinIntensity);
+
+            ViewService.SetSpinnerValue(spinIntensity, intensity);
+        }
+
+        String type = entity.GetType();
+        if(!TextUtils.isEmpty(type)) {
+            final Spinner spinType = ActivityService
+                    .GetConcreteView(Spinner.class, view, R.id.spinType);
+
+            ViewService.SetSpinnerValue(spinType, type);
+        }
     }
 }
