@@ -105,6 +105,31 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onPause()
+    {//Home-button is pressed
+        if(_counting) Stop();
+
+        super.onPause();
+    }
+
+    @Override
+    public void onResume()
+    {
+        Reset();
+        super.onResume();
+    }
+
+
+    @Override
+    public void onDestroy()
+    {
+        //Back-button is pressed
+        if(_counting) Stop();
+
+        super.onDestroy();
+    }
+
     private void Increment(){
         if(!_counting)
         {
