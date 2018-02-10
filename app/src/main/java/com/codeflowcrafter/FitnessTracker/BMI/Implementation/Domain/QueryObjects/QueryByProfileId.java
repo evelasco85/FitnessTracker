@@ -40,8 +40,9 @@ public class QueryByProfileId  extends BaseQueryObject<BodyMassIndex, QueryByPro
     @Override
     public List<BodyMassIndex> PerformSearchOperation(QueryByProfileId.Criteria criteria) {
         String where = BodyMassIndex.COLUMN_PROFILE_ID + "=" +  criteria.ProfileId;
+        String sortOrder = BodyMassIndex.COLUMN_ID + " DESC";
         CursorLoader loader = new CursorLoader(_context, _uri,
-                null, where, null, null
+                null, where, null, sortOrder
         );
 
         Cursor cursor = loader.loadInBackground();

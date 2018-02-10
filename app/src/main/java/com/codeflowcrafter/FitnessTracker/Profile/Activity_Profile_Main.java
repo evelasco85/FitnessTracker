@@ -21,6 +21,7 @@ import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IView;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
+import com.codeflowcrafter.FitnessTracker.Shared.HeartRate.Activity_Heart_Rate_Counter;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
@@ -144,5 +145,32 @@ public class Activity_Profile_Main extends Base_Activity_Main<
         intent.putExtra(Activity_BMI_Main.KEY_HEIGHT_INCHES, heightInches);
 
         this.startActivity(intent);
+    }
+
+    public void OnPromptExecution_RestingHeartRate(int profileId)
+    {
+        Intent intent = new Intent(this, Activity_Heart_Rate_Counter.class);
+
+        this.startActivityForResult(intent, Activity_Heart_Rate_Counter.REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent resultingData)
+    {
+        if(resultCode != RESULT_OK) return;
+
+        switch (requestCode) {
+            case (Activity_Heart_Rate_Counter.REQUEST_CODE):
+                int heartRate = resultingData
+                        .getIntExtra(
+                                Activity_Heart_Rate_Counter.RESULT_HEART_RATE,
+                                0);
+                return;
+            default:
+                return;
+        }
     }
 }

@@ -7,6 +7,7 @@
     <string name="title_activity_main_program">Program</string>
     <string name="title_activity_main_repmax">Rep Max</string>
     <string name="title_activity_main_bmi">Body Mass Index</string>
+    <string name="title_activity_heart_rate_counter">Heart Rate Counter</string>
 
     <string name="label_ellipses">...</string>
 

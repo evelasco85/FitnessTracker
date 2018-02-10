@@ -42,7 +42,7 @@
         <activity
             android:name=".BMI.Activity_BMI_Main"
             android:label="@string/title_activity_main_bmi"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".Profile.Implementation.ContentProvider.Provider"
@@ -53,6 +53,11 @@
         <provider
             android:name=".BMI.Implementation.ContentProvider.Provider"
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.BmiProvider" />
+
+        <activity
+            android:name=".Shared.HeartRate.Activity_Heart_Rate_Counter"
+            android:label="@string/title_activity_heart_rate_counter"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

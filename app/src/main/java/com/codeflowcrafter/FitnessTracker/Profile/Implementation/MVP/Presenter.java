@@ -125,4 +125,13 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
                 .SetEvent(String.format("Showing BMI list"))
                 .EmitLog(Priority.Info, Status.Success);
     }
+
+    @Override
+    public void Prompt_RestingHeartRate(int profileId)
+    {
+        _view.OnPromptExecution_RestingHeartRate(profileId);
+        _slc
+                .SetEvent(String.format("Showing Resting Heart Rate list"))
+                .EmitLog(Priority.Info, Status.Success);
+    }
 }
