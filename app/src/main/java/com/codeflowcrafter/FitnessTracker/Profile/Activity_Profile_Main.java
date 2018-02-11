@@ -147,11 +147,12 @@ public class Activity_Profile_Main extends Base_Activity_Main<
         this.startActivity(intent);
     }
 
+    private static final int REQUEST_CODE_TEST_HR = 148;
     public void OnPromptExecution_RestingHeartRate(int profileId)
     {
         Intent intent = new Intent(this, Activity_Heart_Rate_Counter.class);
 
-        this.startActivityForResult(intent, Activity_Heart_Rate_Counter.REQUEST_CODE);
+        this.startActivityForResult(intent, REQUEST_CODE_TEST_HR);
     }
 
     @Override
@@ -163,7 +164,7 @@ public class Activity_Profile_Main extends Base_Activity_Main<
         if(resultCode != RESULT_OK) return;
 
         switch (requestCode) {
-            case (Activity_Heart_Rate_Counter.REQUEST_CODE):
+            case (REQUEST_CODE_TEST_HR):
                 int heartRate = resultingData
                         .getIntExtra(
                                 Activity_Heart_Rate_Counter.RESULT_HEART_RATE,

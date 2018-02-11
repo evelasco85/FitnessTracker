@@ -16,7 +16,6 @@ import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetCon
 
 public class Activity_Heart_Rate_Counter extends AppCompatActivity {
     public static final String RESULT_HEART_RATE = "Resulting Heart Rate";
-    public static final int REQUEST_CODE = 143;
 
     private int _currentHeartRate = 0;
     private Boolean _counting = false;
