@@ -27,7 +27,6 @@ public class Provider extends ContentProviderTemplate {
         super(
                 FitnessTrackerContentProviders.APPLICATION_NAME,
                 FitnessTrackerContentProviders.GetInstance(),
-                Profile.PROVIDER_NAME, Profile.TABLE_NAME,
                 new Table());
     }
 

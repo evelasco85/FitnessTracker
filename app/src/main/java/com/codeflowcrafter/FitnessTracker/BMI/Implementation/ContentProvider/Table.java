@@ -34,6 +34,8 @@ public class Table extends BaseTable {
         return BodyMassIndex.TABLE_NAME;
     }
 
+    public String GetProviderName(){ return BodyMassIndex.PROVIDER_NAME; }
+
     public String GetTableCreationScript()
     {
         HashMap<String, String> tableColumns = BodyMassIndex.GetTableColumns();

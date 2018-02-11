@@ -35,6 +35,8 @@ public class Table extends BaseTable {
         return Exercise.TABLE_NAME;
     }
 
+    public String GetProviderName(){ return Exercise.PROVIDER_NAME; }
+
     public String GetTableCreationScript()
     {
         HashMap<String, String> tableColumns = Exercise.GetTableColumns();

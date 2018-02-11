@@ -9,6 +9,8 @@ import java.util.List;
 
 public class BMICategoryService {
     private static final String LAST_CATEGORY_DESCRIPTION = "Obese Class III";
+    private static final double UPPER_SCORE_UNDERWEIGHT = 18.5;
+    private static final double UPPER_SCORE_NORMAL = 25;
     private List<BMICategory> _categories =  new ArrayList<>();
 
     private static BMICategoryService s_instance = new BMICategoryService();
@@ -18,8 +20,8 @@ public class BMICategoryService {
     {
         BMICategory category1 = new BMICategory("Very severely underweight", 15);
         BMICategory category2 = new BMICategory("Severely underweight", 16);
-        BMICategory category3 = new BMICategory("Underweight", 18.5);
-        BMICategory category4 = new BMICategory("Normal", 25);
+        BMICategory category3 = new BMICategory("Underweight", UPPER_SCORE_UNDERWEIGHT);
+        BMICategory category4 = new BMICategory("Normal", UPPER_SCORE_NORMAL);
         BMICategory category5 = new BMICategory("Overweight", 30);
         BMICategory category6 = new BMICategory("Obese Class I", 35);
         BMICategory category7 = new BMICategory("Obese Class II", 40);
@@ -54,5 +56,12 @@ public class BMICategoryService {
         }
 
         return description;
+    }
+
+    public double IdealNormalWeightLbs(int heightInches)
+    {
+        double meanNormalBmiScore = (UPPER_SCORE_UNDERWEIGHT + UPPER_SCORE_NORMAL) / 2;
+
+        return (meanNormalBmiScore * (heightInches * heightInches)) / 703;
     }
 }

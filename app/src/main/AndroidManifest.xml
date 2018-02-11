@@ -28,7 +28,7 @@
             android:label="@string/title_activity_main_exercise"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".HeartRate.Activity_HeartRate_Resting_Main"
+            android:name=".RestingHeartRate.Activity_Resting_HeartRate_Main"
             android:label="@string/title_activity_main_heartrate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

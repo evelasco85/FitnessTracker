@@ -53,6 +53,30 @@
                 />
         </TableRow>
         <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Ideal Weight: "
+                />
+            <TextView
+                android:id="@+id/txtIdealWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Weight to Lose: "
+                />
+            <TextView
+                android:id="@+id/txtIdealWeightToLose"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark" />
+        </TableRow>
+        <TableRow>
             <include layout="@layout/merge_height"/>
         </TableRow>
         <TableRow>
@@ -61,11 +85,12 @@
                 android:layout_height="match_parent"
                 android:text="Class.: "
                 />
+
             <TextView
                 android:id="@+id/txtClassification"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                />
+                android:textColor="@color/colorPrimaryDark" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

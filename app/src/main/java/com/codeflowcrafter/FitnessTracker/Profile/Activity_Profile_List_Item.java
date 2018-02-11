@@ -44,13 +44,16 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
         final Button btnMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
         final PopupMenu popMenu = new PopupMenu(activityContext, btnMenu);
 
+        Calendar dobCalendar = CalculatorService.ConvertToCalendar(item.GetDateOfBirth());
+        final int age = CalculatorService.CalculateAge(dobCalendar);
+
         popMenu.inflate(R.menu.mnu_profile_edit_delete);
         popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem mnuItem) {
                 switch (mnuItem.getItemId()) {
                     case (R.id.mnuRestingHeartRate):
-                        fViewRequest.Prompt_RestingHeartRate(fItem.GetId());
+                        fViewRequest.Prompt_RestingHeartRate(fItem.GetId(), age);
                         return true;
                     case (R.id.mnuBmi):
                         fViewRequest.Prompt_BMI(fItem.GetId(), fItem.GetHeightInches());
@@ -88,9 +91,6 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
                 .setText(item.GetGender());
         GetConcreteView(TextView.class, itemLayout, R.id.txtBirthday)
                 .setText(item.GetDateOfBirth());
-
-        Calendar dobCalendar = CalculatorService.ConvertToCalendar(item.GetDateOfBirth());
-        int age = CalculatorService.CalculateAge(dobCalendar);
 
         ViewService.SetAge(
                 GetConcreteView(TextView.class, itemLayout, R.id.txtAge),

@@ -119,7 +119,6 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
         super.onResume();
     }
 
-
     @Override
     public void onDestroy()
     {

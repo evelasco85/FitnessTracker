@@ -127,9 +127,9 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
     }
 
     @Override
-    public void Prompt_RestingHeartRate(int profileId)
+    public void Prompt_RestingHeartRate(int profileId, int age)
     {
-        _view.OnPromptExecution_RestingHeartRate(profileId);
+        _view.OnPromptExecution_RestingHeartRate(profileId, age);
         _slc
                 .SetEvent(String.format("Showing Resting Heart Rate list"))
                 .EmitLog(Priority.Info, Status.Success);

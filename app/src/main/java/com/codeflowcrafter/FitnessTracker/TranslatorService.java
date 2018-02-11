@@ -39,4 +39,13 @@ public class TranslatorService {
     {
         return _bmiTranslator;
     }
+
+    private com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.Translator
+            _rhrTranslator = new com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation
+            .Domain.Translator();
+    public com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.Translator
+    GetRhrTranslator()
+    {
+        return _rhrTranslator;
+    }
 }

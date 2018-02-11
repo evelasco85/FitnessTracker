@@ -11,5 +11,5 @@ import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
 
 public interface IRequests extends Crud_IRequests<Profile> {
     void Prompt_BMI(int profileId, int heightInches);
-    void Prompt_RestingHeartRate(int profileId);
+    void Prompt_RestingHeartRate(int profileId, int age);
 }

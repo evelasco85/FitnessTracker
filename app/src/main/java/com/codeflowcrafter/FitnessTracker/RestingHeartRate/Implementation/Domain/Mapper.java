@@ -1,12 +1,9 @@
-package com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain;
+package com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain;
 
 import android.content.ContentResolver;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
-import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
-import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocationDelegates;
@@ -14,36 +11,36 @@ import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocatio
 import java.util.Hashtable;
 
 /**
- * Created by enric on 06/02/2018.
+ * Created by enric on 11/02/2018.
  */
 
-public class Mapper extends BaseMapper<Profile> {
+public class Mapper extends BaseMapper<RestingHeartRate> {
     public final static String KEY_MAPPER_NAME = "[Mapper Name]";
     public final static String KEY_OPERATION = "[Operation]";
     public final static String KEY_COUNT = "[Count]";
 
     private ContentResolver _resolver;
     private Uri _uri;
-    private IEntityTranslator<Profile> _translator = TranslatorService
+    private IEntityTranslator<RestingHeartRate> _translator = TranslatorService
             .GetInstance()
-            .GetProfileTranslator();
+            .GetRhrTranslator();
 
     public Mapper(ContentResolver resolver, Uri uri)
     {
-        super(Profile.class);
+        super(RestingHeartRate.class);
 
         _resolver = resolver;
         _uri = uri;
     }
 
     @Override
-    public boolean ConcreteUpdate(Profile entity, IInvocationDelegates invocationDelegates) {
+    public boolean ConcreteUpdate(RestingHeartRate entity, IInvocationDelegates invocationDelegates) {
         int updatedRecords = 0;
 
         if(entity == null)
             return false;
 
-        String where = Profile.COLUMN_ID + "=" +  entity.GetId();
+        String where = RestingHeartRate.COLUMN_ID + "=" +  entity.GetId();
 
         updatedRecords = _resolver
                 .update(
@@ -64,7 +61,7 @@ public class Mapper extends BaseMapper<Profile> {
     }
 
     @Override
-    public boolean ConcreteInsert(Profile entity, IInvocationDelegates invocationDelegates) {
+    public boolean ConcreteInsert(RestingHeartRate entity, IInvocationDelegates invocationDelegates) {
         _resolver.insert(_uri, _translator.EntityToContentValues(entity));
 
         Hashtable results = new Hashtable();
@@ -80,8 +77,8 @@ public class Mapper extends BaseMapper<Profile> {
     }
 
     @Override
-    public boolean ConcreteDelete(Profile entity, IInvocationDelegates invocationDelegates) {
-        String where = Profile.COLUMN_ID + "=" +  entity.GetId();
+    public boolean ConcreteDelete(RestingHeartRate entity, IInvocationDelegates invocationDelegates) {
+        String where = RestingHeartRate.COLUMN_ID + "=" +  entity.GetId();
         int deletedRecords = _resolver.delete(_uri, where, null );
 
         Hashtable results = new Hashtable();
@@ -90,43 +87,9 @@ public class Mapper extends BaseMapper<Profile> {
         results.put(KEY_OPERATION, "Deletion");
         results.put(KEY_COUNT, String.valueOf(deletedRecords));
 
-        if(deletedRecords > 0)
-        {
-            DeleteBMI(results, entity.GetId());
-            DeleteRHR(results, entity.GetId());
-        }
-
         invocationDelegates.SetResults(results);
         invocationDelegates.SuccessfulInvocation(entity);
 
         return true;
-    }
-
-    private void DeleteBMI(Hashtable results, int id)
-    {
-        String keyColumn = BodyMassIndex.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  id;
-        Uri uri = FitnessTrackerContentProviders
-                .GetInstance()
-                .GetBmiProvider()
-                .GetContentUri();
-        int deletedRecords = _resolver.delete(uri, where, null );
-
-        results.put("[Operation]", "Deletion BMI(s)");
-        results.put("[Count]", String.valueOf(deletedRecords));
-    }
-
-    private void DeleteRHR(Hashtable results, int id)
-    {
-        String keyColumn = RestingHeartRate.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  id;
-        Uri uri = FitnessTrackerContentProviders
-                .GetInstance()
-                .GetRhrProvider()
-                .GetContentUri();
-        int deletedRecords = _resolver.delete(uri, where, null );
-
-        results.put("[Operation]", "Deletion RHR(s)");
-        results.put("[Count]", String.valueOf(deletedRecords));
     }
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 public abstract class BaseTable implements IBaseTable {
     public abstract String GetRecordKeyColumnName();
     public abstract String GetTableName();
+    public abstract String GetProviderName();
     public abstract String GetTableCreationScript();
     public abstract SQLiteQueryBuilder GetQueryBuilder(Uri uri);
 

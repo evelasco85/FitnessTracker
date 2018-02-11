@@ -1,7 +1,9 @@
 package com.codeflowcrafter.FitnessTracker.Profile;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.HeartRate.Activity_Heart_Rate_Counter;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
@@ -102,6 +105,17 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
             }
         });
 
+        /******************************/
+        ActivityService
+                .GetConcreteView(TextView.class, fView, R.id.txtName)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TestCall();
+                    }
+                });
+        /******************************/
+
         final TextView txtDateOfBirth = ActivityService.GetConcreteView(TextView.class, fView, R.id.txtDateOfBirth);
 
         txtDateOfBirth.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +143,39 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
                 dialog.show(getFragmentManager(), "datePicker");
             }
         });
+    }
+
+    private static final int REQUEST_CODE_TEST_HR = 123;
+    public void TestCall()
+    {
+        Intent intent = new Intent(getActivity(), Activity_Heart_Rate_Counter.class);
+
+        startActivityForResult(intent, REQUEST_CODE_TEST_HR);
+    }
+
+    @Override
+    public void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent resultingData)
+    {
+        if(resultCode != Activity.RESULT_OK) return;
+
+        View view = getView();
+
+        switch (requestCode) {
+            case (REQUEST_CODE_TEST_HR):
+                int heartRate = resultingData
+                        .getIntExtra(
+                                Activity_Heart_Rate_Counter.RESULT_HEART_RATE,
+                                0);
+                ActivityService
+                        .GetConcreteView(TextView.class, view, R.id.txtName)
+                        .setText(String.valueOf(heartRate));
+                return;
+            default:
+                return;
+        }
     }
 
     private void InvokeActionBasedPersistency(View view, String selectedAction)

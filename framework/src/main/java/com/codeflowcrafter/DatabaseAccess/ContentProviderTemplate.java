@@ -35,13 +35,16 @@ public abstract class ContentProviderTemplate extends ContentProvider
 
     public ContentProviderTemplate(
             String applicationName, BaseContentProviders dataAccess,
-            String providerAuthorityName, String uriPath,
             BaseTable tableTemplate)
     {
+        String providerAuthorityName = tableTemplate.GetProviderName();
+
         _dataAccess = dataAccess;
         _tableTemplate = tableTemplate;
         _fullProviderAuthorityName = ROOT_AUTHORITY_BASE + "." + applicationName + "." + providerAuthorityName;
         _uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+        String uriPath = tableTemplate.GetTableName();
 
         _contentUri =  Uri.parse("content://" + _fullProviderAuthorityName + "/" + uriPath);
 

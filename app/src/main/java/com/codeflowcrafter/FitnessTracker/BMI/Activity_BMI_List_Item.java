@@ -15,6 +15,7 @@ import com.codeflowcrafter.FitnessTracker.Base.Activity.BaseListItem;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.IDataContainer;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -71,12 +72,23 @@ public class Activity_BMI_List_Item extends BaseListItem<BodyMassIndex, IRequest
             }
         });
 
+        int height = item.GetHeightInches();
+        double weight = item.GetWeightLbs();
+        double idealWeight = BMICategoryService
+                .GetInstance()
+                .IdealNormalWeightLbs(height);
+        double ideaWeightToLose = weight - idealWeight;
+
         GetConcreteView(TextView.class, itemLayout, R.id.txtBmiId)
                 .setText(String.valueOf(item.GetId()));
         GetConcreteView(TextView.class, itemLayout, R.id.txtDate)
                 .setText(item.GetDate());
         GetConcreteView(TextView.class, itemLayout, R.id.txtWeight)
-                .setText(String.valueOf(item.GetWeightLbs()));
+                .setText(String.valueOf(weight));
+        GetConcreteView(TextView.class, itemLayout, R.id.txtIdealWeight)
+                .setText(String.format("%.2f", idealWeight));
+        GetConcreteView(TextView.class, itemLayout, R.id.txtIdealWeightToLose)
+                .setText(String.format("%.2f", ideaWeightToLose));
 
         EditText txtFeet = GetConcreteView(EditText.class, itemLayout, R.id.txtFeet);
         EditText txtInches = GetConcreteView(EditText.class, itemLayout, R.id.txtInches);
@@ -84,11 +96,11 @@ public class Activity_BMI_List_Item extends BaseListItem<BodyMassIndex, IRequest
         ViewService.DisableConcreteView(txtFeet);
         ViewService.DisableConcreteView(txtInches);
         ViewService.DisableConcreteView(GetConcreteView(TextView.class, itemLayout, R.id.txtDate));
-        ViewService.SetHeight(item.GetHeightInches(), txtFeet, txtInches);
+        ViewService.SetHeight(height, txtFeet, txtInches);
         ViewService.SetClassification(
                 GetConcreteView(TextView.class, itemLayout, R.id.txtClassification),
-                item.GetWeightLbs(),
-                item.GetHeightInches()
+                weight,
+                height
         );
     }
 }

@@ -21,6 +21,7 @@ import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
@@ -233,11 +234,7 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
         );
-        ViewService.SetClassification(
-                GetConcreteView(TextView.class, view, R.id.txtClassification),
-                entity.GetWeightLbs(),
-                entity.GetHeightInches()
-        );
+        SetComputedViews(view);
     }
 
     private void SetBMIChangeListener(final View view, EditText textbox)
@@ -255,23 +252,37 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                int heightInches = ViewService.GetHeightInches(
-                        ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
-                        ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
-                );
-                double weightLbs = 0;
-                String weight = ActivityService
-                        .GetConcreteView(TextView.class, view, R.id.txtWeight)
-                        .getText()
-                        .toString();
-                if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
-
-                ViewService.SetClassification(
-                        GetConcreteView(TextView.class, view, R.id.txtClassification),
-                        weightLbs,
-                        heightInches
-                );
+                SetComputedViews(view);
             }
         });
+    }
+
+    private void SetComputedViews(View view)
+    {
+        int heightInches = ViewService.GetHeightInches(
+                ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
+                ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
+        );
+        double weightLbs = 0;
+        String weight = ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtWeight)
+                .getText()
+                .toString();
+        if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
+        ViewService.SetClassification(
+                GetConcreteView(TextView.class, view, R.id.txtClassification),
+                weightLbs,
+                heightInches
+        );
+
+        double idealWeight = BMICategoryService
+                .GetInstance()
+                .IdealNormalWeightLbs(heightInches);
+        double ideaWeightToLose = weightLbs - idealWeight;
+
+        GetConcreteView(TextView.class, view, R.id.txtIdealWeight)
+                .setText(String.format("%.2f", idealWeight));
+        GetConcreteView(TextView.class, view, R.id.txtIdealWeightToLose)
+                .setText(String.format("%.2f", ideaWeightToLose));
     }
 }
