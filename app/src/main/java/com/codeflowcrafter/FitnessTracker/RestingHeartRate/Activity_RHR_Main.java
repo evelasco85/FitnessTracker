@@ -124,7 +124,7 @@ public class Activity_RHR_Main extends Base_Activity_Main<
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg) {
                         GetViewRequest().Delete(entity);
-                        String message = "BMI id '" + entity.GetId() + "' deleted";
+                        String message = "RHR id '" + entity.GetId() + "' deleted";
                         Toast
                                 .makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
                                 .show();

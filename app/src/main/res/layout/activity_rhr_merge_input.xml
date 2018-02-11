@@ -41,13 +41,13 @@
                 android:layout_height="match_parent"
                 android:text="Resting Heart Rate: "
                 />
-
-            <TextView
+            <EditText
                 android:id="@+id/txtRhr"
-                android:hint="[Click Here]"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center" />
+                android:gravity="center"
+                android:hint="[Click Here]"
+                android:inputType="number" />
         </TableRow>
     </TableLayout>
 </merge>
