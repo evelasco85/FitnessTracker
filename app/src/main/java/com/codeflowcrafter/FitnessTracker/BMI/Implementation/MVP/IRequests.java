@@ -8,4 +8,5 @@ import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_IRequests;
  */
 
 public interface IRequests extends Crud_IRequests<BodyMassIndex> {
+    double GetIdealWeightLbs(int heightInches);
 }

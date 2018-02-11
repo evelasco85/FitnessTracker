@@ -1,15 +1,14 @@
-package com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP;
+package com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.MVP;
 
-import android.content.CursorLoader;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
-import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
+import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
@@ -17,21 +16,21 @@ import com.codeflowcrafter.LogManagement.Status;
 import java.util.List;
 
 /**
- * Created by enric on 09/02/2018.
+ * Created by enric on 11/02/2018.
  */
 
-public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
+public class Presenter extends Crud_Presenter<RestingHeartRate, IRequests, IView>
         implements IRequests {
     private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Presenter(IView view, IEntityTranslator<BodyMassIndex> translator)
+    public Presenter(IView view, IEntityTranslator<RestingHeartRate> translator)
     {
         super(view,
                 translator,
                 new MapperInvocationDelegate(_slc));
 
-        _slc.SetComponent("BMI");
+        _slc.SetComponent("Resting Heart Rate");
         view.SetViewRequest(this);
 
         _view = view;
@@ -41,17 +40,17 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
     public Uri GetContentUri() {
         return FitnessTrackerContentProviders
                 .GetInstance()
-                .GetBmiProvider()
+                .GetRhrProvider()
                 .GetContentUri();
     }
 
     @Override
-    public int LoadEntities(List<BodyMassIndex> entityList)
+    public int LoadEntities(List<RestingHeartRate> entityList)
     {
         int size = super.LoadEntities(entityList);
 
         _slc
-                .SetEvent(String.format("Loaded BMI count %d", size))
+                .SetEvent(String.format("Loaded resting heart rate count %d", size))
                 .EmitLog(Priority.Info, Status.Success);
 
         return size;
@@ -62,65 +61,63 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
     {
         super.Prompt_AddEntry();
         _slc
-                .SetEvent("Open BMI Entry")
+                .SetEvent("Open resting heart rate Entry")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
     public void CancelEntry(){
         _slc
-                .SetEvent("Cancel BMI entry window")
+                .SetEvent("Cancel resting heart rate entry window")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Add(BodyMassIndex entity)
+    public void Add(RestingHeartRate entity)
     {
         super.Add(entity);
         _slc
-                .SetEvent("BMI Added")
+                .SetEvent("Resting heart rate Added")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Update(BodyMassIndex entity)
+    public void Update(RestingHeartRate entity)
     {
         super.Update(entity);
         _slc
-                .SetEvent(String.format("Updated BMI id %s", entity.GetId()))
+                .SetEvent(String.format("Updated resting heart rate id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Prompt_EditEntry(BodyMassIndex entity) {
+    public void Prompt_EditEntry(RestingHeartRate entity) {
         super.Prompt_EditEntry(entity);
         _slc
-                .SetEvent("Open BMI editing")
+                .SetEvent("Open resting heart rate editing")
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Delete(BodyMassIndex entity)
+    public void Delete(RestingHeartRate entity)
     {
         super.Delete(entity);
         _slc
-                .SetEvent(String.format("Deleted BMI id %s", entity.GetId()))
+                .SetEvent(String.format("Deleted resting heart rate id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
 
     @Override
-    public void Prompt_Detail(BodyMassIndex entity)
+    public void Prompt_Detail(RestingHeartRate entity)
     {
         super.Prompt_Detail(entity);
         _slc
-                .SetEvent(String.format("Showing details of BMI id %s", entity.GetId()))
+                .SetEvent(String.format("Showing details of resting heart rate id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
     }
 
-    public double GetIdealWeightLbs(int heightInches)
+    public int GetMhr(int age)
     {
-        return BMICategoryService
-                .GetInstance()
-                .IdealNormalWeightLbs(heightInches);
+        return CalculatorService.GetMaximumHeartRate(age);
     }
 }

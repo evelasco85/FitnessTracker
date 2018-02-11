@@ -105,17 +105,6 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
             }
         });
 
-        /******************************/
-        ActivityService
-                .GetConcreteView(TextView.class, fView, R.id.txtName)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TestCall();
-                    }
-                });
-        /******************************/
-
         final TextView txtDateOfBirth = ActivityService.GetConcreteView(TextView.class, fView, R.id.txtDateOfBirth);
 
         txtDateOfBirth.setOnClickListener(new View.OnClickListener() {
@@ -143,39 +132,6 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
                 dialog.show(getFragmentManager(), "datePicker");
             }
         });
-    }
-
-    private static final int REQUEST_CODE_TEST_HR = 123;
-    public void TestCall()
-    {
-        Intent intent = new Intent(getActivity(), Activity_Heart_Rate_Counter.class);
-
-        startActivityForResult(intent, REQUEST_CODE_TEST_HR);
-    }
-
-    @Override
-    public void onActivityResult(
-            int requestCode,
-            int resultCode,
-            Intent resultingData)
-    {
-        if(resultCode != Activity.RESULT_OK) return;
-
-        View view = getView();
-
-        switch (requestCode) {
-            case (REQUEST_CODE_TEST_HR):
-                int heartRate = resultingData
-                        .getIntExtra(
-                                Activity_Heart_Rate_Counter.RESULT_HEART_RATE,
-                                0);
-                ActivityService
-                        .GetConcreteView(TextView.class, view, R.id.txtName)
-                        .setText(String.valueOf(heartRate));
-                return;
-            default:
-                return;
-        }
     }
 
     private void InvokeActionBasedPersistency(View view, String selectedAction)
@@ -259,11 +215,12 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
     {
         TextView txtAge = ActivityService.GetConcreteView(TextView.class, view, R.id.txtAge);
         TextView txtMhr = ActivityService.GetConcreteView(TextView.class, view, R.id.txtMhr);
-        Calendar dobCalendar = CalculatorService.ConvertToCalendar(dateOfBirth);
-        int age = CalculatorService.CalculateAge(dobCalendar);
+
+        int age = GetViewRequest().GetAge(dateOfBirth);
+        int mhr = GetViewRequest().GetMhr(age);
 
         txtDateOfBirth.setText(dateOfBirth);
-        ViewService.SetAge(txtAge, age);
-        ViewService.SetMHR(txtMhr, age);
+        txtAge.setText(String.format("(%s)", String.valueOf(age)));
+        txtMhr.setText(String.format("(%s)", String.valueOf(mhr)));
     }
 }

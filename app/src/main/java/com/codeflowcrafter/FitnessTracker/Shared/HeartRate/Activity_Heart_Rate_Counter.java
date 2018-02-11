@@ -26,6 +26,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
     private TextView _txtSeconds;
     private Button _btnStart_Increment;
     private Button _btnFinish;
+    private Button _btnCancel;
     private CountDownTimer _timer;
 
     @Override
@@ -41,6 +42,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
         _txtSeconds = GetConcreteView(TextView.class, _view, R.id.txtSeconds);
         _btnStart_Increment = GetConcreteView(Button.class, _view, R.id.btnStart_Increment);
         _btnFinish = GetConcreteView(Button.class, _view, R.id.btnFinish);
+        _btnCancel = GetConcreteView(Button.class, _view, R.id.btnCancel);
 
         SetViewHandlers();
     }
@@ -70,6 +72,13 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
                         Finish();
                     }
                 });
+        GetConcreteView(Button.class, view, R.id.btnCancel)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Cancel();
+                    }
+                });
         _timer = new CountDownTimer(
                 HeartRateService.COUNTER_LIMIT_SECONDS * 1000,
                 1000
@@ -86,6 +95,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
                 _txtSeconds.setText("Done");
                 _btnStart_Increment.setEnabled(false);
                 _btnFinish.setEnabled(true);
+                _btnCancel.setEnabled(true);
             }
         };
     }
@@ -101,6 +111,14 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
                 GetHeartRatePerMinute());
 
         setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
+    private void Cancel()
+    {
+        if(_counting) Stop();
+
+        setResult(RESULT_CANCELED);
         finish();
     }
 
@@ -133,6 +151,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
         {
             _timer.start();
             _btnFinish.setEnabled(false);
+            _btnCancel.setEnabled(false);
         }
 
         _counting = true;
@@ -159,6 +178,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
         _txtSeconds.setText(String.valueOf(HeartRateService.COUNTER_LIMIT_SECONDS));
         _btnStart_Increment.setEnabled(true);
         _btnFinish.setEnabled(true);
+        _btnCancel.setEnabled(true);
     }
 
     private void UpdateViews()

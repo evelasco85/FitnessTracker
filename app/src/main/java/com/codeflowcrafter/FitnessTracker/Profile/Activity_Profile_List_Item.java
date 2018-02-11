@@ -44,8 +44,7 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
         final Button btnMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
         final PopupMenu popMenu = new PopupMenu(activityContext, btnMenu);
 
-        Calendar dobCalendar = CalculatorService.ConvertToCalendar(item.GetDateOfBirth());
-        final int age = CalculatorService.CalculateAge(dobCalendar);
+        final int age = fViewRequest.GetAge(item.GetDateOfBirth());
 
         popMenu.inflate(R.menu.mnu_profile_edit_delete);
         popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -91,12 +90,12 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
                 .setText(item.GetGender());
         GetConcreteView(TextView.class, itemLayout, R.id.txtBirthday)
                 .setText(item.GetDateOfBirth());
+        GetConcreteView(TextView.class, itemLayout, R.id.txtAge)
+                .setText(String.format("(%s)", String.valueOf(age)));
 
-        ViewService.SetAge(
-                GetConcreteView(TextView.class, itemLayout, R.id.txtAge),
-                age);
-        ViewService.SetMHR(
-                GetConcreteView(TextView.class, itemLayout, R.id.txtMhr),
-                age);
+        int maximumHeartRate = fViewRequest.GetMhr(age);
+
+        GetConcreteView(TextView.class, itemLayout, R.id.txtMhr)
+                .setText(String.format("%s bpm", String.valueOf(maximumHeartRate)));
     }
 }

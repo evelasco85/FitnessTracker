@@ -9,10 +9,12 @@ import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
+import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -133,5 +135,22 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
         _slc
                 .SetEvent(String.format("Showing Resting Heart Rate list"))
                 .EmitLog(Priority.Info, Status.Success);
+    }
+
+    public int GetAge(String dateOfBirth)
+    {
+        Calendar dobCalendar = CalculatorService.ConvertToCalendar(dateOfBirth);
+
+        return GetAge(dobCalendar);
+    }
+
+    public int GetAge(Calendar dateOfBirthCalendar)
+    {
+        return CalculatorService.CalculateAge(dateOfBirthCalendar);
+    }
+
+    public int GetMhr(int age)
+    {
+        return CalculatorService.GetMaximumHeartRate(age);
     }
 }

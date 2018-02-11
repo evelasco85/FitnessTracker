@@ -109,13 +109,27 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingBottom="50dp"
+            >
 
             <Button
                 android:id="@+id/btnFinish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Finish / Close" />
+                android:text="Finish" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel" />
         </TableRow>
 
     </TableLayout>

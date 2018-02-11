@@ -28,21 +28,17 @@
             android:label="@string/title_activity_main_exercise"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RestingHeartRate.Activity_Resting_HeartRate_Main"
-            android:label="@string/title_activity_main_heartrate"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Program.Activity_Program_Main"
-            android:label="@string/title_activity_main_program"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".RepMax.Activity_RepMax_Main"
-            android:label="@string/title_activity_main_repmax"
+            android:name=".RestingHeartRate.Activity_RHR_Main"
+            android:label="@string/title_activity_main_resting_heartrate"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BMI.Activity_BMI_Main"
             android:label="@string/title_activity_main_bmi"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Shared.HeartRate.Activity_Heart_Rate_Counter"
+            android:label="@string/title_activity_heart_rate_counter"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <provider
             android:name=".Profile.Implementation.ContentProvider.Provider"
@@ -53,11 +49,9 @@
         <provider
             android:name=".BMI.Implementation.ContentProvider.Provider"
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.BmiProvider" />
-
-        <activity
-            android:name=".Shared.HeartRate.Activity_Heart_Rate_Counter"
-            android:label="@string/title_activity_heart_rate_counter"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <provider
+            android:name=".RestingHeartRate.Implementation.ContentProvider.Provider"
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.RhrProvider" />
     </application>
 
 </manifest>

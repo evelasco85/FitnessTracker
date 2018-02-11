@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.codeflowcrafter.FitnessTracker.RestingHeartRate.Activity_RHR_Main">
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="0,1">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.AppBarLayout>
+        <Button
+            android:id="@+id/btnAddRHR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Resting Heart Rate"
+            tools:text="Add Resting Heart Rate" />
+        <fragment
+            android:name="android.app.ListFragment"
+            tools:layout="@layout/activity_rhr_listitem"
+            android:id="@+id/fragment_rhrList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            />
+    </TableLayout>
+
+</android.support.design.widget.CoordinatorLayout>

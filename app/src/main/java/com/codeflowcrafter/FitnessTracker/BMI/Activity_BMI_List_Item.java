@@ -74,9 +74,7 @@ public class Activity_BMI_List_Item extends BaseListItem<BodyMassIndex, IRequest
 
         int height = item.GetHeightInches();
         double weight = item.GetWeightLbs();
-        double idealWeight = BMICategoryService
-                .GetInstance()
-                .IdealNormalWeightLbs(height);
+        double idealWeight = fViewRequest.GetIdealWeightLbs(height);
         double ideaWeightToLose = weight - idealWeight;
 
         GetConcreteView(TextView.class, itemLayout, R.id.txtBmiId)

@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.Profile;
+package com.codeflowcrafter.FitnessTracker.RestingHeartRate;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,42 +11,42 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.codeflowcrafter.FitnessTracker.BMI.Activity_BMI_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.QueryObjects.QueryAll;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IView;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
-import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Activity_RHR_Main;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.QueryObjects.QueryByProfileId;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.MVP.IRequests;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.MVP.IView;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
-import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
-
-public class Activity_Profile_Main extends Base_Activity_Main<
-        Profile,
+public class Activity_RHR_Main extends Base_Activity_Main<
+        RestingHeartRate,
         IRequests,
-        Activity_Profile_List_Item>
-        implements IView
-{
-    private Presenter _presenter;
+        Activity_RHR_List_Item>
+        implements IView {
+    public static final String KEY_PROFILE_ID = "Profile Id";
+    public static final String KEY_AGE = "Age";
 
-    public Activity_Profile_Main()
+    private Presenter _presenter;
+    private int _profileId = 0;
+    private int _age = 0;
+
+    public Activity_RHR_Main()
     {
         super(
-                R.layout.activity_profile_main,
-                R.id.fragment_profileList
+                R.layout.activity_rhr_main,
+                R.id.fragment_rhrList
         );
 
         _presenter = new Presenter(
                 this,
-                TranslatorService.GetInstance().GetProfileTranslator()
+                TranslatorService.GetInstance().GetRhrTranslator()
         );
     }
 
@@ -55,20 +55,27 @@ public class Activity_Profile_Main extends Base_Activity_Main<
         super.onCreate(savedInstanceState);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Intent invoker = getIntent();
+
+        if (invoker != null) {
+            _profileId = invoker.getIntExtra(KEY_PROFILE_ID, 0);
+            _age = invoker.getIntExtra(KEY_AGE, 0);
+        }
     }
 
     @Override
-    public Activity_Profile_List_Item GetListItem(DataContainer<Profile> container)
+    public Activity_RHR_List_Item GetListItem(DataContainer<RestingHeartRate> container)
     {
-        return new Activity_Profile_List_Item(this, GetViewRequest(), container);
+        return new Activity_RHR_List_Item(this, GetViewRequest(), container);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
     {
         IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
-        IRepository<Profile> repository = manager.GetRepository(Profile.class);
-        QueryAll.Criteria criteria = new QueryAll.Criteria();
+        IRepository<RestingHeartRate> repository = manager.GetRepository(RestingHeartRate.class);
+        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(_profileId);
 
         GetViewRequest().LoadEntities(repository.Matching(criteria));
     }
@@ -78,7 +85,8 @@ public class Activity_Profile_Main extends Base_Activity_Main<
     {
         View view = findViewById(android.R.id.content);
 
-        GetConcreteView(Button.class, view, R.id.btnAddProfile)
+        ActivityService
+                .GetConcreteView(Button.class, view, R.id.btnAddRHR)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -87,25 +95,28 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 });
     }
 
-    public void OnPromptExecution_Detail(Profile entity){
-        Activity_Profile_Dialog_ReadAddEdit.Show(
+    public void OnPromptExecution_Detail(RestingHeartRate entity){
+        Activity_RHR_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
-                Activity_Profile_Dialog_ReadAddEdit.ACTION_READ, entity);
+                Activity_RHR_Dialog_ReadAddEdit.ACTION_READ, entity,
+                _profileId, _age);
     }
 
     public void OnPromptExecution_AddEntry(){
-        Activity_Profile_Dialog_ReadAddEdit.Show(
+        Activity_RHR_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
-                Activity_Profile_Dialog_ReadAddEdit.ACTION_ADD, null);
+                Activity_RHR_Dialog_ReadAddEdit.ACTION_ADD, null,
+                _profileId, _age);
     }
 
-    public void OnPromptExecution_EditEntry(Profile entity){
-        Activity_Profile_Dialog_ReadAddEdit.Show(
+    public void OnPromptExecution_EditEntry(RestingHeartRate entity){
+        Activity_RHR_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
-                Activity_Profile_Dialog_ReadAddEdit.ACTION_EDIT, entity);
+                Activity_RHR_Dialog_ReadAddEdit.ACTION_EDIT, entity,
+                _profileId, _age);
     }
 
-    public void OnPromptExecution_DeleteEntry(final Profile entity){
+    public void OnPromptExecution_DeleteEntry(final RestingHeartRate entity){
         AlertDialog.Builder verify = ActivityService.CreateDeleteAlertDialog(this);
 
         verify.setPositiveButton(
@@ -113,7 +124,7 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg) {
                         GetViewRequest().Delete(entity);
-                        String message = "'" + entity.GetName() + "' profile deleted";
+                        String message = "BMI id '" + entity.GetId() + "' deleted";
                         Toast
                                 .makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
                                 .show();
@@ -130,27 +141,6 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 }
         );
 
-
         verify.show();
-    }
-
-    public void OnPromptExecution_BMI(int profileId, int heightInches)
-    {
-        Intent intent = new Intent(this, Activity_BMI_Main.class);
-
-        intent.putExtra(Activity_BMI_Main.KEY_PROFILE_ID, profileId);
-        intent.putExtra(Activity_BMI_Main.KEY_HEIGHT_INCHES, heightInches);
-
-        this.startActivity(intent);
-    }
-
-    public void OnPromptExecution_RestingHeartRate(int profileId, int age)
-    {
-        Intent intent = new Intent(this, Activity_RHR_Main.class);
-
-        intent.putExtra(Activity_RHR_Main.KEY_PROFILE_ID, profileId);
-        intent.putExtra(Activity_RHR_Main.KEY_AGE, age);
-
-        this.startActivity(intent);
     }
 }

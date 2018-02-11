@@ -1,11 +1,11 @@
-package com.codeflowcrafter.FitnessTracker.BMI;
+package com.codeflowcrafter.FitnessTracker.RestingHeartRate;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +14,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Dialog_ReadAddEdit;
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.HeartRate.Activity_Heart_Rate_Counter;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
@@ -28,35 +29,34 @@ import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
-
 /**
- * Created by enric on 09/02/2018.
+ * Created by enric on 11/02/2018.
  */
 
-public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAddEdit<BodyMassIndex, IRequests> {
-    private final static int _fragmentId = R.layout.activity_bmi_fragment_read_add_edit;
+public class Activity_RHR_Dialog_ReadAddEdit  extends Base_Activity_Dialog_ReadAddEdit<RestingHeartRate, IRequests> {
+    private final static int _fragmentId = R.layout.activity_rhr_fragment_read_add_edit;
     private final static int _saveCancelConcreteViewId = R.id.saveCancelFragmentPlaceholder;
-    public static final String FRAGMENT_NAME = "Add/Edit BMI";
-    public static final String KEY_PROFILE_ID = "Profile Id";
-    public static final String KEY_HEIGHT_INCHES = "Height in Inches";
+    private final static int REQUEST_CODE_RESTING_HEART_RATE = 123;
+    public static final String FRAGMENT_NAME = "Add/Edit RHR";
+    public static final String KEY_PROFILE_ID = "RHR Id";
+    public static final String KEY_AGE = "Age";
 
     private int _id = 0;
     private int _profileId = 0;
-    private int _heightInches = 0;
+    private int _age = 0;
 
-    public static Activity_BMI_Dialog_ReadAddEdit newInstance(
+    public static Activity_RHR_Dialog_ReadAddEdit newInstance(
             String action,
-            BodyMassIndex entity,
+            RestingHeartRate entity,
             int profileId,
-            int heightInches)
+            int age)
     {
-        Activity_BMI_Dialog_ReadAddEdit dialog = new Activity_BMI_Dialog_ReadAddEdit();
+        Activity_RHR_Dialog_ReadAddEdit dialog = new Activity_RHR_Dialog_ReadAddEdit();
         Bundle args = new Bundle();
 
         args.putString(Base_Activity_Dialog_ReadAddEdit.KEY_ACTION, action);
         args.putInt(KEY_PROFILE_ID, profileId);
-        args.putInt(KEY_HEIGHT_INCHES, heightInches);
+        args.putInt(KEY_AGE, age);
         dialog.setArguments(args);
         dialog.SetEntityToEdit(entity);
 
@@ -65,17 +65,17 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
 
     public static void Show(
             FragmentManager manager, IRequests request,
-            String action, BodyMassIndex entity,
-            int profileId, int heightInches)
+            String action, RestingHeartRate entity,
+            int profileId, int age)
     {
-        Activity_BMI_Dialog_ReadAddEdit dialog = Activity_BMI_Dialog_ReadAddEdit
-                .newInstance(action, entity, profileId, heightInches);
+        Activity_RHR_Dialog_ReadAddEdit dialog = Activity_RHR_Dialog_ReadAddEdit
+                .newInstance(action, entity, profileId, age);
 
         dialog.SetViewRequest(request);
         dialog.show(manager, FRAGMENT_NAME);
     }
 
-    public Activity_BMI_Dialog_ReadAddEdit()
+    public Activity_RHR_Dialog_ReadAddEdit()
     {
         super(_fragmentId, _saveCancelConcreteViewId);
     }
@@ -85,38 +85,32 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         _profileId = getArguments().getInt(KEY_PROFILE_ID);
-        _heightInches = getArguments().getInt(KEY_HEIGHT_INCHES);
+        _age = getArguments().getInt(KEY_AGE);
 
-        ViewService.SetHeight(
-                _heightInches,
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
-        );
+        SetMHR(view);
 
         return view;
     }
 
     public void SetConcreteViews(final View view, final String selectedAction) {
-        EditText txtWeight = ActivityService.GetConcreteView(EditText.class, view, R.id.txtWeight);
-        EditText txtFeet = ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet);
-        EditText txtInches = ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches);
         final TextView txtDate = ActivityService.GetConcreteView(TextView.class, view, R.id.txtDate);
+        final TextView txtRhr = ActivityService.GetConcreteView(TextView.class, view, R.id.txtRhr);
 
         if(selectedAction == ACTION_READ)
         {
             //Disable input contols
-            ViewService.DisableConcreteView(txtWeight);
-            ViewService.DisableConcreteView(txtFeet);
-            ViewService.DisableConcreteView(txtInches);
             ViewService.DisableConcreteView(txtDate);
+            ViewService.DisableConcreteView(txtRhr);
 
             return;
         }
 
-        SetBMIChangeListener(view, txtWeight);
-        SetBMIChangeListener(view, txtFeet);
-        SetBMIChangeListener(view, txtInches);
-
+        txtRhr.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OpenHeartRateCounter();
+                    }
+                });
         ActivityService.GetConcreteView(Button.class, view, R.id.btnSave)
                 .setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -184,34 +178,30 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         }
     }
 
-    public BodyMassIndex ViewDataToModel(View view){
-        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(BodyMassIndex.class);
+    public RestingHeartRate ViewDataToModel(View view){
+        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(RestingHeartRate.class);
         String date = ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtDate)
                 .getText()
                 .toString();
-        int heightInches = ViewService.GetHeightInches(
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
-        );
-        double weightLbs = 0;
-        String weight = ActivityService
-                .GetConcreteView(TextView.class, view, R.id.txtWeight)
+        String rhr = ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtRhr)
                 .getText()
                 .toString();
-        if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
+        int rhrValue = 0;
+        if(!TextUtils.isEmpty(rhr)) rhrValue = Integer.parseInt(rhr);
 
-        return new BodyMassIndex(
+        return new RestingHeartRate(
                 mapper,
                 _id,
                 _profileId,
                 date,
-                heightInches,
-                weightLbs
+                _age,
+                rhrValue
         );
     }
 
-    public void SetModelToViewData(View view, BodyMassIndex entity){
+    public void SetModelToViewData(View view, RestingHeartRate entity){
         if(entity == null){
             return;
         }
@@ -225,61 +215,51 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                     .GetConcreteView(TextView.class, view, R.id.txtDate)
                     .setText(date);
         }
+
         ActivityService
-                .GetConcreteView(EditText.class, view, R.id.txtWeight)
-                .setText(String.valueOf(entity.GetWeightLbs()));
-        ViewService.SetHeight(
-                entity.GetHeightInches(),
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
-        );
-        SetComputedViews(view);
+                .GetConcreteView(TextView.class, view, R.id.txtRhr)
+                .setText(String.format("%s", String.valueOf(entity.GetRestingHeartRate())));
+        SetMHR(view);
     }
 
-    private void SetBMIChangeListener(final View view, EditText textbox)
+    void SetMHR(View view)
     {
-        textbox.addTextChangedListener(new TextWatcher() {
+        int maximumHeartRate = GetViewRequest().GetMhr(_age);
 
-            @Override
-            public void afterTextChanged(Editable s) {}
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                SetComputedViews(view);
-            }
-        });
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtMhr)
+                .setText(String.format("%s", String.valueOf(maximumHeartRate)));
     }
 
-    private void SetComputedViews(View view)
+    private void OpenHeartRateCounter()
     {
-        int heightInches = ViewService.GetHeightInches(
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
-                ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
-        );
-        double weightLbs = 0;
-        String weight = ActivityService
-                .GetConcreteView(TextView.class, view, R.id.txtWeight)
-                .getText()
-                .toString();
-        if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
-        ViewService.SetClassification(
-                GetConcreteView(TextView.class, view, R.id.txtClassification),
-                weightLbs,
-                heightInches
-        );
+        Intent intent = new Intent(getActivity(), Activity_Heart_Rate_Counter.class);
 
-        double idealWeight = GetViewRequest().GetIdealWeightLbs(heightInches);
-        double ideaWeightToLose = weightLbs - idealWeight;
+        startActivityForResult(intent, REQUEST_CODE_RESTING_HEART_RATE);
+    }
 
-        GetConcreteView(TextView.class, view, R.id.txtIdealWeight)
-                .setText(String.format("%.2f", idealWeight));
-        GetConcreteView(TextView.class, view, R.id.txtIdealWeightToLose)
-                .setText(String.format("%.2f", ideaWeightToLose));
+    @Override
+    public void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent resultingData)
+    {
+        if(resultCode != Activity.RESULT_OK) return;
+
+        View view = getView();
+
+        switch (requestCode) {
+            case (REQUEST_CODE_RESTING_HEART_RATE):
+                int heartRate = resultingData
+                        .getIntExtra(
+                                Activity_Heart_Rate_Counter.RESULT_HEART_RATE,
+                                0);
+                ActivityService
+                        .GetConcreteView(TextView.class, view, R.id.txtRhr)
+                        .setText(String.valueOf(heartRate));
+                return;
+            default:
+                return;
+        }
     }
 }
