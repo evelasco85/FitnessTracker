@@ -96,7 +96,7 @@ public class Activity_RHR_Dialog_ReadAddEdit  extends Base_Activity_Dialog_ReadA
         final TextView txtDate = ActivityService.GetConcreteView(TextView.class, view, R.id.txtDate);
         final EditText txtRhr = ActivityService.GetConcreteView(EditText.class, view, R.id.txtRhr);
 
-        if(selectedAction == ACTION_READ)
+        if(selectedAction.equals(ACTION_READ))
         {
             //Disable input contols
             ViewService.DisableConcreteView(txtDate);

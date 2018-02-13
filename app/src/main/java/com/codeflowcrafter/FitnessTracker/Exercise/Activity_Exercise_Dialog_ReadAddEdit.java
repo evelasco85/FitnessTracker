@@ -67,7 +67,7 @@ public class Activity_Exercise_Dialog_ReadAddEdit  extends Base_Activity_Dialog_
         ViewService.InitializeIntensitySpinner(this.getActivity(), spinIntensity);
         ViewService.InitializeExerciseTypeSpinner(this.getActivity(), spinType);
 
-        if(selectedAction == ACTION_READ)
+        if(selectedAction.equals(ACTION_READ))
         {
             ViewService.DisableConcreteView(GetConcreteView(EditText.class, view, R.id.txtName));
             ViewService.DisableConcreteView(GetConcreteView(EditText.class, view, R.id.txtDuration));

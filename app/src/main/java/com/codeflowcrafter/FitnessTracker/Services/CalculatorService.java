@@ -72,24 +72,32 @@ public class CalculatorService {
         double weightMultiplier = 0;
         double heightMultiplier = 0;
         double ageMultiplier = 0;
+        int adder = 0;
 
-        if(gender == Gender.MALE)
+        if(gender.equals(Gender.MALE))
         {
-            weightMultiplier = 6.3;
-            heightMultiplier = 12.9;
+            adder = 66;
+            weightMultiplier = 6.23;
+            heightMultiplier = 12.7;
             ageMultiplier = 6.8;
         }
-        else if(gender == Gender.FEMALE)
+        else if(gender.equals(Gender.FEMALE))
         {
-            weightMultiplier = 4.3;
+            adder = 655;
+            weightMultiplier = 4.35;
             heightMultiplier = 4.7;
             ageMultiplier = 4.7;
         }
 
-        double bmr = (weightMultiplier * weightInPounds) + (heightMultiplier * heightInInches) -
+        double bmr = adder + (weightMultiplier * weightInPounds) + (heightMultiplier * heightInInches) -
                 (ageMultiplier * age);
 
         return bmr;
+    }
+
+    public static double CalculateCaloriesByHarrisBenedictEquation(double bmr, double multiplier)
+    {
+        return bmr * multiplier;
     }
 
     public static int CalculateZonedHeartRate(

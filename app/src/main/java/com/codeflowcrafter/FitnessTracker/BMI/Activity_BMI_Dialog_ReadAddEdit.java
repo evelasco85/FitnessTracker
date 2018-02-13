@@ -102,7 +102,7 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         EditText txtInches = ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches);
         final TextView txtDate = ActivityService.GetConcreteView(TextView.class, view, R.id.txtDate);
 
-        if(selectedAction == ACTION_READ)
+        if(selectedAction.equals(ACTION_READ))
         {
             //Disable input contols
             ViewService.DisableConcreteView(txtWeight);

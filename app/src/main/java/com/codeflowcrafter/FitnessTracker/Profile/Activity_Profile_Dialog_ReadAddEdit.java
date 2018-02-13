@@ -75,7 +75,7 @@ public class Activity_Profile_Dialog_ReadAddEdit extends Base_Activity_Dialog_Re
 
         ViewService.InitializeGenderSpinner(this.getActivity(), spinGender);
 
-        if(selectedAction == ACTION_READ)
+        if(selectedAction.equals(ACTION_READ))
         {
             //Disable input contols
             ViewService.DisableConcreteView(ActivityService.GetConcreteView(EditText.class, fView, R.id.txtName));

@@ -76,7 +76,7 @@ public class IdentityMap<TEntity extends IDomainObject> implements
         Boolean found = false;
 
         for(int index = 0; index < _identityFields.size(); index++){
-            if(_identityFields.get(index).getName() == keyToSearch)
+            if(_identityFields.get(index).getName().equals(keyToSearch))
             {
                 found = true;
                 break;

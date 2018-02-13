@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -24,6 +25,8 @@ import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivity;
+import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivityService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
@@ -132,16 +135,16 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         return view;
     }
 
-    public void SetConcreteViews(final View view, final String selectedAction) {
-        EditText txtWeight = ActivityService.GetConcreteView(EditText.class, view, R.id.txtWeight);
-        EditText txtFeet = ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet);
-        EditText txtInches = ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches);
-        final TextView txtDate = ActivityService.GetConcreteView(TextView.class, view, R.id.txtDate);
-        final Spinner spinLevelOfActivity = ActivityService.GetConcreteView(Spinner.class, view, R.id.spinLevelOfActivity);
+    public void SetConcreteViews(final View fView, final String selectedAction) {
+        EditText txtWeight = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtWeight);
+        EditText txtFeet = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtFeet);
+        EditText txtInches = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtInches);
+        final TextView txtDate = ActivityService.GetConcreteView(TextView.class, fView, R.id.txtDate);
+        final Spinner spinLevelOfActivity = ActivityService.GetConcreteView(Spinner.class, fView, R.id.spinLevelOfActivity);
 
         ViewService.InitializeLevelOfActivitiesSpinner(this.getActivity(), spinLevelOfActivity);
 
-        if(selectedAction == ACTION_READ)
+        if(selectedAction.equals(ACTION_READ))
         {
             //Disable input contols
             ViewService.DisableConcreteView(txtWeight);
@@ -153,20 +156,31 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
             return;
         }
 
-        ViewService.SetDefaultSpinnerItemSelectedListener(spinLevelOfActivity);
-        SetBMIChangeListener(view, txtWeight);
-        SetBMIChangeListener(view, txtFeet);
-        SetBMIChangeListener(view, txtInches);
+        SetBMIChangeListener(fView, txtWeight);
+        SetBMIChangeListener(fView, txtFeet);
+        SetBMIChangeListener(fView, txtInches);
 
-        ActivityService.GetConcreteView(Button.class, view, R.id.btnSave)
+        spinLevelOfActivity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinLevelOfActivity.setSelection(position);
+                SetComputedViews(fView);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+        ActivityService.GetConcreteView(Button.class, fView, R.id.btnSave)
                 .setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        InvokeActionBasedPersistency(view, selectedAction);
+                        InvokeActionBasedPersistency(fView, selectedAction);
                         dismiss();
                     }
                 });
-        ActivityService.GetConcreteView(Button.class, view, R.id.btnCancel)
+        ActivityService.GetConcreteView(Button.class, fView, R.id.btnCancel)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -304,5 +318,22 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .toString();
         if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
         //Set calories and BMR here
+
+        double bmrValue = CalculatorService.GetBMR(_gender, _age, weightLbs, heightInches);
+        String levelOfActivity = (String)ActivityService
+                .GetConcreteView(Spinner.class, view, R.id.spinLevelOfActivity)
+                .getSelectedItem();
+        double multiplier = LevelOfActivityService
+                .GetInstance()
+                .GetMultiplier(levelOfActivity);
+        double totalCalories = CalculatorService
+                .CalculateCaloriesByHarrisBenedictEquation(bmrValue, multiplier);
+
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtBmr)
+                .setText(String.format("%.2f", bmrValue));
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtTotalCalories)
+                .setText(String.format("%.2f", totalCalories));
     }
 }

@@ -57,7 +57,7 @@ public class LevelOfActivityService {
         {
             LevelOfActivity level = _levels.get(index);
 
-            if(level.GetDescription() == description)
+            if(level.GetDescription().equals(description))
             {
                 multiplier = level.GetMultiplier();
 

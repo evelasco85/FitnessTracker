@@ -61,7 +61,7 @@ public abstract class Base_Activity_Dialog_ReadAddEdit<TEntity, TRequest>
                 break;
         }
 
-        if(selectedAction == ACTION_READ)
+        if(selectedAction.equals(ACTION_READ))
         {
             Fragment childFragment = getFragmentManager().findFragmentById(_saveCancelConcreteViewId);
 

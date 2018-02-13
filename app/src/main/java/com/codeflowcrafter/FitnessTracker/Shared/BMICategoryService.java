@@ -43,7 +43,7 @@ public class BMICategoryService {
         int currentCategoryLevel = 0;
         String description = LAST_CATEGORY_DESCRIPTION;
 
-        while((description == LAST_CATEGORY_DESCRIPTION) && (currentCategoryLevel < categorySize))
+        while((description.equals(LAST_CATEGORY_DESCRIPTION)) && (currentCategoryLevel < categorySize))
         {
             BMICategory category = _categories.get(currentCategoryLevel);
 
