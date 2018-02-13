@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.ContentProvider;
+package com.codeflowcrafter.FitnessTracker.BMR.Implementation.ContentProvider;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -6,9 +6,9 @@ import android.net.Uri;
 
 import com.codeflowcrafter.DatabaseAccess.ContentProviderTemplate;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
-import com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain.BasalMetabolicRate;
-import com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain.Mapper;
-import com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain.QueryObjects.QueryByProfileId;
+import com.codeflowcrafter.FitnessTracker.BMR.Implementation.Domain.BasalMetabolicRate;
+import com.codeflowcrafter.FitnessTracker.BMR.Implementation.Domain.Mapper;
+import com.codeflowcrafter.FitnessTracker.BMR.Implementation.Domain.QueryObjects.QueryByProfileId;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObjectInterfaces.IBaseQueryObjectConcrete;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 

@@ -91,8 +91,10 @@ public class Mapper extends BaseMapper<Profile> {
 
         if(deletedRecords > 0)
         {
-            DeleteBMI(results, entity.GetId());
-            DeleteRHR(results, entity.GetId());
+            int profileId = entity.GetId();
+
+            DeleteBMI(results, profileId);
+            DeleteRHR(results, profileId);
         }
 
         invocationDelegates.SetResults(results);
@@ -101,10 +103,10 @@ public class Mapper extends BaseMapper<Profile> {
         return true;
     }
 
-    private void DeleteBMI(Hashtable results, int id)
+    private void DeleteBMI(Hashtable results, int profileId)
     {
         String keyColumn = BodyMassIndex.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  id;
+        String where = keyColumn + "=" +  profileId;
         Uri uri = FitnessTrackerContentProviders
                 .GetInstance()
                 .GetBmiProvider()
@@ -115,10 +117,10 @@ public class Mapper extends BaseMapper<Profile> {
         results.put("[Count]", String.valueOf(deletedRecords));
     }
 
-    private void DeleteRHR(Hashtable results, int id)
+    private void DeleteRHR(Hashtable results, int profileId)
     {
         String keyColumn = RestingHeartRate.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  id;
+        String where = keyColumn + "=" +  profileId;
         Uri uri = FitnessTrackerContentProviders
                 .GetInstance()
                 .GetRhrProvider()

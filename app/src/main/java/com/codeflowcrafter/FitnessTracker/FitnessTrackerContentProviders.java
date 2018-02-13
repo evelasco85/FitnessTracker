@@ -7,7 +7,6 @@ import com.codeflowcrafter.DatabaseAccess.BaseContentProviders;
 import com.codeflowcrafter.DatabaseAccess.DatabaseHelper;
 import com.codeflowcrafter.DatabaseAccess.DatabaseHelperBuilder;
 import com.codeflowcrafter.DatabaseAccess.Interfaces.IDatabaseHelperBuilder_Setup;
-import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 
 /**
@@ -38,8 +37,8 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.ContentProvider.Provider
             _rhrProvider = new com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation
             .ContentProvider.Provider();
-    private com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.ContentProvider.Provider
-            _bmrProvider = new com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation
+    private com.codeflowcrafter.FitnessTracker.BMR.Implementation.ContentProvider.Provider
+            _bmrProvider = new com.codeflowcrafter.FitnessTracker.BMR.Implementation
             .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
@@ -60,6 +59,13 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         _bmiProvider.RegisterDomain(context, resolver, dsManager);
         _rhrProvider.RegisterDomain(context, resolver, dsManager);
         _bmrProvider.RegisterDomain(context, resolver, dsManager);
+    }
+
+    public DatabaseHelper GetDatabaseHelper(Context context)
+    {
+        DatabaseHelper dbHelper = _dbHelperSetup.Create(context);
+
+        return dbHelper;
     }
 
     public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider
@@ -86,16 +92,9 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         return _rhrProvider;
     }
 
-    public com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.ContentProvider.Provider
+    public com.codeflowcrafter.FitnessTracker.BMR.Implementation.ContentProvider.Provider
     GetBmrProvider()
     {
         return _bmrProvider;
-    }
-
-    public DatabaseHelper GetDatabaseHelper(Context context)
-    {
-        DatabaseHelper dbHelper = _dbHelperSetup.Create(context);
-
-        return dbHelper;
     }
 }

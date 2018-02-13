@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain;
+package com.codeflowcrafter.FitnessTracker.BMR.Implementation.Domain;
 
 import android.content.ContentValues;
 import android.database.Cursor;

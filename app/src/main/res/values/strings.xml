@@ -12,4 +12,5 @@
     <string name="prompt_gender">Choose a gender</string>
     <string name="prompt_intensity">Choose an intensity</string>
     <string name="prompt_type">Choose a type</string>
+    <string name="prompt_levelOfActivity">Choose a level of activity</string>
 </resources>

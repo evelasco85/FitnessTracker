@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.ContentProvider;
+package com.codeflowcrafter.FitnessTracker.BMR.Implementation.ContentProvider;
 
 import android.app.SearchManager;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -6,7 +6,7 @@ import android.net.Uri;
 
 import com.codeflowcrafter.DatabaseAccess.BaseTable;
 import com.codeflowcrafter.DatabaseAccess.ContentProviderTemplate;
-import com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain.BasalMetabolicRate;
+import com.codeflowcrafter.FitnessTracker.BMR.Implementation.Domain.BasalMetabolicRate;
 
 import java.util.HashMap;
 import java.util.Map;

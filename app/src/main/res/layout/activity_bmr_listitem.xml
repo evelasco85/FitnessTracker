@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <Button
+        android:id="@+id/btnBmrMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/label_ellipses"
+        android:layout_alignParentRight="true"
+        />
+    <TextView
+        android:id="@+id/txtBmrId"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:fadingEdge="vertical"
+        android:padding="10dp"
+        android:layout_toLeftOf="@id/btnBmrMenu"
+        android:visibility="invisible"
+        />
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/txtBmrId"
+        android:stretchColumns="0,1">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Date: "
+                />
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+        </TableRow>
+        <TableRow
+            android:gravity="left">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Level of Activity: "
+                />
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="35dp">
+            <TextView
+                android:id="@+id/txtLevelOfActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Basal Metabolic Rate: "
+                />
+            <TextView
+                android:id="@+id/txtBmr"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Daily calories to burn: "
+                />
+            <TextView
+                android:id="@+id/txtDailyCalories"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark" />
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>
