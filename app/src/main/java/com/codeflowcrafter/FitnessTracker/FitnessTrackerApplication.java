@@ -152,20 +152,6 @@ public class FitnessTrackerApplication
         Context context = getApplicationContext();
         ContentResolver resolver = getContentResolver();
 
-        contentProviders
-                .GetProfileProvider()
-                .RegisterDomain(context, resolver, _dsManager);
-        contentProviders
-                .GetExerciseProvider()
-                .RegisterDomain(context, resolver, _dsManager);
-        contentProviders
-                .GetBmiProvider()
-                .RegisterDomain(context, resolver, _dsManager);
-        contentProviders
-                .GetRhrProvider()
-                .RegisterDomain(context, resolver, _dsManager);
-        contentProviders
-                .GetBmrProvider()
-                .RegisterDomain(context, resolver, _dsManager);
+        contentProviders.RegisterDomains(context, resolver, _dsManager);
     }
 }

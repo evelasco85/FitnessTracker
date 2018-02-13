@@ -1,5 +1,6 @@
 package com.codeflowcrafter.FitnessTracker;
 
+import android.content.ContentResolver;
 import android.content.Context;
 
 import com.codeflowcrafter.DatabaseAccess.BaseContentProviders;
@@ -7,6 +8,7 @@ import com.codeflowcrafter.DatabaseAccess.DatabaseHelper;
 import com.codeflowcrafter.DatabaseAccess.DatabaseHelperBuilder;
 import com.codeflowcrafter.DatabaseAccess.Interfaces.IDatabaseHelperBuilder_Setup;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.ContentProvider.Provider;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 
 /**
  * Created by aiko on 5/1/17.
@@ -46,6 +48,18 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         _bmiProvider.SetupTable(_dbHelperSetup);
         _rhrProvider.SetupTable(_dbHelperSetup);
         _bmrProvider.SetupTable(_dbHelperSetup);
+    }
+
+    public void RegisterDomains(
+            Context context,
+            ContentResolver resolver,
+            IDataSynchronizationManager dsManager)
+    {
+        _profileProvider.RegisterDomain(context, resolver, dsManager);
+        _exerciseProvider.RegisterDomain(context, resolver, dsManager);
+        _bmiProvider.RegisterDomain(context, resolver, dsManager);
+        _rhrProvider.RegisterDomain(context, resolver, dsManager);
+        _bmrProvider.RegisterDomain(context, resolver, dsManager);
     }
 
     public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider
