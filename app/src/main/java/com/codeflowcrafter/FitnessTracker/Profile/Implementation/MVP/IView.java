@@ -8,5 +8,6 @@ import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
  */
 public interface IView extends Crud_IView<Profile, IRequests> {
     void OnPromptExecution_BMI(int profileId, int heightInches);
+    void OnPromptExecution_BMR(int profileId, int age, String gender);
     void OnPromptExecution_RestingHeartRate(int profileId, int age);
 }

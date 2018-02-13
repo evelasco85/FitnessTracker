@@ -10,10 +10,10 @@ import java.util.List;
 public class LevelOfActivityService {
 
     private static final String LEVEL_1 = "Little or no exercise";
-    private static final String LEVEL_2 = "Light exercise 1-3 days/week";
-    private static final String LEVEL_3 = "Moderate exercise 3-5 days/week";
-    private static final String LEVEL_4 = "Hard exercise 6-7 days a week";
-    private static final String LEVEL_5 = "Very hard exercise & physical job or 2x training";
+    private static final String LEVEL_2 = "exercise 1-3 days";
+    private static final String LEVEL_3 = "exercise 3-5 days";
+    private static final String LEVEL_4 = "exercise 6-7 days";
+    private static final String LEVEL_5 = "Very hard exercise";
 
     private List<LevelOfActivity> _levels =  new ArrayList<>();
 

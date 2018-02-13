@@ -15,6 +15,7 @@ import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.FitnessTracker.Shared.ExerciseType;
 import com.codeflowcrafter.FitnessTracker.Shared.Gender;
 import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExerciseService;
+import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivityService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -49,6 +50,19 @@ public class ViewService {
                 genderArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinGender.setAdapter(adapter);
+    }
+
+    public static void InitializeLevelOfActivitiesSpinner(Activity activity, Spinner spinLevelOfActivity)
+    {
+        List<String> levelActivityArray = LevelOfActivityService
+                .GetInstance()
+                .GetLevelDescriptions();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                activity,
+                android.R.layout.simple_spinner_item,
+                levelActivityArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinLevelOfActivity.setAdapter(adapter);
     }
 
     public static void SetHeight(int totalInches, EditText txtFeet, EditText txtInches)

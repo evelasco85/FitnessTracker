@@ -38,7 +38,11 @@
         <activity
             android:name=".Shared.HeartRate.Activity_Heart_Rate_Counter"
             android:label="@string/title_activity_heart_rate_counter"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".BMR.Activity_BMR_Main"
+            android:label="@string/title_activity_main_bmr"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <provider
             android:name=".Profile.Implementation.ContentProvider.Provider"

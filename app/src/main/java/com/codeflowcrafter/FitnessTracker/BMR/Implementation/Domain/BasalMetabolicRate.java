@@ -51,7 +51,7 @@ public class BasalMetabolicRate
     public double GetWeightLbs() {return _weightLbs;}
     public void SetWeightLbs(double weightLbs){ _weightLbs = weightLbs;}
 
-    public static final String COLUMN_LVL_ACTIVITY = "Level of Activity";
+    public static final String COLUMN_LVL_ACTIVITY = "LevelOfActivity";
     private String _levelOfActivity;
     public String GetLevelOfActivity() {return _levelOfActivity;}
     public void SetLevelOfActivity(String levelOfActivity){

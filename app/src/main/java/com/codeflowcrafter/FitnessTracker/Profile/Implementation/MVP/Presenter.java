@@ -130,6 +130,15 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
     }
 
     @Override
+    public void Prompt_BMR(int profileId, int age, String gender)
+    {
+        _view.OnPromptExecution_BMR(profileId, age, gender);
+        _slc
+                .SetEvent(String.format("Showing BMR list"))
+                .EmitLog(Priority.Info, Status.Success);
+    }
+
+    @Override
     public void Prompt_RestingHeartRate(int profileId, int age)
     {
         _view.OnPromptExecution_RestingHeartRate(profileId, age);

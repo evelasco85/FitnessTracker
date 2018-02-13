@@ -51,6 +51,12 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
             @Override
             public boolean onMenuItemClick(MenuItem mnuItem) {
                 switch (mnuItem.getItemId()) {
+                    case (R.id.mnuBmr):
+                        fViewRequest.Prompt_BMR(
+                                fItem.GetId(),
+                                age,
+                                fItem.GetGender());
+                        return true;
                     case (R.id.mnuRestingHeartRate):
                         fViewRequest.Prompt_RestingHeartRate(fItem.GetId(), age);
                         return true;

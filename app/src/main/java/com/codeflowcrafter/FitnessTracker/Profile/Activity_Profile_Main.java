@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codeflowcrafter.FitnessTracker.BMI.Activity_BMI_Main;
+import com.codeflowcrafter.FitnessTracker.BMR.Activity_BMR_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
@@ -132,6 +133,17 @@ public class Activity_Profile_Main extends Base_Activity_Main<
 
         intent.putExtra(Activity_BMI_Main.KEY_PROFILE_ID, profileId);
         intent.putExtra(Activity_BMI_Main.KEY_HEIGHT_INCHES, heightInches);
+
+        this.startActivity(intent);
+    }
+
+    public void OnPromptExecution_BMR(int profileId, int age, String gender)
+    {
+        Intent intent = new Intent(this, Activity_BMR_Main.class);
+
+        intent.putExtra(Activity_BMR_Main.KEY_PROFILE_ID, profileId);
+        intent.putExtra(Activity_BMR_Main.KEY_AGE, age);
+        intent.putExtra(Activity_BMR_Main.KEY_GENDER, gender);
 
         this.startActivity(intent);
     }
