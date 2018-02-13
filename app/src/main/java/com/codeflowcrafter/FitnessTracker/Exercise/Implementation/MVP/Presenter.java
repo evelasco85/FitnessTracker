@@ -1,17 +1,19 @@
 package com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP;
 
-import android.content.CursorLoader;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
 import java.util.List;
 
@@ -24,10 +26,9 @@ public class Presenter extends Crud_Presenter<Exercise, IRequests, IView>
     private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Presenter(IView view, IEntityTranslator<Exercise> translator)
+    public Presenter(IView view)
     {
         super(view,
-                translator,
                 new MapperInvocationDelegate(_slc));
 
         _slc.SetComponent("Exercise");
@@ -114,5 +115,14 @@ public class Presenter extends Crud_Presenter<Exercise, IRequests, IView>
         _slc
                 .SetEvent(String.format("Showing details of exercise id %s", entity.GetId()))
                 .EmitLog(Priority.Info, Status.Success);
+    }
+
+    public List<Exercise> GetData()
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<Exercise> repository = manager.GetRepository(Exercise.class);
+        QueryAll.Criteria criteria = new QueryAll.Criteria();
+
+        return repository.Matching(criteria);
     }
 }

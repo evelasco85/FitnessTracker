@@ -1,15 +1,11 @@
 package com.codeflowcrafter.FitnessTracker.Base.MVP;
 
-import android.content.CursorLoader;
-import android.database.Cursor;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocationDelegates;
 import com.codeflowcrafter.PEAA.Domain.Interfaces.IDomainObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,14 +20,11 @@ public abstract class Crud_Presenter<
         implements Crud_IRequests<TEntity> {
     private TIView _view;
     private IInvocationDelegates _invocationDelegate;
-    private IEntityTranslator<TEntity> _translator;
 
     public Crud_Presenter(TIView view,
-                          IEntityTranslator<TEntity> translator,
                           IInvocationDelegates invocationDelegate)
     {
         _view = view;
-        _translator = translator;
         _invocationDelegate = invocationDelegate;
     }
 

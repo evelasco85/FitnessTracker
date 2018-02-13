@@ -36,12 +36,16 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.ContentProvider.Provider
             _rhrProvider = new com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation
             .ContentProvider.Provider();
+    private com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.ContentProvider.Provider
+            _bmrProvider = new com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation
+            .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
         _profileProvider.SetupTable(_dbHelperSetup);
         _exerciseProvider.SetupTable(_dbHelperSetup);
         _bmiProvider.SetupTable(_dbHelperSetup);
         _rhrProvider.SetupTable(_dbHelperSetup);
+        _bmrProvider.SetupTable(_dbHelperSetup);
     }
 
     public com.codeflowcrafter.FitnessTracker.Profile.Implementation.ContentProvider.Provider
@@ -66,6 +70,12 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     GetRhrProvider()
     {
         return _rhrProvider;
+    }
+
+    public com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.ContentProvider.Provider
+    GetBmrProvider()
+    {
+        return _bmrProvider;
     }
 
     public DatabaseHelper GetDatabaseHelper(Context context)

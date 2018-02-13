@@ -1,10 +1,9 @@
 package com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP;
 
-import android.content.CursorLoader;
 import android.net.Uri;
 
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
+import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.QueryObjects.QueryByProfileId;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
@@ -13,6 +12,9 @@ import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
 import java.util.List;
 
@@ -25,11 +27,9 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
     private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Presenter(IView view, IEntityTranslator<BodyMassIndex> translator)
+    public Presenter(IView view)
     {
-        super(view,
-                translator,
-                new MapperInvocationDelegate(_slc));
+        super(view, new MapperInvocationDelegate(_slc));
 
         _slc.SetComponent("BMI");
         view.SetViewRequest(this);
@@ -122,5 +122,14 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
         return BMICategoryService
                 .GetInstance()
                 .IdealNormalWeightLbs(heightInches);
+    }
+
+    public List<BodyMassIndex> GetData(int profileId)
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<BodyMassIndex> repository = manager.GetRepository(BodyMassIndex.class);
+        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
+
+        return repository.Matching(criteria);
     }
 }

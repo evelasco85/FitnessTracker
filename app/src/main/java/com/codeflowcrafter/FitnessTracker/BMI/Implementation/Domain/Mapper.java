@@ -3,8 +3,6 @@ package com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain;
 import android.content.ContentResolver;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
-import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocationDelegates;
 
@@ -21,9 +19,6 @@ public class Mapper extends BaseMapper<BodyMassIndex> {
 
     private ContentResolver _resolver;
     private Uri _uri;
-    private IEntityTranslator<BodyMassIndex> _translator = TranslatorService
-            .GetInstance()
-            .GetBmiTranslator();
 
     public Mapper(ContentResolver resolver, Uri uri)
     {
@@ -45,7 +40,7 @@ public class Mapper extends BaseMapper<BodyMassIndex> {
         updatedRecords = _resolver
                 .update(
                         _uri,
-                        _translator.EntityToContentValues(entity),
+                        entity.GetContentValues(),
                         where, null);
 
         Hashtable results = new Hashtable();
@@ -62,7 +57,11 @@ public class Mapper extends BaseMapper<BodyMassIndex> {
 
     @Override
     public boolean ConcreteInsert(BodyMassIndex entity, IInvocationDelegates invocationDelegates) {
-        _resolver.insert(_uri, _translator.EntityToContentValues(entity));
+        _resolver
+                .insert(
+                        _uri,
+                        entity.GetContentValues()
+                );
 
         Hashtable results = new Hashtable();
 

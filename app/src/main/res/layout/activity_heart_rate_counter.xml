@@ -85,33 +85,27 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:paddingTop="20dp">
 
             <Button
                 android:id="@+id/btnStart_Increment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:height="150dp"
                 android:text="Start/Increment" />
-
-            <Button
-                android:id="@+id/btnReset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reset" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="50dp" />
+            android:paddingBottom="100dp" />
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingBottom="50dp"
-            >
+            android:gravity="center">
 
             <Button
                 android:id="@+id/btnFinish"
@@ -130,6 +124,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancel" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset" />
         </TableRow>
 
     </TableLayout>

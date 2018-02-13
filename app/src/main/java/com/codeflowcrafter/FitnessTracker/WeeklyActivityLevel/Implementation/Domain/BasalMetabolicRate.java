@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain;
+package com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -11,14 +11,14 @@ import com.codeflowcrafter.PEAA.Domain.DomainObject;
 import java.util.HashMap;
 
 /**
- * Created by enric on 11/02/2018.
+ * Created by enric on 12/02/2018.
  */
 
-public class RestingHeartRate
+public class BasalMetabolicRate
         extends DomainObject
         implements IContentRetriever {
-    public static final String PROVIDER_NAME = "RhrProvider";
-    public static final String TABLE_NAME = "rhr";
+    public static final String PROVIDER_NAME = "BmrProvider";
+    public static final String TABLE_NAME = "bmr";
 
     /*COLUMNS SECTION HERE*/
     public static final String COLUMN_ID = "_id";
@@ -41,29 +41,44 @@ public class RestingHeartRate
     public void SetAge(int age){
         _age = age;}
 
-    public static final String COLUMN_RESTING_HEART_RATE = "rhr";
-    private int _rhr;
-    public int GetRestingHeartRate() {return _rhr;}
-    public void SetRestingHeartRate(int rhr){ _rhr = rhr;}
+    public static final String COLUMN_HEIGHT_INCHES = "heightInches";
+    private int _heightInches;
+    public int GetHeightInches() {return _heightInches;}
+    public void SetHeightInches(int heightInches){ _heightInches = heightInches;}
+
+    public static final String COLUMN_WEIGHT_LBS = "weightLbs";
+    private double _weightLbs;
+    public double GetWeightLbs() {return _weightLbs;}
+    public void SetWeightLbs(double weightLbs){ _weightLbs = weightLbs;}
+
+    public static final String COLUMN_LVL_ACTIVITY = "Level of Activity";
+    private String _levelOfActivity;
+    public String GetLevelOfActivity() {return _levelOfActivity;}
+    public void SetLevelOfActivity(String levelOfActivity){
+        _levelOfActivity = levelOfActivity;}
     /**********************/
 
-    public RestingHeartRate(
+    public BasalMetabolicRate(
             IBaseMapper mapper,
             int id,
             int profileId,
             String date,
             int age,
-            int rhr) {
+            int heightInches,
+            double weightLbs,
+            String levelOfActivity) {
         super(mapper);
 
         _id = id;
         _profileId = profileId;
         _date = date;
         _age = age;
-        _rhr = rhr;
+        _heightInches = heightInches;
+        _weightLbs = weightLbs;
+        _levelOfActivity = levelOfActivity;
     }
 
-    public RestingHeartRate(
+    public BasalMetabolicRate(
             IBaseMapper mapper,
             Cursor cursor,
             HashMap<String, Integer> ordinals)
@@ -74,7 +89,9 @@ public class RestingHeartRate
                 cursor.getInt(ordinals.get(COLUMN_PROFILE_ID)),
                 cursor.getString(ordinals.get(COLUMN_DATE)),
                 cursor.getInt(ordinals.get(COLUMN_AGE)),
-                cursor.getInt(ordinals.get(COLUMN_RESTING_HEART_RATE))
+                cursor.getInt(ordinals.get(COLUMN_HEIGHT_INCHES)),
+                cursor.getDouble(ordinals.get(COLUMN_HEIGHT_INCHES)),
+                cursor.getString(ordinals.get(COLUMN_LVL_ACTIVITY))
         );
     }
 
@@ -86,7 +103,9 @@ public class RestingHeartRate
         tableColumns.put(COLUMN_PROFILE_ID, "integer");
         tableColumns.put(COLUMN_DATE, "DATETIME");
         tableColumns.put(COLUMN_AGE, "integer");
-        tableColumns.put(COLUMN_RESTING_HEART_RATE, "integer");
+        tableColumns.put(COLUMN_HEIGHT_INCHES, "integer");
+        tableColumns.put(COLUMN_WEIGHT_LBS, "double");
+        tableColumns.put(COLUMN_LVL_ACTIVITY, "TEXT");
 
         return tableColumns;
     }
@@ -99,7 +118,9 @@ public class RestingHeartRate
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_PROFILE_ID);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_DATE);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_AGE);
-        DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_RESTING_HEART_RATE);
+        DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_HEIGHT_INCHES);
+        DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_WEIGHT_LBS);
+        DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_LVL_ACTIVITY);
 
         return ordinals;
     }
@@ -114,7 +135,9 @@ public class RestingHeartRate
         values.put(COLUMN_PROFILE_ID, _profileId);
         values.put(COLUMN_DATE, _date);
         values.put(COLUMN_AGE, _age);
-        values.put(COLUMN_RESTING_HEART_RATE, _rhr);
+        values.put(COLUMN_HEIGHT_INCHES, _heightInches);
+        values.put(COLUMN_WEIGHT_LBS, _weightLbs);
+        values.put(COLUMN_LVL_ACTIVITY, _levelOfActivity);
 
         return values;
     }

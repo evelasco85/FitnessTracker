@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.QueryObjects.QueryByProfileId;
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP.IView;
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP.Presenter;
@@ -20,10 +19,8 @@ import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
-import com.codeflowcrafter.FitnessTracker.TranslatorService;
-import com.codeflowcrafter.PEAA.DataSynchronizationManager;
-import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
-import com.codeflowcrafter.PEAA.Interfaces.IRepository;
+
+import java.util.List;
 
 
 public class Activity_BMI_Main extends Base_Activity_Main<
@@ -45,10 +42,7 @@ public class Activity_BMI_Main extends Base_Activity_Main<
                 R.id.fragment_bmiList
         );
 
-        _presenter = new Presenter(
-                this,
-                TranslatorService.GetInstance().GetBmiTranslator()
-        );
+        _presenter = new Presenter(this);
     }
 
     @Override
@@ -74,11 +68,9 @@ public class Activity_BMI_Main extends Base_Activity_Main<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
     {
-        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
-        IRepository<BodyMassIndex> repository = manager.GetRepository(BodyMassIndex.class);
-        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(_profileId);
+        List<BodyMassIndex> data = GetViewRequest().GetData(_profileId);
 
-        GetViewRequest().LoadEntities(repository.Matching(criteria));
+        GetViewRequest().LoadEntities(data);
     }
 
     @Override

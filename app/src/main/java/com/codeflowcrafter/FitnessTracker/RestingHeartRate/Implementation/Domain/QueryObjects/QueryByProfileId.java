@@ -5,11 +5,13 @@ import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
+import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObject;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,7 +21,6 @@ import java.util.List;
 public class QueryByProfileId  extends BaseQueryObject<RestingHeartRate, QueryByProfileId.Criteria> {
     private Context _context;
     private Uri _uri;
-    private IEntityTranslator<RestingHeartRate> _translator;
 
     public static class Criteria {
         public int ProfileId;
@@ -29,12 +30,11 @@ public class QueryByProfileId  extends BaseQueryObject<RestingHeartRate, QueryBy
         }
     }
 
-    public QueryByProfileId(Context context, Uri uri, IEntityTranslator<RestingHeartRate> translator) {
+    public QueryByProfileId(Context context, Uri uri) {
         super(QueryByProfileId.Criteria.class);
 
         _context = context;
         _uri = uri;
-        _translator = translator;
     }
 
     @Override
@@ -51,11 +51,12 @@ public class QueryByProfileId  extends BaseQueryObject<RestingHeartRate, QueryBy
         if(cursor == null)
             return entityList;
 
-        _translator.UpdateColumnOrdinals(cursor);
+        HashMap<String, Integer> ordinals = RestingHeartRate.GetOrdinals(cursor);
+        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(RestingHeartRate.class);
 
         while (cursor.moveToNext())
         {
-            entityList.add(_translator.CursorToEntity(cursor));
+            entityList.add(new RestingHeartRate(mapper, cursor, ordinals));
         }
 
         cursor.close();

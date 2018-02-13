@@ -52,6 +52,9 @@
         <provider
             android:name=".RestingHeartRate.Implementation.ContentProvider.Provider"
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.RhrProvider" />
+        <provider
+            android:name=".WeeklyActivityLevel.Implementation.ContentProvider.Provider"
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.BmrProvider" />
     </application>
 
 </manifest>

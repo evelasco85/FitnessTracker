@@ -2,16 +2,19 @@ package com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.MVP;
 
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.QueryObjects.QueryByProfileId;
 import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
 import java.util.List;
 
@@ -24,10 +27,9 @@ public class Presenter extends Crud_Presenter<RestingHeartRate, IRequests, IView
     private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Presenter(IView view, IEntityTranslator<RestingHeartRate> translator)
+    public Presenter(IView view)
     {
         super(view,
-                translator,
                 new MapperInvocationDelegate(_slc));
 
         _slc.SetComponent("Resting Heart Rate");
@@ -119,5 +121,14 @@ public class Presenter extends Crud_Presenter<RestingHeartRate, IRequests, IView
     public int GetMhr(int age)
     {
         return CalculatorService.GetMaximumHeartRate(age);
+    }
+
+    public List<RestingHeartRate> GetData(int profileId)
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<RestingHeartRate> repository = manager.GetRepository(RestingHeartRate.class);
+        QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
+
+        return repository.Matching(criteria);
     }
 }

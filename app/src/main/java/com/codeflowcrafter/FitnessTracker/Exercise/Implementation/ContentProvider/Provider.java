@@ -5,12 +5,10 @@ import android.content.Context;
 import android.net.Uri;
 
 import com.codeflowcrafter.DatabaseAccess.ContentProviderTemplate;
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Mapper;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
-import com.codeflowcrafter.FitnessTracker.TranslatorService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObjectInterfaces.IBaseQueryObjectConcrete;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 
@@ -38,11 +36,8 @@ public class Provider extends ContentProviderTemplate {
         Uri uri = GetContentUri();
         Mapper mapper = new Mapper(resolver, uri);
         List<IBaseQueryObjectConcrete<Exercise>> queryObjects = new ArrayList<>();
-        IEntityTranslator<Exercise> translator = TranslatorService
-                .GetInstance()
-                .GetExerciseTranslator();
 
-        queryObjects.add(new QueryAll(context, uri, translator));
+        queryObjects.add(new QueryAll(context, uri));
         dsManager.RegisterEntity(
                 Exercise.class,
                 mapper,

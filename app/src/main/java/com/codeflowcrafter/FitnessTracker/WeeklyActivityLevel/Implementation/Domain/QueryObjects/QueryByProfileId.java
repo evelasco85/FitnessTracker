@@ -1,11 +1,11 @@
-package com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.QueryObjects;
+package com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain.QueryObjects;
 
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
+import com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain.BasalMetabolicRate;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObject;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by enric on 09/02/2018.
+ * Created by enric on 12/02/2018.
  */
 
-public class QueryByProfileId extends BaseQueryObject<BodyMassIndex, QueryByProfileId.Criteria> {
+public class QueryByProfileId extends BaseQueryObject<BasalMetabolicRate, QueryByProfileId.Criteria> {
     private Context _context;
     private Uri _uri;
 
@@ -38,9 +38,9 @@ public class QueryByProfileId extends BaseQueryObject<BodyMassIndex, QueryByProf
     }
 
     @Override
-    public List<BodyMassIndex> PerformSearchOperation(QueryByProfileId.Criteria criteria) {
-        String where = BodyMassIndex.COLUMN_PROFILE_ID + "=" +  criteria.ProfileId;
-        String sortOrder = BodyMassIndex.COLUMN_ID + " DESC";
+    public List<BasalMetabolicRate> PerformSearchOperation(QueryByProfileId.Criteria criteria) {
+        String where = BasalMetabolicRate.COLUMN_PROFILE_ID + "=" +  criteria.ProfileId;
+        String sortOrder = BasalMetabolicRate.COLUMN_ID + " DESC";
         CursorLoader loader = new CursorLoader(_context, _uri,
                 null, where, null, sortOrder
         );
@@ -51,12 +51,12 @@ public class QueryByProfileId extends BaseQueryObject<BodyMassIndex, QueryByProf
         if(cursor == null)
             return entityList;
 
-        HashMap<String, Integer> ordinals = BodyMassIndex.GetOrdinals(cursor);
-        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(BodyMassIndex.class);
+        HashMap<String, Integer> ordinals = BasalMetabolicRate.GetOrdinals(cursor);
+        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(BasalMetabolicRate.class);
 
         while (cursor.moveToNext())
         {
-            entityList.add(new BodyMassIndex(mapper, cursor, ordinals));
+            entityList.add(new BasalMetabolicRate(mapper, cursor, ordinals));
         }
 
         cursor.close();

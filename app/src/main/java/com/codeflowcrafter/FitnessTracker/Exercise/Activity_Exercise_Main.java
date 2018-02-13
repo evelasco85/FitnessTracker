@@ -13,16 +13,13 @@ import android.widget.Toast;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
-import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.IView;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
-import com.codeflowcrafter.FitnessTracker.TranslatorService;
-import com.codeflowcrafter.PEAA.DataSynchronizationManager;
-import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
-import com.codeflowcrafter.PEAA.Interfaces.IRepository;
+
+import java.util.List;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -41,10 +38,7 @@ public class Activity_Exercise_Main extends Base_Activity_Main<
                 R.id.fragment_exerciseList
         );
 
-        _presenter = new Presenter(
-                this,
-                TranslatorService.GetInstance().GetExerciseTranslator()
-        );
+        _presenter = new Presenter(this);
     }
 
     @Override
@@ -63,11 +57,9 @@ public class Activity_Exercise_Main extends Base_Activity_Main<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursorY)
     {
-        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
-        IRepository<Exercise> repository = manager.GetRepository(Exercise.class);
-        QueryAll.Criteria criteria = new QueryAll.Criteria();
+        List<Exercise> data = GetViewRequest().GetData();
 
-        GetViewRequest().LoadEntities(repository.Matching(criteria));
+        GetViewRequest().LoadEntities(data);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain;
+package com.codeflowcrafter.FitnessTracker.WeeklyActivityLevel.Implementation.Domain;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -9,10 +9,10 @@ import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IInvocatio
 import java.util.Hashtable;
 
 /**
- * Created by enric on 08/02/2018.
+ * Created by enric on 12/02/2018.
  */
 
-public class Mapper extends BaseMapper<Exercise> {
+public class Mapper extends BaseMapper<BasalMetabolicRate> {
     public final static String KEY_MAPPER_NAME = "[Mapper Name]";
     public final static String KEY_OPERATION = "[Operation]";
     public final static String KEY_COUNT = "[Count]";
@@ -22,20 +22,20 @@ public class Mapper extends BaseMapper<Exercise> {
 
     public Mapper(ContentResolver resolver, Uri uri)
     {
-        super(Exercise.class);
+        super(BasalMetabolicRate.class);
 
         _resolver = resolver;
         _uri = uri;
     }
 
     @Override
-    public boolean ConcreteUpdate(Exercise entity, IInvocationDelegates invocationDelegates) {
+    public boolean ConcreteUpdate(BasalMetabolicRate entity, IInvocationDelegates invocationDelegates) {
         int updatedRecords = 0;
 
         if(entity == null)
             return false;
 
-        String where = Exercise.COLUMN_ID + "=" +  entity.GetId();
+        String where = BasalMetabolicRate.COLUMN_ID + "=" +  entity.GetId();
 
         updatedRecords = _resolver
                 .update(
@@ -56,7 +56,7 @@ public class Mapper extends BaseMapper<Exercise> {
     }
 
     @Override
-    public boolean ConcreteInsert(Exercise entity, IInvocationDelegates invocationDelegates) {
+    public boolean ConcreteInsert(BasalMetabolicRate entity, IInvocationDelegates invocationDelegates) {
         _resolver
                 .insert(
                         _uri,
@@ -76,8 +76,8 @@ public class Mapper extends BaseMapper<Exercise> {
     }
 
     @Override
-    public boolean ConcreteDelete(Exercise entity, IInvocationDelegates invocationDelegates) {
-        String where = Exercise.COLUMN_ID + "=" +  entity.GetId();
+    public boolean ConcreteDelete(BasalMetabolicRate entity, IInvocationDelegates invocationDelegates) {
+        String where = BasalMetabolicRate.COLUMN_ID + "=" +  entity.GetId();
         int deletedRecords = _resolver.delete(_uri, where, null );
 
         Hashtable results = new Hashtable();

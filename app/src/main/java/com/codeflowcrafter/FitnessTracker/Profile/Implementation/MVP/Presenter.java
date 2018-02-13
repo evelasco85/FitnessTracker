@@ -1,18 +1,20 @@
 package com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP;
 
-import android.content.CursorLoader;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
+import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
+import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 
 import java.util.Calendar;
 import java.util.List;
@@ -27,10 +29,9 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
     private IView _view;
     private final static IStaticLogEntryWrapper _slc = FitnessTrackerApplication.GetInstance().CreateSLC();
 
-    public Presenter(IView view, IEntityTranslator<Profile> translator)
+    public Presenter(IView view)
     {
         super(view,
-                translator,
                 new MapperInvocationDelegate(_slc));
 
         _slc.SetComponent("Profile");
@@ -152,5 +153,14 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
     public int GetMhr(int age)
     {
         return CalculatorService.GetMaximumHeartRate(age);
+    }
+
+    public List<Profile> GetData()
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<Profile> repository = manager.GetRepository(Profile.class);
+        QueryAll.Criteria criteria = new QueryAll.Criteria();
+
+        return repository.Matching(criteria);
     }
 }

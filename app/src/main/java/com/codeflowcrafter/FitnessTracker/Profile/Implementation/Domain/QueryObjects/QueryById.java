@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.Base.Domain.IEntityTranslator;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
+import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObject;
+import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,7 +20,6 @@ import java.util.List;
 public class QueryById extends BaseQueryObject<Profile, QueryById.Criteria> {
     private Context _context;
     private Uri _uri;
-    private IEntityTranslator<Profile> _translator;
 
     public static class Criteria {
         public int Id;
@@ -28,12 +29,11 @@ public class QueryById extends BaseQueryObject<Profile, QueryById.Criteria> {
         }
     }
 
-    public QueryById(Context context, Uri uri, IEntityTranslator<Profile> translator) {
+    public QueryById(Context context, Uri uri) {
         super(QueryById.Criteria.class);
 
         _context = context;
         _uri = uri;
-        _translator = translator;
     }
 
     @Override
@@ -46,10 +46,11 @@ public class QueryById extends BaseQueryObject<Profile, QueryById.Criteria> {
             return entityList;
         }
 
-        _translator.UpdateColumnOrdinals(cursor);
+        HashMap<String, Integer> ordinals = Profile.GetOrdinals(cursor);
+        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(Profile.class);
 
         if(cursor.moveToFirst()) {
-            entityList.add(_translator.CursorToEntity(cursor));
+            entityList.add(new Profile(mapper, cursor, ordinals));
         }
 
         cursor.close();

@@ -15,17 +15,14 @@ import com.codeflowcrafter.FitnessTracker.BMI.Activity_BMI_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
-import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IView;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Activity_RHR_Main;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
-import com.codeflowcrafter.FitnessTracker.TranslatorService;
-import com.codeflowcrafter.PEAA.DataSynchronizationManager;
-import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
-import com.codeflowcrafter.PEAA.Interfaces.IRepository;
+
+import java.util.List;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -44,10 +41,7 @@ public class Activity_Profile_Main extends Base_Activity_Main<
                 R.id.fragment_profileList
         );
 
-        _presenter = new Presenter(
-                this,
-                TranslatorService.GetInstance().GetProfileTranslator()
-        );
+        _presenter = new Presenter(this);
     }
 
     @Override
@@ -66,11 +60,9 @@ public class Activity_Profile_Main extends Base_Activity_Main<
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor)
     {
-        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
-        IRepository<Profile> repository = manager.GetRepository(Profile.class);
-        QueryAll.Criteria criteria = new QueryAll.Criteria();
+        List<Profile> data = GetViewRequest().GetData();
 
-        GetViewRequest().LoadEntities(repository.Matching(criteria));
+        GetViewRequest().LoadEntities(data);
     }
 
     @Override
