@@ -14,6 +14,7 @@ import com.codeflowcrafter.FitnessTracker.BMI.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.BaseListItem;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.IDataContainer;
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
 import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 
@@ -95,10 +96,14 @@ public class Activity_BMI_List_Item extends BaseListItem<BodyMassIndex, IRequest
         ViewService.DisableConcreteView(txtInches);
         ViewService.DisableConcreteView(GetConcreteView(TextView.class, itemLayout, R.id.txtDate));
         ViewService.SetHeight(height, txtFeet, txtInches);
+
+        double bmiScore = fViewRequest.GetBMI(weight, height);
+
+        GetConcreteView(TextView.class, itemLayout, R.id.txtBmi)
+                .setText(String.format("%.2f", bmiScore));
         ViewService.SetClassification(
                 GetConcreteView(TextView.class, itemLayout, R.id.txtClassification),
-                weight,
-                height
+                bmiScore
         );
     }
 }

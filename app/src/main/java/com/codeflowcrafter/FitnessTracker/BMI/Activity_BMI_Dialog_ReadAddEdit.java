@@ -268,10 +268,14 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .getText()
                 .toString();
         if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
+
+        double bmiScore = GetViewRequest().GetBMI(weightLbs, heightInches);
+
+        GetConcreteView(TextView.class, view, R.id.txtBmi)
+                .setText(String.format("%.2f", bmiScore));
         ViewService.SetClassification(
                 GetConcreteView(TextView.class, view, R.id.txtClassification),
-                weightLbs,
-                heightInches
+                bmiScore
         );
 
         double idealWeight = GetViewRequest().GetIdealWeightLbs(heightInches);

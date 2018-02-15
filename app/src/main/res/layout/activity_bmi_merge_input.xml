@@ -37,6 +37,24 @@
                 android:layout_height="wrap_content"
                 />
         </TableRow>
+        <TableRow
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <include layout="@layout/merge_height"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="BMI: "
+                />
+            <TextView
+                android:id="@+id/txtBmi"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+        </TableRow>
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
@@ -60,12 +78,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@android:color/holo_red_dark" />
-        </TableRow>
-        <TableRow
-            android:padding="5dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <include layout="@layout/merge_height"/>
         </TableRow>
         <TableRow
             android:padding="5dp"

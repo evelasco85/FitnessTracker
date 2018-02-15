@@ -145,10 +145,8 @@ public class ViewService {
         });
     }
 
-    public static void SetClassification(TextView txtClassification,
-                                         double weightsLbs, int heightInches)
+    public static void SetClassification(TextView txtClassification, double bmiScore)
     {
-        double bmiScore = CalculatorService.GetBMI(weightsLbs, heightInches);
         String classification = BMICategoryService
                 .GetInstance()
                 .GetBMICategory(bmiScore);

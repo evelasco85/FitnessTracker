@@ -8,6 +8,7 @@ import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
+import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
@@ -131,5 +132,10 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
         QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
 
         return repository.Matching(criteria);
+    }
+
+    public double GetBMI(double weightsLbs, int heightInches)
+    {
+        return CalculatorService.GetBMI(weightsLbs, heightInches);
     }
 }
