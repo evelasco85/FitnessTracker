@@ -114,11 +114,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingTop="15dp"
-                android:text="Daily calories to burn\nwithout gaining weight" />
+                android:text="Number of calories needed\nto maintain your weight" />
+
             <TextView
                 android:id="@+id/txtTotalCalories"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center" />
         </TableRow>
     </TableLayout>
 </merge>
