@@ -280,19 +280,19 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         );
 
         double idealWeight = GetViewRequest().GetIdealWeightLbs(heightInches);
-        double ideaWeightToLose = weightLbs - idealWeight;
+        double idealWeightToLose = weightLbs - idealWeight;
 
         GetConcreteView(TextView.class, view, R.id.txtIdealWeight)
                 .setText(String.format("%.2f", idealWeight));
         GetConcreteView(TextView.class, view, R.id.txtIdealWeightToLose)
-                .setText(String.format("%.2f", ideaWeightToLose));
+                .setText(String.format("%.2f", idealWeightToLose));
 
         DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+        double caloriesToLose = GetViewRequest().GetCaloriesToBurn(idealWeightToLose);
 
         GetConcreteView(TextView.class, view, R.id.txtCaloriesToBurn)
                 .setText(
-//                        String.format("%.2f", ideaWeightToLose * 3500)
-                        formatter.format(ideaWeightToLose * 3500)
+                        formatter.format(caloriesToLose)
                 );
     }
 }

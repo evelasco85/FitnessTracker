@@ -60,7 +60,8 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
             String action,
             BasalMetabolicRate entity,
             int profileId,
-            int age, String gender)
+            int age,
+            String gender)
     {
         Activity_BMR_Dialog_ReadAddEdit dialog = new Activity_BMR_Dialog_ReadAddEdit();
         Bundle args = new Bundle();
@@ -78,7 +79,9 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
     public static void Show(
             FragmentManager manager, IRequests request,
             String action, BasalMetabolicRate entity,
-            int profileId, int age, String gender)
+            int profileId,
+            int age,
+            String gender)
     {
         Activity_BMR_Dialog_ReadAddEdit dialog = Activity_BMR_Dialog_ReadAddEdit
                 .newInstance(action, entity, profileId, age, gender);
@@ -94,21 +97,18 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = super.onCreateView(inflater, container, savedInstanceState);
-
         _profileId = getArguments().getInt(KEY_PROFILE_ID);
         _age = getArguments().getInt(KEY_AGE);
         _gender = getArguments().getString(KEY_GENDER);
 
-        ActivityService
-                .GetConcreteView(TextView.class, view, R.id.txtAge)
-                .setText(String.valueOf(_age));
-        ActivityService
-                .GetConcreteView(TextView.class, view, R.id.txtGender)
-                .setText(_gender);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
+        return view;
+    }
 
-        /*QUERY BMI (WEIGHT AND HEIGHT) HERE*/
+    private void LoadDefaultData(View view)
+    {
+         /*QUERY BMI (WEIGHT AND HEIGHT) HERE*/
         IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
         IRepository<BodyMassIndex> repository = manager.GetRepository(BodyMassIndex.class);
         QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(_profileId);
@@ -130,9 +130,13 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         );
         ActivityService.GetConcreteView(EditText.class, view, R.id.txtWeight)
                 .setText(String.valueOf(latestWeightLbs));
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtAge)
+                .setText(String.valueOf(_age));
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtGender)
+                .setText(_gender);
         /************************************/
-
-        return view;
     }
 
     public void SetConcreteViews(final View fView, final String selectedAction) {
@@ -143,6 +147,7 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         final Spinner spinLevelOfActivity = ActivityService.GetConcreteView(Spinner.class, fView, R.id.spinLevelOfActivity);
 
         ViewService.InitializeLevelOfActivitiesSpinner(this.getActivity(), spinLevelOfActivity);
+        LoadDefaultData(fView);
 
         if(selectedAction.equals(ACTION_READ))
         {
@@ -254,10 +259,28 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .GetConcreteView(TextView.class, view, R.id.txtWeight)
                 .getText()
                 .toString();
+
         if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
 
-//        return new BasalMetabolicRate(mapper);
-        return null;
+        String levelOfActivity = (String)ActivityService
+                .GetConcreteView(Spinner.class, view, R.id.spinLevelOfActivity)
+                .getSelectedItem();
+        String ageValue = ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtAge)
+                .getText().toString();
+
+        int age = 0;
+
+        if(!TextUtils.isEmpty(ageValue)) age = Integer.parseInt(ageValue);
+
+        return new BasalMetabolicRate(mapper,
+                _id,
+                _profileId,
+                date,
+                age,
+                heightInches,
+                weightLbs,
+                levelOfActivity);
     }
 
     public void SetModelToViewData(View view, BasalMetabolicRate entity){
@@ -266,6 +289,9 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         }
 
         _id = entity.GetId();
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtGender)
+                .setText(_gender);
 
         String date = entity.GetDate();
 
@@ -274,6 +300,7 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                     .GetConcreteView(TextView.class, view, R.id.txtDate)
                     .setText(date);
         }
+
         ActivityService
                 .GetConcreteView(EditText.class, view, R.id.txtWeight)
                 .setText(String.valueOf(entity.GetWeightLbs()));
@@ -282,6 +309,19 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtFeet),
                 ActivityService.GetConcreteView(EditText.class, view, R.id.txtInches)
         );
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtAge)
+                .setText(String.valueOf(entity.GetAge()));
+
+        String levelOfActivity = entity.GetLevelOfActivity();
+
+        if(!TextUtils.isEmpty(levelOfActivity)) {
+            final Spinner levelOfActivitySpinner = ActivityService
+                    .GetConcreteView(Spinner.class, view, R.id.spinLevelOfActivity);
+
+            ViewService.SetSpinnerValue(levelOfActivitySpinner, levelOfActivity);
+        }
+
         SetComputedViews(view);
     }
 
@@ -317,7 +357,6 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .getText()
                 .toString();
         if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
-        //Set calories and BMR here
 
         double bmrValue = CalculatorService.GetBMR(_gender, _age, weightLbs, heightInches);
         String levelOfActivity = (String)ActivityService

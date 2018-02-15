@@ -90,7 +90,7 @@ public class BasalMetabolicRate
                 cursor.getString(ordinals.get(COLUMN_DATE)),
                 cursor.getInt(ordinals.get(COLUMN_AGE)),
                 cursor.getInt(ordinals.get(COLUMN_HEIGHT_INCHES)),
-                cursor.getDouble(ordinals.get(COLUMN_HEIGHT_INCHES)),
+                cursor.getDouble(ordinals.get(COLUMN_WEIGHT_LBS)),
                 cursor.getString(ordinals.get(COLUMN_LVL_ACTIVITY))
         );
     }

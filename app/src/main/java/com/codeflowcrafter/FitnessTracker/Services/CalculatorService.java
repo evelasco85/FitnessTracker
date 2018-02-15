@@ -110,4 +110,12 @@ public class CalculatorService {
 
         return zonedHeartRate;
     }
+
+    public static double GetCaloriesToBurn(double idealWeightToLoseLbs)
+    {
+        double caloriesPerPound = 3500;
+        double caloriesToLose = idealWeightToLoseLbs * caloriesPerPound;
+
+        return (caloriesToLose > 0) ? caloriesToLose : 0;
+    }
 }

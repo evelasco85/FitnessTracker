@@ -13,4 +13,5 @@ public interface IRequests extends Crud_IRequests<BodyMassIndex> {
     double GetIdealWeightLbs(int heightInches);
     List<BodyMassIndex> GetData(int profileId);
     double GetBMI(double weightsLbs, int heightInches);
+    double GetCaloriesToBurn(double idealWeightToLoseLbs);
 }

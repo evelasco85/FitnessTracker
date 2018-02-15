@@ -138,4 +138,9 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
     {
         return CalculatorService.GetBMI(weightsLbs, heightInches);
     }
+
+    public double GetCaloriesToBurn(double idealWeightToLoseLbs)
+    {
+        return CalculatorService.GetCaloriesToBurn(idealWeightToLoseLbs);
+    }
 }
