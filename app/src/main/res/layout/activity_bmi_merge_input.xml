@@ -55,6 +55,21 @@
                 android:layout_height="match_parent"
                 />
         </TableRow>
+        <TableRow
+            android:padding="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
+            <TextView
+                android:text="Classification:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/txtClassification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark" />
+        </TableRow>
         <TableRow>
             <TextView
                 android:layout_width="wrap_content"
@@ -79,21 +94,45 @@
                 android:layout_height="match_parent"
                 android:textColor="@android:color/holo_red_dark" />
         </TableRow>
-        <TableRow
-            android:padding="5dp"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+        <TableRow>
             <TextView
-                android:text="Classification:"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Ratio: "
                 />
-
             <TextView
-                android:id="@+id/txtClassification"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark" />
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="1 Lbs. = 3.5K Cal."/>
+        </TableRow>
+        <TableRow>
+            <TextView />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="75% fat"/>
+        </TableRow>
+        <TableRow>
+            <TextView />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="25% lean tissue"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Calories to burn: "
+                />
+            <TextView
+                android:id="@+id/txtCaloriesToBurn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark"/>
         </TableRow>
     </TableLayout>
 </merge>

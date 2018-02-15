@@ -25,6 +25,7 @@ import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMappe
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -285,5 +286,13 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .setText(String.format("%.2f", idealWeight));
         GetConcreteView(TextView.class, view, R.id.txtIdealWeightToLose)
                 .setText(String.format("%.2f", ideaWeightToLose));
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+
+        GetConcreteView(TextView.class, view, R.id.txtCaloriesToBurn)
+                .setText(
+//                        String.format("%.2f", ideaWeightToLose * 3500)
+                        formatter.format(ideaWeightToLose * 3500)
+                );
     }
 }
