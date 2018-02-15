@@ -58,24 +58,27 @@
                 android:layout_height="match_parent"
                 />
         </TableRow>
-        <TableRow>
+
+        <TableRow android:paddingBottom="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Basal Metabolic Rate: "
-                />
+                android:text="Basal Metabolic Rate: " />
+
             <TextView
                 android:id="@+id/txtBmr"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
         </TableRow>
+
         <TableRow>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Daily calories to burn: "
-                />
+                android:text="Number of calories needed\nto maintain your weight: " />
+
             <TextView
                 android:id="@+id/txtDailyCalories"
                 android:layout_width="wrap_content"

@@ -52,10 +52,6 @@ public class Activity_BMR_Main extends Base_Activity_Main<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         Intent invoker = getIntent();
 
         if (invoker != null) {
@@ -63,12 +59,16 @@ public class Activity_BMR_Main extends Base_Activity_Main<
             _age = invoker.getIntExtra(KEY_AGE, 0);
             _gender = invoker.getStringExtra(KEY_GENDER);
         }
+
+        super.onCreate(savedInstanceState);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 
     @Override
     public Activity_BMR_List_Item GetListItem(DataContainer<BasalMetabolicRate> container)
     {
-        return new Activity_BMR_List_Item(this, GetViewRequest(), container);
+        return new Activity_BMR_List_Item(this, GetViewRequest(), container, _gender);
     }
 
     @Override

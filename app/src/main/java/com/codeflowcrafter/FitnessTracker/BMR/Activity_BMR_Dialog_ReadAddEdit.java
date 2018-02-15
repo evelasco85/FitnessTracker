@@ -265,13 +265,7 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         String levelOfActivity = (String)ActivityService
                 .GetConcreteView(Spinner.class, view, R.id.spinLevelOfActivity)
                 .getSelectedItem();
-        String ageValue = ActivityService
-                .GetConcreteView(TextView.class, view, R.id.txtAge)
-                .getText().toString();
-
-        int age = 0;
-
-        if(!TextUtils.isEmpty(ageValue)) age = Integer.parseInt(ageValue);
+        int age = GetAge(view);
 
         return new BasalMetabolicRate(mapper,
                 _id,
@@ -358,13 +352,14 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .toString();
         if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
 
-        double bmrValue = CalculatorService.GetBMR(_gender, _age, weightLbs, heightInches);
         String levelOfActivity = (String)ActivityService
                 .GetConcreteView(Spinner.class, view, R.id.spinLevelOfActivity)
                 .getSelectedItem();
         double multiplier = LevelOfActivityService
                 .GetInstance()
                 .GetMultiplier(levelOfActivity);
+        int age = GetAge(view);
+        double bmrValue = CalculatorService.GetBMR(_gender, age, weightLbs, heightInches);
         double totalCalories = CalculatorService
                 .CalculateCaloriesByHarrisBenedictEquation(bmrValue, multiplier);
 
@@ -374,5 +369,18 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtTotalCalories)
                 .setText(String.format("%.2f", totalCalories));
+    }
+
+    private int GetAge(View view)
+    {
+        String ageValue = ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtAge)
+                .getText().toString();
+
+        int age = 0;
+
+        if(!TextUtils.isEmpty(ageValue)) age = Integer.parseInt(ageValue);
+
+        return age;
     }
 }
