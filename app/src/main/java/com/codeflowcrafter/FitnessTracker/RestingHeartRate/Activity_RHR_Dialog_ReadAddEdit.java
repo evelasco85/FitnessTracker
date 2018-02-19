@@ -33,7 +33,7 @@ import java.util.Calendar;
  * Created by enric on 11/02/2018.
  */
 
-public class Activity_RHR_Dialog_ReadAddEdit  extends Base_Activity_Dialog_ReadAddEdit<RestingHeartRate, IRequests> {
+public class Activity_RHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAddEdit<RestingHeartRate, IRequests> {
     private final static int _fragmentId = R.layout.activity_rhr_fragment_read_add_edit;
     private final static int _saveCancelConcreteViewId = R.id.saveCancelFragmentPlaceholder;
     private final static int REQUEST_CODE_RESTING_HEART_RATE = 123;

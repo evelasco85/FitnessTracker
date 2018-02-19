@@ -38,11 +38,15 @@
         <activity
             android:name=".Shared.HeartRate.Activity_Heart_Rate_Counter"
             android:label="@string/title_activity_heart_rate_counter"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BMR.Activity_BMR_Main"
             android:label="@string/title_activity_main_bmr"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ExerciseHeartRate.Activity_EHR_Main"
+            android:label="@string/title_activity_main_ehr"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <provider
             android:name=".Profile.Implementation.ContentProvider.Provider"
@@ -59,6 +63,9 @@
         <provider
             android:name=".BMR.Implementation.ContentProvider.Provider"
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.BmrProvider" />
+        <provider
+            android:name=".ExerciseHeartRate.Implementation.ContentProvider.Provider"
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.EhrProvider" />
     </application>
 
 </manifest>

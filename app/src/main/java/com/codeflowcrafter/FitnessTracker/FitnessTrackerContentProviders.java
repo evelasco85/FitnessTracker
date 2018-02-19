@@ -40,6 +40,9 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private com.codeflowcrafter.FitnessTracker.BMR.Implementation.ContentProvider.Provider
             _bmrProvider = new com.codeflowcrafter.FitnessTracker.BMR.Implementation
             .ContentProvider.Provider();
+    private com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.ContentProvider.Provider
+            _ehrProvider = new com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation
+            .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
         _profileProvider.SetupTable(_dbHelperSetup);
@@ -47,6 +50,7 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         _bmiProvider.SetupTable(_dbHelperSetup);
         _rhrProvider.SetupTable(_dbHelperSetup);
         _bmrProvider.SetupTable(_dbHelperSetup);
+        _ehrProvider.SetupTable(_dbHelperSetup);
     }
 
     public void RegisterDomains(
@@ -59,6 +63,7 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         _bmiProvider.RegisterDomain(context, resolver, dsManager);
         _rhrProvider.RegisterDomain(context, resolver, dsManager);
         _bmrProvider.RegisterDomain(context, resolver, dsManager);
+        _ehrProvider.RegisterDomain(context, resolver, dsManager);
     }
 
     public DatabaseHelper GetDatabaseHelper(Context context)
@@ -96,5 +101,11 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     GetBmrProvider()
     {
         return _bmrProvider;
+    }
+
+    public com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.ContentProvider.Provider
+    GetEhrProvider()
+    {
+        return _ehrProvider;
     }
 }

@@ -1,11 +1,11 @@
-package com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.QueryObjects;
+package com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.Domain.QueryObjects;
 
 import android.content.Context;
 import android.content.CursorLoader;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
+import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.Domain.ExerciseHeartRate;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObject;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
@@ -15,10 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by enric on 11/02/2018.
+ * Created by enric on 19/02/2018.
  */
 
-public class QueryByProfileId extends BaseQueryObject<RestingHeartRate, QueryByProfileId.Criteria> {
+public class QueryByProfileId extends BaseQueryObject<ExerciseHeartRate, QueryByProfileId.Criteria> {
     private Context _context;
     private Uri _uri;
 
@@ -38,9 +38,9 @@ public class QueryByProfileId extends BaseQueryObject<RestingHeartRate, QueryByP
     }
 
     @Override
-    public List<RestingHeartRate> PerformSearchOperation(QueryByProfileId.Criteria criteria) {
-        String where = RestingHeartRate.COLUMN_PROFILE_ID + "=" +  criteria.ProfileId;
-        String sortOrder = RestingHeartRate.COLUMN_ID + " DESC";
+    public List<ExerciseHeartRate> PerformSearchOperation(QueryByProfileId.Criteria criteria) {
+        String where = ExerciseHeartRate.COLUMN_PROFILE_ID + "=" +  criteria.ProfileId;
+        String sortOrder = ExerciseHeartRate.COLUMN_ID + " DESC";
         CursorLoader loader = new CursorLoader(_context, _uri,
                 null, where, null, sortOrder
         );
@@ -51,12 +51,12 @@ public class QueryByProfileId extends BaseQueryObject<RestingHeartRate, QueryByP
         if(cursor == null)
             return entityList;
 
-        HashMap<String, Integer> ordinals = RestingHeartRate.GetOrdinals(cursor);
-        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(RestingHeartRate.class);
+        HashMap<String, Integer> ordinals = ExerciseHeartRate.GetOrdinals(cursor);
+        IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(ExerciseHeartRate.class);
 
         while (cursor.moveToNext())
         {
-            entityList.add(new RestingHeartRate(mapper, cursor, ordinals));
+            entityList.add(new ExerciseHeartRate(mapper, cursor, ordinals));
         }
 
         cursor.close();

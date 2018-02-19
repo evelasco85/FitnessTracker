@@ -6,6 +6,7 @@
     <string name="title_activity_main_resting_heartrate">Resting Heart Rate Tracker</string>
     <string name="title_activity_main_bmi">Body Mass Index</string>
     <string name="title_activity_main_bmr">Level of Activity</string>
+    <string name="title_activity_main_ehr">Exercise Heart Rate</string>
     <string name="title_activity_heart_rate_counter">Heart Rate Counter</string>
 
     <string name="label_ellipses">...</string>
@@ -14,4 +15,6 @@
     <string name="prompt_intensity">Choose an intensity</string>
     <string name="prompt_type">Choose a type</string>
     <string name="prompt_levelOfActivity">Choose a level of activity</string>
+    <string name="prompt_exercise">Choose exercise type</string>
+
 </resources>
