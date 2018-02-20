@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.Domain.ExerciseHeartRate;
 import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.MVP.IView;
@@ -36,6 +37,7 @@ public class Activity_EHR_Main extends Base_Activity_Main<
     private Presenter _presenter;
     private int _profileId = 0;
     private int _age = 0;
+    private List<Exercise> _exercises;
 
     public Activity_EHR_Main()
     {
@@ -58,6 +60,7 @@ public class Activity_EHR_Main extends Base_Activity_Main<
         if (invoker != null) {
             _profileId = invoker.getIntExtra(KEY_PROFILE_ID, 0);
             _age = invoker.getIntExtra(KEY_AGE, 0);
+            _exercises = GetViewRequest().GetExercisesData();
         }
     }
 
@@ -94,21 +97,21 @@ public class Activity_EHR_Main extends Base_Activity_Main<
         Activity_EHR_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
                 Activity_EHR_Dialog_ReadAddEdit.ACTION_READ, entity,
-                _profileId, _age);
+                _profileId, _age, _exercises);
     }
 
     public void OnPromptExecution_AddEntry(){
         Activity_EHR_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
                 Activity_EHR_Dialog_ReadAddEdit.ACTION_ADD, null,
-                _profileId, _age);
+                _profileId, _age, _exercises);
     }
 
     public void OnPromptExecution_EditEntry(ExerciseHeartRate entity){
         Activity_EHR_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
                 Activity_EHR_Dialog_ReadAddEdit.ACTION_EDIT, entity,
-                _profileId, _age);
+                _profileId, _age, _exercises);
     }
 
     public void OnPromptExecution_DeleteEntry(final ExerciseHeartRate entity){

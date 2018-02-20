@@ -13,10 +13,6 @@ import com.codeflowcrafter.FitnessTracker.Base.Activity.IDataContainer;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.R;
-import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
-import com.codeflowcrafter.FitnessTracker.Services.ViewService;
-
-import java.util.Calendar;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -46,11 +42,14 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
 
         final int age = fViewRequest.GetAge(item.GetDateOfBirth());
 
-        popMenu.inflate(R.menu.mnu_profile_edit_delete);
+        popMenu.inflate(R.menu.mnu_profile);
         popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem mnuItem) {
                 switch (mnuItem.getItemId()) {
+                    case (R.id.mnuEhr):
+                        fViewRequest.Prompt_ExerciseHeartRate(fItem.GetId(), age);
+                        return true;
                     case (R.id.mnuBmr):
                         fViewRequest.Prompt_BMR(
                                 fItem.GetId(),

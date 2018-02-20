@@ -6,29 +6,29 @@ package com.codeflowcrafter.FitnessTracker.Shared;
 
 public class IntensityOfExercise {
     private String _description;
-    private int _lowerMhrPercentLimit;
-    private int _upperMhrPercentLimit;
+    private int _lowerPercentLimit;
+    private int _upperPercentLimit;
 
     public IntensityOfExercise(
             String description,
-            int lowerMhrPercentLimit,
-            int upperMhrPercentLimit
+            int lowerPercentLimit,
+            int upperPercentLimit
     )
     {
         _description = description;
-        _lowerMhrPercentLimit = lowerMhrPercentLimit;
-        _upperMhrPercentLimit = upperMhrPercentLimit;
+        _lowerPercentLimit = lowerPercentLimit;
+        _upperPercentLimit = upperPercentLimit;
     }
 
     public String GetDescription() {
         return _description;
     }
 
-    public int GetLowerMhrPercentLimit() {
-        return _lowerMhrPercentLimit;
+    public int GetLowerPercentLimit() {
+        return _lowerPercentLimit;
     }
 
-    public int GetUpperMhrPercentLimit() {
-        return _upperMhrPercentLimit;
+    public int GetUpperPercentLimit() {
+        return _upperPercentLimit;
     }
 }

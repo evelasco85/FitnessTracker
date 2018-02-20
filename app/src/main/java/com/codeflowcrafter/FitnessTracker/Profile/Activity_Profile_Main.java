@@ -15,6 +15,7 @@ import com.codeflowcrafter.FitnessTracker.BMI.Activity_BMI_Main;
 import com.codeflowcrafter.FitnessTracker.BMR.Activity_BMR_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
+import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Activity_EHR_Main;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.Domain.Profile;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IView;
@@ -154,6 +155,16 @@ public class Activity_Profile_Main extends Base_Activity_Main<
 
         intent.putExtra(Activity_RHR_Main.KEY_PROFILE_ID, profileId);
         intent.putExtra(Activity_RHR_Main.KEY_AGE, age);
+
+        this.startActivity(intent);
+    }
+
+    public void OnPromptExecution_ExerciseHeartRate(int profileId, int age)
+    {
+        Intent intent = new Intent(this, Activity_EHR_Main.class);
+
+        intent.putExtra(Activity_EHR_Main.KEY_PROFILE_ID, profileId);
+        intent.putExtra(Activity_EHR_Main.KEY_AGE, age);
 
         this.startActivity(intent);
     }

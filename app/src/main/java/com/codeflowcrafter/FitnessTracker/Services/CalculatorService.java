@@ -105,10 +105,10 @@ public class CalculatorService {
             int restingHeartRate,
             int percent)
     {
-        int zone = (maximumHeartRate - restingHeartRate) * (percent / 100);
-        int zonedHeartRate = zone + restingHeartRate;
+        double zone = (((double)maximumHeartRate - (double)restingHeartRate) * ((double)percent / 100));
+        double zonedHeartRate = (zone + (double)restingHeartRate);
 
-        return zonedHeartRate;
+        return (int) zonedHeartRate;
     }
 
     public static double GetCaloriesToBurn(double idealWeightToLoseLbs)

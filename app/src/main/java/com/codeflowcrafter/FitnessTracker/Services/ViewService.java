@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.FitnessTracker.Shared.ExerciseType;
@@ -63,6 +64,31 @@ public class ViewService {
                 levelActivityArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinLevelOfActivity.setAdapter(adapter);
+    }
+
+    public static void InitializeExercisesSpinner(
+            Activity activity,
+            Spinner spinExercises,
+            List<Exercise> exercises)
+    {
+        List<String> exerciseArray  =  new ArrayList<String>();
+
+        if(exercises != null) {
+            for (int index = 0; index < exercises.size(); index++) {
+                Exercise exercise = exercises.get(index);
+
+                if (exercise == null) continue;
+
+                exerciseArray.add(exercise.GetName());
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                activity,
+                android.R.layout.simple_spinner_item,
+                exerciseArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinExercises.setAdapter(adapter);
     }
 
     public static void SetHeight(int totalInches, EditText txtFeet, EditText txtInches)

@@ -1,13 +1,20 @@
 package com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.MVP;
 
 import android.net.Uri;
+import android.text.TextUtils;
 
 import com.codeflowcrafter.FitnessTracker.Base.MVP.Crud_Presenter;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAll;
 import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.Domain.ExerciseHeartRate;
 import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.Domain.QueryObjects.QueryByProfileId;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerApplication;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.MapperInvocationDelegate;
+import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
+import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
+import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExercise;
+import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExerciseService;
 import com.codeflowcrafter.LogManagement.Interfaces.IStaticLogEntryWrapper;
 import com.codeflowcrafter.LogManagement.Priority;
 import com.codeflowcrafter.LogManagement.Status;
@@ -124,5 +131,57 @@ public class Presenter extends Crud_Presenter<ExerciseHeartRate, IRequests, IVie
         QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
 
         return repository.Matching(criteria);
+    }
+
+    public int GetMhr(int age)
+    {
+        return CalculatorService.GetMaximumHeartRate(age);
+    }
+
+    public List<Exercise> GetExercisesData()
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<Exercise> repository = manager.GetRepository(Exercise.class);
+        QueryAll.Criteria criteria = new QueryAll.Criteria();
+
+        return repository.Matching(criteria);
+    }
+
+    public RestingHeartRate GetLatestRestingHeartRate(int profileId)
+    {
+        IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
+        IRepository<RestingHeartRate> repository = manager.GetRepository(RestingHeartRate.class);
+        com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.QueryObjects.QueryByProfileId.Criteria criteria = new com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.QueryObjects.QueryByProfileId.Criteria(profileId);
+
+        List<RestingHeartRate> rhrList = repository.Matching(criteria);
+
+        if((rhrList == null) || (rhrList.isEmpty())) return null;
+
+        return rhrList.get(0);
+    }
+
+    public IntensityOfExercise GetIntensityOfExercise(List<Exercise> exercises, String exerciseName)
+    {
+        IntensityOfExercise intensity = null;
+
+        if((exercises == null) || (exercises.isEmpty()) || TextUtils.isEmpty(exerciseName))
+            return intensity;
+
+        for(int index = 0; index < exercises.size(); index++)
+        {
+            Exercise exercise = exercises.get(index);
+
+            if(exercise == null) continue;
+
+            if(exerciseName.equals(exercise.GetName()))
+            {
+                intensity = IntensityOfExerciseService
+                        .GetInstance()
+                        .GetIntensityByDescription(exercise.GetIntensity());
+                break;
+            }
+        }
+
+        return intensity;
     }
 }

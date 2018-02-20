@@ -16,6 +16,7 @@ public interface IRequests extends Crud_IRequests<Profile> {
     void Prompt_BMI(int profileId, int heightInches);
     void Prompt_BMR(int profileId, int age, String gender);
     void Prompt_RestingHeartRate(int profileId, int age);
+    void Prompt_ExerciseHeartRate(int profileId, int age);
     List<Profile> GetData();
     int GetAge(String dateOfBirth);
     int GetAge(Calendar dateOfBirthCalendar);

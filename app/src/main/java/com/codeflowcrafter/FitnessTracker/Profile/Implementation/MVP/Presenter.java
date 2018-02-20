@@ -147,6 +147,15 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
                 .EmitLog(Priority.Info, Status.Success);
     }
 
+    @Override
+    public void Prompt_ExerciseHeartRate(int profileId, int age)
+    {
+        _view.OnPromptExecution_ExerciseHeartRate(profileId, age);
+        _slc
+                .SetEvent(String.format("Showing Exercise Heart Rate list"))
+                .EmitLog(Priority.Info, Status.Success);
+    }
+
     public int GetAge(String dateOfBirth)
     {
         Calendar dobCalendar = CalculatorService.ConvertToCalendar(dateOfBirth);

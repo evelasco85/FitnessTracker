@@ -1,5 +1,7 @@
 package com.codeflowcrafter.FitnessTracker.Shared;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,5 +51,27 @@ public class IntensityOfExerciseService {
         }
 
         return descriptions;
+    }
+
+    public IntensityOfExercise GetIntensityByDescription(String description)
+    {
+        IntensityOfExercise intensityMatched = null;
+
+        if(TextUtils.isEmpty(description)) return intensityMatched;
+
+        for(int index = 0; index < _intensities.size(); ++index)
+        {
+            IntensityOfExercise intensity = _intensities.get(index);
+
+            if(intensity == null) continue;
+
+            if(description.equals(intensity.GetDescription()))
+            {
+                intensityMatched = intensity;
+                break;
+            }
+        }
+
+        return intensityMatched;
     }
 }
