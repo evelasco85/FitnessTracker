@@ -5,6 +5,9 @@ import android.database.Cursor;
 
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IContentRetriever;
 import com.codeflowcrafter.FitnessTracker.Services.DomainService;
+import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IAge;
+import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IProfile;
+import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IRestingHeartRate;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.Domain.DomainObject;
 
@@ -15,7 +18,8 @@ import java.util.HashMap;
  */
 
 public class ExerciseHeartRate extends DomainObject
-        implements IContentRetriever {
+        implements IContentRetriever, IProfile, IAge, IRestingHeartRate
+{
     public static final String PROVIDER_NAME = "EhrProvider";
     public static final String TABLE_NAME = "ehr";
 
