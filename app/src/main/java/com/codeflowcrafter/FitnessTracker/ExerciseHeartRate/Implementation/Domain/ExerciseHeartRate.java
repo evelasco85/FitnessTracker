@@ -5,9 +5,9 @@ import android.database.Cursor;
 
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IContentRetriever;
 import com.codeflowcrafter.FitnessTracker.Services.DomainService;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IAge;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IProfile;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IRestingHeartRate;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IAge;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IProfile;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IRestingHeartRate;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.Domain.DomainObject;
 
@@ -35,34 +35,26 @@ public class ExerciseHeartRate extends DomainObject
     public static final String COLUMN_DATE = "date";
     private String _date;
     public String GetDate() {return _date;}
-    public void SetDate(String date){
-        _date = date;}
 
     public static final String COLUMN_AGE = "age";
     private int _age;
     public int GetAge() {return _age;}
-    public void SetAge(int age){
-        _age = age;}
 
     public static final String COLUMN_RESTING_HEART_RATE = "rhr";
     private int _rhr;
     public int GetRestingHeartRate() {return _rhr;}
-    public void SetRestingHeartRate(int rhr){ _rhr = rhr;}
 
     public static final String COLUMN_EXERCISE_HEART_RATE = "exerciseHeartRate";
     private int _exerciseHeartRate;
     public int GetExerciseHeartRate() {return _exerciseHeartRate;}
-    public void SetExerciseHeartRate(int exerciseHeartRate){ _exerciseHeartRate = exerciseHeartRate;}
 
     public static final String COLUMN_RECOVERY_HEART_RATE = "recoveryHeartRate";
     private int _recoveryHeartRate;
     public int GetRecoveryHeartRate() {return _recoveryHeartRate;}
-    public void SetRecoveryHeartRate(int recoveryHeartRate){ _recoveryHeartRate = recoveryHeartRate;}
 
     public static final String COLUMN_EXERCISE = "exercise";
     private String _exercise;
     public String GetExercise() {return _exercise;}
-    public void SetExercise(String exercise){ _exercise = exercise;}
     /**********************/
 
     public ExerciseHeartRate(

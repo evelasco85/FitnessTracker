@@ -5,10 +5,10 @@ import android.database.Cursor;
 
 import com.codeflowcrafter.FitnessTracker.Base.Domain.IContentRetriever;
 import com.codeflowcrafter.FitnessTracker.Services.DomainService;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IAge;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IHeight;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IProfile;
-import com.codeflowcrafter.FitnessTracker.Shared.DomainInterfaces.IWeight;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IAge;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IHeight;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IProfile;
+import com.codeflowcrafter.FitnessTracker.Shared.Domain.Interfaces.IWeight;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.Domain.DomainObject;
 
@@ -37,30 +37,22 @@ public class BasalMetabolicRate
     public static final String COLUMN_DATE = "date";
     private String _date;
     public String GetDate() {return _date;}
-    public void SetDate(String date){
-        _date = date;}
 
     public static final String COLUMN_AGE = "age";
     private int _age;
     public int GetAge() {return _age;}
-    public void SetAge(int age){
-        _age = age;}
 
     public static final String COLUMN_HEIGHT_INCHES = "heightInches";
     private int _heightInches;
     public int GetHeightInches() {return _heightInches;}
-    public void SetHeightInches(int heightInches){ _heightInches = heightInches;}
 
     public static final String COLUMN_WEIGHT_LBS = "weightLbs";
     private double _weightLbs;
     public double GetWeightLbs() {return _weightLbs;}
-    public void SetWeightLbs(double weightLbs){ _weightLbs = weightLbs;}
 
     public static final String COLUMN_LVL_ACTIVITY = "LevelOfActivity";
     private String _levelOfActivity;
     public String GetLevelOfActivity() {return _levelOfActivity;}
-    public void SetLevelOfActivity(String levelOfActivity){
-        _levelOfActivity = levelOfActivity;}
     /**********************/
 
     public BasalMetabolicRate(
