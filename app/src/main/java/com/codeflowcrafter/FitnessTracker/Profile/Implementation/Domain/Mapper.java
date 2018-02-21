@@ -110,56 +110,53 @@ public class Mapper extends BaseMapper<Profile> {
     private void DeleteBMI(Hashtable results, int profileId)
     {
         String keyColumn = BodyMassIndex.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  profileId;
         Uri uri = FitnessTrackerContentProviders
                 .GetInstance()
                 .GetBmiProvider()
                 .GetContentUri();
-        int deletedRecords = _resolver.delete(uri, where, null );
 
-        results.put("[Operation]", "Deletion BMI(s)");
-        results.put("[Count]", String.valueOf(deletedRecords));
+        Delete(results, keyColumn, profileId, uri, "BMI");
     }
 
     private void DeleteRHR(Hashtable results, int profileId)
     {
         String keyColumn = RestingHeartRate.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  profileId;
         Uri uri = FitnessTrackerContentProviders
                 .GetInstance()
                 .GetRhrProvider()
                 .GetContentUri();
-        int deletedRecords = _resolver.delete(uri, where, null );
 
-        results.put("[Operation]", "Deletion RHR(s)");
-        results.put("[Count]", String.valueOf(deletedRecords));
+        Delete(results, keyColumn, profileId, uri, "RHR");
     }
 
     private void DeleteBMR(Hashtable results, int profileId)
     {
         String keyColumn = BasalMetabolicRate.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  profileId;
         Uri uri = FitnessTrackerContentProviders
                 .GetInstance()
                 .GetBmrProvider()
                 .GetContentUri();
-        int deletedRecords = _resolver.delete(uri, where, null );
 
-        results.put("[Operation]", "Deletion BMR(s)");
-        results.put("[Count]", String.valueOf(deletedRecords));
+        Delete(results, keyColumn, profileId, uri, "BMR");
     }
 
     private void DeleteEHR(Hashtable results, int profileId)
     {
         String keyColumn = ExerciseHeartRate.COLUMN_PROFILE_ID;
-        String where = keyColumn + "=" +  profileId;
         Uri uri = FitnessTrackerContentProviders
                 .GetInstance()
                 .GetEhrProvider()
                 .GetContentUri();
+
+        Delete(results, keyColumn, profileId, uri, "EHR");
+    }
+
+    private void Delete(Hashtable results, String keyColumn, int keyValue, Uri uri, String module)
+    {
+        String where = keyColumn + "=" +  keyValue;
         int deletedRecords = _resolver.delete(uri, where, null );
 
-        results.put("[Operation]", "Deletion EHR(s)");
-        results.put("[Count]", String.valueOf(deletedRecords));
+        results.put("[" + module  + ": Operation]", "Deletion");
+        results.put("[" + module  + ": Count]", String.valueOf(deletedRecords));
     }
 }
