@@ -54,6 +54,11 @@ public class ExerciseHeartRate extends DomainObject
     private int _recoveryHeartRate;
     public int GetRecoveryHeartRate() {return _recoveryHeartRate;}
     public void SetRecoveryHeartRate(int recoveryHeartRate){ _recoveryHeartRate = recoveryHeartRate;}
+
+    public static final String COLUMN_EXERCISE = "exercise";
+    private String _exercise;
+    public String GetExercise() {return _exercise;}
+    public void SetExercise(String exercise){ _exercise = exercise;}
     /**********************/
 
     public ExerciseHeartRate(
@@ -64,7 +69,8 @@ public class ExerciseHeartRate extends DomainObject
             int age,
             int rhr,
             int exerciseHeartRate,
-            int recoveryHeartRate) {
+            int recoveryHeartRate,
+            String exercise) {
         super(mapper);
 
         _id = id;
@@ -74,6 +80,7 @@ public class ExerciseHeartRate extends DomainObject
         _rhr = rhr;
         _exerciseHeartRate = exerciseHeartRate;
         _recoveryHeartRate = recoveryHeartRate;
+        _exercise = exercise;
     }
 
     public ExerciseHeartRate(
@@ -89,7 +96,8 @@ public class ExerciseHeartRate extends DomainObject
                 cursor.getInt(ordinals.get(COLUMN_AGE)),
                 cursor.getInt(ordinals.get(COLUMN_RESTING_HEART_RATE)),
                 cursor.getInt(ordinals.get(COLUMN_EXERCISE_HEART_RATE)),
-                cursor.getInt(ordinals.get(COLUMN_RECOVERY_HEART_RATE))
+                cursor.getInt(ordinals.get(COLUMN_RECOVERY_HEART_RATE)),
+                cursor.getString(ordinals.get(COLUMN_EXERCISE))
         );
     }
 
@@ -104,6 +112,7 @@ public class ExerciseHeartRate extends DomainObject
         tableColumns.put(COLUMN_RESTING_HEART_RATE, "integer");
         tableColumns.put(COLUMN_EXERCISE_HEART_RATE, "integer");
         tableColumns.put(COLUMN_RECOVERY_HEART_RATE, "integer");
+        tableColumns.put(COLUMN_EXERCISE, "TEXT");
 
         return tableColumns;
     }
@@ -119,6 +128,7 @@ public class ExerciseHeartRate extends DomainObject
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_RESTING_HEART_RATE);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_EXERCISE_HEART_RATE);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_RECOVERY_HEART_RATE);
+        DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_EXERCISE);
 
         return ordinals;
     }
@@ -136,6 +146,7 @@ public class ExerciseHeartRate extends DomainObject
         values.put(COLUMN_RESTING_HEART_RATE, _rhr);
         values.put(COLUMN_EXERCISE_HEART_RATE, _exerciseHeartRate);
         values.put(COLUMN_RECOVERY_HEART_RATE, _recoveryHeartRate);
+        values.put(COLUMN_EXERCISE, _exercise);
 
         return values;
     }

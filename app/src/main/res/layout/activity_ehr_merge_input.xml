@@ -33,12 +33,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center" />
         </TableRow>
-        <TableRow>
+
+        <TableRow android:paddingBottom="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Resting Heart Rate: "
-                />
+                android:gravity="center"
+                android:text="Resting Heart Rate: " />
+
             <EditText
                 android:id="@+id/txtRhr"
                 android:layout_width="wrap_content"
@@ -89,31 +92,36 @@
                 android:gravity="center"
                 android:textColor="@color/colorPrimaryDark" />
         </TableRow>
-        <TableRow>
+
+        <TableRow android:paddingBottom="15dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Exercise Heart Rate: "
-                />
+                android:gravity="center"
+                android:text="Exercise Heart Rate: " />
+
             <EditText
                 android:id="@+id/txtEhr"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:hint="[Click Here]"
                 android:inputType="number" />
         </TableRow>
         <TableRow>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Recovery Heart Rate: "
-                />
+                android:gravity="center"
+                android:text="Recovery Heart Rate: " />
+
             <EditText
                 android:id="@+id/txtRecoverHr"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:gravity="top|center"
                 android:hint="[Click Here]"
                 android:inputType="number" />
         </TableRow>

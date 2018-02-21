@@ -112,19 +112,23 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
 
     private void LoadDefaultData(View view)
     {
-        IRequests request = GetViewRequest();
-        int maximumHeartRate = request.GetMhr(_age);
+        SetMHR(view);
 
-        GetConcreteView(TextView.class, view, R.id.txtMhr)
-                .setText(String.format("%s", String.valueOf(maximumHeartRate)));
-
-        RestingHeartRate latestRHR = request.GetLatestRestingHeartRate(_profileId);
+        RestingHeartRate latestRHR = GetViewRequest().GetLatestRestingHeartRate(_profileId);
 
         if(latestRHR != null)
         {
             GetConcreteView(EditText.class, view, R.id.txtRhr)
                     .setText(String.format("%s", String.valueOf(latestRHR.GetRestingHeartRate())));
         }
+    }
+
+    private void SetMHR(View view)
+    {
+        int maximumHeartRate = GetViewRequest().GetMhr(_age);
+
+        GetConcreteView(TextView.class, view, R.id.txtMhr)
+                .setText(String.format("%s", String.valueOf(maximumHeartRate)));
     }
 
     private void SetExerciseSpinner(final Spinner spinExercise, final View fView)
@@ -162,6 +166,9 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         {
             //Disable input contols
             ViewService.DisableConcreteView(txtDate);
+            ViewService.DisableConcreteView(txtRhr);
+            ViewService.DisableConcreteView(txtEhr);
+            ViewService.DisableConcreteView(txtRecoverHr);
             spinExercise.setEnabled(false);
             return;
         }
@@ -269,8 +276,44 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
 
     public ExerciseHeartRate ViewDataToModel(View view){
         IBaseMapper mapper = DataSynchronizationManager.GetInstance().GetMapper(ExerciseHeartRate.class);
+        String date = ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtDate)
+                .getText()
+                .toString();
 
-        return null;
+        int rhr = 0;
+        String rhrValue = ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtRhr)
+                .getText().toString();
+        if(!TextUtils.isEmpty(rhrValue)) rhr = Integer.parseInt(rhrValue);
+
+        int exerciseHeartRate = 0;
+        String exerciseHeartRateValue = ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtEhr)
+                .getText().toString();
+        if(!TextUtils.isEmpty(exerciseHeartRateValue)) exerciseHeartRate = Integer.parseInt(exerciseHeartRateValue);
+
+        int recoveryHeartRate = 0;
+        String recoveryHeartRateValue = ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtRecoverHr)
+                .getText().toString();
+        if(!TextUtils.isEmpty(recoveryHeartRateValue)) recoveryHeartRate = Integer.parseInt(recoveryHeartRateValue);
+
+        String exercise = (String)ActivityService
+                .GetConcreteView(Spinner.class, view, R.id.spinExercise)
+                .getSelectedItem();
+
+        return new ExerciseHeartRate(
+                mapper,
+                _id,
+                _profileId,
+                date,
+                _age,
+                rhr,
+                exerciseHeartRate,
+                recoveryHeartRate,
+                exercise
+        );
     }
 
     public void SetModelToViewData(View view, ExerciseHeartRate entity){
@@ -279,8 +322,37 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         }
 
         _id = entity.GetId();
-    }
+        String date = entity.GetDate();
 
+        if(!TextUtils.isEmpty(date)) {
+            ActivityService
+                    .GetConcreteView(TextView.class, view, R.id.txtDate)
+                    .setText(date);
+        }
+
+        _age = entity.GetAge();
+
+        SetMHR(view);
+        ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtRhr)
+                .setText(String.valueOf(entity.GetRestingHeartRate()));
+
+        String exercise = entity.GetExercise();
+
+        if(!TextUtils.isEmpty(exercise)) {
+            final Spinner spinExercise = ActivityService
+                    .GetConcreteView(Spinner.class, view, R.id.spinExercise);
+
+            ViewService.SetSpinnerValue(spinExercise, exercise);
+        }
+
+        ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtEhr)
+                .setText(String.valueOf(entity.GetExerciseHeartRate()));
+        ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtRecoverHr)
+                .setText(String.valueOf(entity.GetRecoveryHeartRate()));
+    }
 
     @Override
     public void onActivityResult(
