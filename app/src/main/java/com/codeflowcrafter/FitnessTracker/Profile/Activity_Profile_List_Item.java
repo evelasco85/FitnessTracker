@@ -36,14 +36,39 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
         final Context fActivityContext = activityContext;
         final IRequests fViewRequest = viewRequest;
         final Profile fItem = item;
+        final int age = fViewRequest.GetAge(item.GetDateOfBirth());
 
         final Button btnMenu = GetConcreteView(Button.class, itemLayout, R.id.btnProfileMenu);
         final PopupMenu popMenu = new PopupMenu(activityContext, btnMenu);
 
-        final int age = fViewRequest.GetAge(item.GetDateOfBirth());
-
-        popMenu.inflate(R.menu.mnu_profile);
+        popMenu.inflate(R.menu.mnu_edit_delete);
         popMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem mnuItem) {
+                switch (mnuItem.getItemId()) {
+                    case (R.id.mnuEdit):
+                        fViewRequest.Prompt_EditEntry(fItem);
+                        return true;
+                    case (R.id.mnuDelete):
+                        fViewRequest.Prompt_DeleteEntry(fItem);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        btnMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popMenu.show();
+            }
+        });
+
+        final Button btnOptions = GetConcreteView(Button.class, itemLayout, R.id.btnOptions);
+        final PopupMenu popMenuOptions = new PopupMenu(activityContext, btnOptions);
+
+        popMenuOptions.inflate(R.menu.mnu_profile_options);
+        popMenuOptions.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem mnuItem) {
                 switch (mnuItem.getItemId()) {
@@ -62,24 +87,19 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
                     case (R.id.mnuBmi):
                         fViewRequest.Prompt_BMI(fItem.GetId(), fItem.GetHeightInches());
                         return true;
-                    case (R.id.mnuEdit):
-                        fViewRequest.Prompt_EditEntry(fItem);
-                        return true;
-                    case (R.id.mnuDelete):
-                        fViewRequest.Prompt_DeleteEntry(fItem);
-                        return true;
                     default:
                         return false;
                 }
             }
         });
-
-        btnMenu.setOnClickListener(new View.OnClickListener() {
+        btnOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popMenu.show();
+                popMenuOptions.show();
             }
         });
+
+
         itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

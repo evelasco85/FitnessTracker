@@ -11,6 +11,13 @@
         android:text="@string/label_ellipses"
         android:layout_alignParentRight="true"
         />
+    <Button
+        android:id="@+id/btnOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Options"
+        android:layout_toLeftOf="@id/btnProfileMenu"
+        />
     <TextView
         android:id="@+id/txtProfileId"
         android:layout_width="wrap_content"
@@ -18,7 +25,7 @@
         android:scrollbars="vertical"
         android:fadingEdge="vertical"
         android:padding="10dp"
-        android:layout_toLeftOf="@id/btnProfileMenu"
+        android:layout_toLeftOf="@id/btnOptions"
         android:visibility="invisible"
         />
     <TableLayout
