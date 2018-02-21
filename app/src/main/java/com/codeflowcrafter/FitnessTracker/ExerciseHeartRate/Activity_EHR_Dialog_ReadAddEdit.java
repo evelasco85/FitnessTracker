@@ -1,15 +1,19 @@
 package com.codeflowcrafter.FitnessTracker.ExerciseHeartRate;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,7 +31,10 @@ import com.codeflowcrafter.FitnessTracker.Shared.HeartRate.Activity_Heart_Rate_C
 import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExercise;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
+import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
@@ -117,7 +124,6 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         {
             GetConcreteView(EditText.class, view, R.id.txtRhr)
                     .setText(String.format("%s", String.valueOf(latestRHR.GetRestingHeartRate())));
-
         }
     }
 
@@ -145,6 +151,9 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
     public void SetConcreteViews(final View fView, final String selectedAction) {
         final Spinner spinExercise = ActivityService.GetConcreteView(Spinner.class, fView, R.id.spinExercise);
         final TextView txtDate = ActivityService.GetConcreteView(TextView.class, fView, R.id.txtDate);
+        final EditText txtRhr = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtRhr);
+        final EditText txtEhr = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtEhr);
+        final EditText txtRecoverHr = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtRecoverHr);
 
         LoadDefaultData(fView);
         SetExerciseSpinner(spinExercise, fView);
@@ -174,6 +183,73 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                         dismiss();
                     }
                 });
+        txtDate.setText(
+                (new SimpleDateFormat(CalculatorService.DateFormat))
+                        .format(
+                                Calendar
+                                        .getInstance()
+                                        .getTime()
+                        )
+        );
+        txtDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog_DatePicker dialog = new Dialog_DatePicker();
+
+                dialog.SetDefaultDate(txtDate.getText().toString());
+                dialog.SetOnDateSetListener(new DatePickerDialog.OnDateSetListener()
+                {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day)
+                    {
+                        Calendar calendar = Calendar.getInstance();
+
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+                        String dateOfBirth = (new SimpleDateFormat(CalculatorService.DateFormat))
+                                .format(calendar.getTime());
+                        txtDate.setText(dateOfBirth);
+                    }
+                });
+                dialog.show(getFragmentManager(), "datePicker");
+            }
+        });
+        txtRhr.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                SetZone(fView);
+            }
+        });
+        txtRhr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenHeartRateCounter(REQUEST_CODE_RESTING_HEART_RATE);
+            }
+        });
+        txtEhr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenHeartRateCounter(REQUEST_CODE_EXERCISE_HEART_RATE);
+            }
+        });
+        txtRecoverHr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenHeartRateCounter(REQUEST_CODE_RECOVERY_HEART_RATE);
+            }
+        });
     }
 
     private void InvokeActionBasedPersistency(View view, String selectedAction)
@@ -219,20 +295,27 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .getIntExtra(
                         Activity_Heart_Rate_Counter.RESULT_HEART_RATE,
                         0);
+        EditText textbox = null;
 
         switch (requestCode) {
             case (REQUEST_CODE_RESTING_HEART_RATE):
-                ActivityService
-                        .GetConcreteView(TextView.class, view, R.id.txtRhr)
-                        .setText(String.valueOf(heartRate));
-                return;
+                textbox = ActivityService
+                        .GetConcreteView(EditText.class, view, R.id.txtRhr);
+                break;
             case (REQUEST_CODE_EXERCISE_HEART_RATE):
-                return;
+                textbox = ActivityService
+                        .GetConcreteView(EditText.class, view, R.id.txtEhr);
+                break;
             case (REQUEST_CODE_RECOVERY_HEART_RATE):
-                return;
+                textbox = ActivityService
+                        .GetConcreteView(EditText.class, view, R.id.txtRecoverHr);
+                break;
             default:
                 return;
         }
+
+        if(textbox != null)
+            textbox.setText(String.valueOf(heartRate));
     }
 
     private void SetZone(View view)
@@ -245,6 +328,10 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .GetIntensityOfExercise(_exercises, exercise);
 
         if(intensity == null) return;
+
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtIntensity)
+                .setText(intensity.GetDescription());
 
         int maximumHeartRate = 0;
         String maximumHeartRateStr = ActivityService
@@ -280,5 +367,12 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtZone)
                 .setText(description);
+    }
+
+    private void OpenHeartRateCounter(int requestCode)
+    {
+        Intent intent = new Intent(getActivity(), Activity_Heart_Rate_Counter.class);
+
+        startActivityForResult(intent, requestCode);
     }
 }
