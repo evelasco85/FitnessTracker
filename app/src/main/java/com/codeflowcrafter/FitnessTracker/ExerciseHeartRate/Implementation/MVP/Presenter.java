@@ -184,4 +184,24 @@ public class Presenter extends Crud_Presenter<ExerciseHeartRate, IRequests, IVie
 
         return intensity;
     }
+
+    public String GetZoneRange(
+            int maximumHeartRate, int restingHeartRate,
+            IntensityOfExercise intensity)
+    {
+        if(intensity == null) return "N/A";
+
+        int lowerLimit = CalculatorService.CalculateZonedHeartRate(
+                maximumHeartRate,
+                restingHeartRate,
+                intensity.GetLowerPercentLimit()
+        );
+        int upperLimit = CalculatorService.CalculateZonedHeartRate(
+                maximumHeartRate,
+                restingHeartRate,
+                intensity.GetUpperPercentLimit()
+        );
+
+        return String.format("%d - %d", lowerLimit, upperLimit);
+    }
 }

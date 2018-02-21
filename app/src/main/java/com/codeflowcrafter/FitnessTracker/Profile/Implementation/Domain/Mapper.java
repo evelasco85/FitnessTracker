@@ -4,6 +4,8 @@ import android.content.ContentResolver;
 import android.net.Uri;
 
 import com.codeflowcrafter.FitnessTracker.BMI.Implementation.Domain.BodyMassIndex;
+import com.codeflowcrafter.FitnessTracker.BMR.Implementation.Domain.BasalMetabolicRate;
+import com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.Domain.ExerciseHeartRate;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Implementation.Domain.RestingHeartRate;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapper;
@@ -95,6 +97,8 @@ public class Mapper extends BaseMapper<Profile> {
 
             DeleteBMI(results, profileId);
             DeleteRHR(results, profileId);
+            DeleteBMR(results, profileId);
+            DeleteEHR(results, profileId);
         }
 
         invocationDelegates.SetResults(results);
@@ -128,6 +132,34 @@ public class Mapper extends BaseMapper<Profile> {
         int deletedRecords = _resolver.delete(uri, where, null );
 
         results.put("[Operation]", "Deletion RHR(s)");
+        results.put("[Count]", String.valueOf(deletedRecords));
+    }
+
+    private void DeleteBMR(Hashtable results, int profileId)
+    {
+        String keyColumn = BasalMetabolicRate.COLUMN_PROFILE_ID;
+        String where = keyColumn + "=" +  profileId;
+        Uri uri = FitnessTrackerContentProviders
+                .GetInstance()
+                .GetBmrProvider()
+                .GetContentUri();
+        int deletedRecords = _resolver.delete(uri, where, null );
+
+        results.put("[Operation]", "Deletion BMR(s)");
+        results.put("[Count]", String.valueOf(deletedRecords));
+    }
+
+    private void DeleteEHR(Hashtable results, int profileId)
+    {
+        String keyColumn = ExerciseHeartRate.COLUMN_PROFILE_ID;
+        String where = keyColumn + "=" +  profileId;
+        Uri uri = FitnessTrackerContentProviders
+                .GetInstance()
+                .GetEhrProvider()
+                .GetContentUri();
+        int deletedRecords = _resolver.delete(uri, where, null );
+
+        results.put("[Operation]", "Deletion EHR(s)");
         results.put("[Count]", String.valueOf(deletedRecords));
     }
 }

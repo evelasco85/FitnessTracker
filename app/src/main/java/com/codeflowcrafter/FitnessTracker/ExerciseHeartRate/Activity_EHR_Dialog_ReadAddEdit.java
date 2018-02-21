@@ -434,11 +434,14 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 intensity.GetUpperPercentLimit()
         );
 
-        String description = String.format("%d - %d", lowerLimit, upperLimit);
+        String zoneRange = GetViewRequest().GetZoneRange(
+                maximumHeartRate,
+                restingHeartRate,
+                intensity);
 
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtZone)
-                .setText(description);
+                .setText(zoneRange);
     }
 
     private void OpenHeartRateCounter(int requestCode)

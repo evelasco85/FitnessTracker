@@ -47,6 +47,7 @@ public class Activity_EHR_Main extends Base_Activity_Main<
         );
 
         _presenter = new Presenter(this);
+        _exercises = GetViewRequest().GetExercisesData();
     }
 
     @Override
@@ -60,14 +61,13 @@ public class Activity_EHR_Main extends Base_Activity_Main<
         if (invoker != null) {
             _profileId = invoker.getIntExtra(KEY_PROFILE_ID, 0);
             _age = invoker.getIntExtra(KEY_AGE, 0);
-            _exercises = GetViewRequest().GetExercisesData();
         }
     }
 
     @Override
     public Activity_EHR_List_Item GetListItem(DataContainer<ExerciseHeartRate> container)
     {
-        return new Activity_EHR_List_Item(this, GetViewRequest(), container);
+        return new Activity_EHR_List_Item(this, GetViewRequest(), container, _exercises);
     }
 
     @Override
@@ -122,7 +122,7 @@ public class Activity_EHR_Main extends Base_Activity_Main<
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int arg) {
                         GetViewRequest().Delete(entity);
-                        String message = "RHR id '" + entity.GetId() + "' deleted";
+                        String message = "EHR id '" + entity.GetId() + "' deleted";
                         Toast
                                 .makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
                                 .show();

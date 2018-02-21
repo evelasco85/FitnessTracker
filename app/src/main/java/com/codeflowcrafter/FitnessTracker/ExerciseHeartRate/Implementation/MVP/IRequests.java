@@ -19,4 +19,5 @@ public interface IRequests extends Crud_IRequests<ExerciseHeartRate> {
     RestingHeartRate GetLatestRestingHeartRate(int profileId);
     int GetMhr(int age);
     IntensityOfExercise GetIntensityOfExercise(List<Exercise> exercises, String exercise);
+    String GetZoneRange(int maximumHeartRate, int restingHeartRate, IntensityOfExercise intensity);
 }
