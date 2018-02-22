@@ -156,6 +156,15 @@ public class Presenter extends Crud_Presenter<Profile, IRequests, IView>
                 .EmitLog(Priority.Info, Status.Success);
     }
 
+    @Override
+    public void Prompt_RepMax(int profileId)
+    {
+        _view.OnPromptExecution_RepMax(profileId);
+        _slc
+                .SetEvent(String.format("Showing RepMax list"))
+                .EmitLog(Priority.Info, Status.Success);
+    }
+
     public int GetAge(String dateOfBirth)
     {
         Calendar dobCalendar = CalculatorService.ConvertToCalendar(dateOfBirth);

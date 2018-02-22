@@ -72,6 +72,9 @@ public class Activity_Profile_List_Item extends BaseListItem<Profile, IRequests>
             @Override
             public boolean onMenuItemClick(MenuItem mnuItem) {
                 switch (mnuItem.getItemId()) {
+                    case (R.id.mnuRepMax):
+                        fViewRequest.Prompt_RepMax(fItem.GetId());
+                        return true;
                     case (R.id.mnuEhr):
                         fViewRequest.Prompt_ExerciseHeartRate(fItem.GetId(), age);
                         return true;

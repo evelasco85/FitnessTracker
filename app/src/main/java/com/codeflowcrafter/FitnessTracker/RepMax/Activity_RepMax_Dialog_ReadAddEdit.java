@@ -25,7 +25,6 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
 
     private int _id = 0;
     private int _profileId = 0;
-    private int _heightInches = 0;
 
     public static Activity_RepMax_Dialog_ReadAddEdit newInstance(
             String action,

@@ -11,4 +11,5 @@ public interface IView extends Crud_IView<Profile, IRequests> {
     void OnPromptExecution_BMR(int profileId, int age, String gender);
     void OnPromptExecution_RestingHeartRate(int profileId, int age);
     void OnPromptExecution_ExerciseHeartRate(int profileId, int age);
+    void OnPromptExecution_RepMax(int profileId);
 }

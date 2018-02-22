@@ -21,6 +21,7 @@ import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.IView;
 import com.codeflowcrafter.FitnessTracker.Profile.Implementation.MVP.Presenter;
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.RepMax.Activity_RepMax_Main;
 import com.codeflowcrafter.FitnessTracker.RestingHeartRate.Activity_RHR_Main;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 
@@ -165,6 +166,15 @@ public class Activity_Profile_Main extends Base_Activity_Main<
 
         intent.putExtra(Activity_EHR_Main.KEY_PROFILE_ID, profileId);
         intent.putExtra(Activity_EHR_Main.KEY_AGE, age);
+
+        this.startActivity(intent);
+    }
+
+    public void OnPromptExecution_RepMax(int profileId)
+    {
+        Intent intent = new Intent(this, Activity_RepMax_Main.class);
+
+        intent.putExtra(Activity_RepMax_Main.KEY_PROFILE_ID, profileId);
 
         this.startActivity(intent);
     }

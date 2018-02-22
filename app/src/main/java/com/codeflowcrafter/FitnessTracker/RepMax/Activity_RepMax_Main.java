@@ -22,7 +22,7 @@ import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 
 import java.util.List;
 
-public class Activity_Repmax_Main extends Base_Activity_Main<
+public class Activity_RepMax_Main extends Base_Activity_Main<
         RepMax,
         IRequests,
         Activity_RepMax_List_Item>
@@ -32,7 +32,7 @@ public class Activity_Repmax_Main extends Base_Activity_Main<
     private Presenter _presenter;
     private int _profileId = 0;
 
-    public Activity_Repmax_Main()
+    public Activity_RepMax_Main()
     {
         super(
                 R.layout.activity_repmax_main,

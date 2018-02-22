@@ -71,7 +71,7 @@
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.RepMaxProvider" />
 
         <activity
-            android:name=".RepMax.Activity_Repmax_Main"
+            android:name=".RepMax.Activity_RepMax_Main"
             android:label="@string/title_activity_main_repmax"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
