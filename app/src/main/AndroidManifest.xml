@@ -66,6 +66,9 @@
         <provider
             android:name=".ExerciseHeartRate.Implementation.ContentProvider.Provider"
             android:authorities="com.codeflowcrafter.FitnessTrackerApp.EhrProvider" />
+        <provider
+            android:name=".RepMax.Implementation.ContentProvider.Provider"
+            android:authorities="com.codeflowcrafter.FitnessTrackerApp.RepMaxProvider" />
     </application>
 
 </manifest>

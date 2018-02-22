@@ -43,6 +43,9 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     private com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation.ContentProvider.Provider
             _ehrProvider = new com.codeflowcrafter.FitnessTracker.ExerciseHeartRate.Implementation
             .ContentProvider.Provider();
+    private com.codeflowcrafter.FitnessTracker.RepMax.Implementation.ContentProvider.Provider
+            _repMaxProvider = new com.codeflowcrafter.FitnessTracker.RepMax.Implementation
+            .ContentProvider.Provider();
 
     private FitnessTrackerContentProviders() {
         _profileProvider.SetupTable(_dbHelperSetup);
@@ -51,6 +54,7 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         _rhrProvider.SetupTable(_dbHelperSetup);
         _bmrProvider.SetupTable(_dbHelperSetup);
         _ehrProvider.SetupTable(_dbHelperSetup);
+        _repMaxProvider.SetupTable(_dbHelperSetup);
     }
 
     public void RegisterDomains(
@@ -64,6 +68,7 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
         _rhrProvider.RegisterDomain(context, resolver, dsManager);
         _bmrProvider.RegisterDomain(context, resolver, dsManager);
         _ehrProvider.RegisterDomain(context, resolver, dsManager);
+        _repMaxProvider.RegisterDomain(context, resolver, dsManager);
     }
 
     public DatabaseHelper GetDatabaseHelper(Context context)
@@ -107,5 +112,11 @@ public class FitnessTrackerContentProviders extends BaseContentProviders {
     GetEhrProvider()
     {
         return _ehrProvider;
+    }
+
+    public com.codeflowcrafter.FitnessTracker.RepMax.Implementation.ContentProvider.Provider
+    GetRepMaxProvider()
+    {
+        return _repMaxProvider;
     }
 }
