@@ -3,7 +3,9 @@ package com.codeflowcrafter.FitnessTracker.RepMax;
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import com.codeflowcrafter.FitnessTracker.RepMax.Implementation.MVP.IRequests;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.RepMaxService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
@@ -29,6 +32,8 @@ import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.codeflowcrafter.FitnessTracker.Services.ViewService.Set_WorkoutSet;
 
 /**
  * Created by enric on 22/02/2018.
@@ -116,6 +121,8 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
     public void SetConcreteViews(final View fView, final String selectedAction) {
         final Spinner spinExercise = ActivityService.GetConcreteView(Spinner.class, fView, R.id.spinExercise);
         final TextView txtStartDate = ActivityService.GetConcreteView(TextView.class, fView, R.id.txtStartDate);
+        final EditText txtWeightLbs = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtWeightLbs);
+        final EditText txtRepetitions = ActivityService.GetConcreteView(EditText.class, fView, R.id.txtRepetitions);
 
         SetExerciseSpinner(spinExercise, fView);
 
@@ -123,15 +130,15 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
         {
             //Disable input contols
             ViewService.DisableConcreteView(txtStartDate);
-            ViewService.DisableConcreteView(ActivityService
-                    .GetConcreteView(EditText.class, fView, R.id.txtWeightLbs));
-            ViewService.DisableConcreteView(ActivityService
-                    .GetConcreteView(EditText.class, fView, R.id.txtRepititions));
+            ViewService.DisableConcreteView(txtWeightLbs);
+            ViewService.DisableConcreteView(txtRepetitions);
             spinExercise.setEnabled(false);
 
             return;
         }
 
+        SetRoutineListener(fView, txtWeightLbs);
+        SetRoutineListener(fView, txtRepetitions);
         ActivityService.GetConcreteView(Button.class, fView, R.id.btnSave)
                 .setOnClickListener(new View.OnClickListener(){
                     @Override
@@ -185,6 +192,26 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
         });
     }
 
+    private void SetRoutineListener(final View view, EditText textBox)
+    {
+        textBox.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                SetRoutines(view);
+            }
+        });
+    }
+
     private void InvokeActionBasedPersistency(View view, String selectedAction)
     {
         switch (selectedAction)
@@ -217,7 +244,7 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
 
         int repititions = 0;
         String repititionsValue = ActivityService
-                .GetConcreteView(EditText.class, view, R.id.txtRepititions)
+                .GetConcreteView(EditText.class, view, R.id.txtRepetitions)
                 .getText().toString();
         if(!TextUtils.isEmpty(repititionsValue)) repititions = Integer.parseInt(repititionsValue);
 
@@ -255,7 +282,7 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
                 .setText(String.valueOf(entity.GetWeightLbs()));
 
         ActivityService
-                .GetConcreteView(EditText.class, view, R.id.txtRepititions)
+                .GetConcreteView(EditText.class, view, R.id.txtRepetitions)
                 .setText(String.valueOf(entity.GetRepititions()));
 
         String exercise = entity.GetExercise();
@@ -266,5 +293,92 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
 
             ViewService.SetSpinnerValue(spinExercise, exercise);
         }
+    }
+
+    private void SetRoutines(View view)
+    {
+        double weightLbs = 0;
+        String weightLbsStr = ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtWeightLbs)
+                .getText()
+                .toString();
+
+        if(!TextUtils.isEmpty(weightLbsStr))
+            weightLbs = Double.parseDouble(weightLbsStr);
+
+        int repetitions = 0;
+        String repetitionsStr = ActivityService
+                .GetConcreteView(EditText.class, view, R.id.txtRepetitions)
+                .getText()
+                .toString();
+
+        if(!TextUtils.isEmpty(repetitionsStr))
+            repetitions = Integer.parseInt(repetitionsStr);
+
+        double oneRM = RepMaxService.GetInstance().Get_1RM(weightLbs, repetitions);
+
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set1),
+                RepMaxService.WEEK1,
+                RepMaxService.SET1,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set2),
+                RepMaxService.WEEK1,
+                RepMaxService.SET2,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set3),
+                RepMaxService.WEEK1,
+                RepMaxService.SET3,
+                oneRM);
+
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk2Set1),
+                RepMaxService.WEEK2,
+                RepMaxService.SET1,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk2Set2),
+                RepMaxService.WEEK2,
+                RepMaxService.SET2,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk2Set3),
+                RepMaxService.WEEK2,
+                RepMaxService.SET3,
+                oneRM);
+
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk3Set1),
+                RepMaxService.WEEK3,
+                RepMaxService.SET1,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk3Set2),
+                RepMaxService.WEEK3,
+                RepMaxService.SET2,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk3Set3),
+                RepMaxService.WEEK3,
+                RepMaxService.SET3,
+                oneRM);
+
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk4Set1),
+                RepMaxService.WEEK4,
+                RepMaxService.SET1,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk4Set2),
+                RepMaxService.WEEK4,
+                RepMaxService.SET2,
+                oneRM);
+        Set_WorkoutSet(
+                ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk4Set3),
+                RepMaxService.WEEK4,
+                RepMaxService.SET3,
+                oneRM);
     }
 }

@@ -17,6 +17,7 @@ import com.codeflowcrafter.FitnessTracker.Shared.ExerciseType;
 import com.codeflowcrafter.FitnessTracker.Shared.Gender;
 import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExerciseService;
 import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivityService;
+import com.codeflowcrafter.FitnessTracker.Shared.RepMaxService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -178,5 +179,15 @@ public class ViewService {
                 .GetBMICategory(bmiScore);
 
         txtClassification.setText(classification);
+    }
+
+    public static void Set_WorkoutSet(TextView txtSet, String week, String set, double oneRM)
+    {
+        txtSet
+                .setText(
+                        RepMaxService
+                                .GetInstance()
+                                .WorkoutSetDescription(week, set, oneRM)
+                );
     }
 }

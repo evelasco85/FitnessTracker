@@ -58,15 +58,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Repititions: " />
+                android:text="Repetitions: " />
 
             <EditText
-                android:id="@+id/txtRepititions"
+                android:id="@+id/txtRepetitions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:inputType="number" />
         </TableRow>
-
     </TableLayout>
 </merge>

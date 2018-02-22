@@ -83,7 +83,7 @@ public class Activity_RepMax_List_Item extends BaseListItem<RepMax, IRequests> {
                 .setText(item.GetExercise());
         GetConcreteView(TextView.class, itemLayout, R.id.txtWeight)
                 .setText(String.valueOf(item.GetWeightLbs()));
-        GetConcreteView(TextView.class, itemLayout, R.id.txtRepititions)
+        GetConcreteView(TextView.class, itemLayout, R.id.txtRepetitions)
                 .setText(String.valueOf(item.GetRepititions()));
     }
 }
