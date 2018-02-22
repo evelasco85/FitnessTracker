@@ -184,7 +184,7 @@ public class ViewService {
 
     public static void Set_WorkoutSet(TextView txtSet, String week, String set, double oneRM)
     {
-        txtSet.setTextSize(TypedValue.COMPLEX_UNIT_SP,10);
+        txtSet.setTextSize(TypedValue.COMPLEX_UNIT_SP,11);
         txtSet
                 .setText(
                         RepMaxService
