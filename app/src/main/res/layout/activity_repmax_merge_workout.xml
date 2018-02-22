@@ -22,16 +22,19 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/holo_red_dark" />
         </TableRow>
+
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:columnCount="5"
+            android:orientation="horizontal"
             android:rowCount="3">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="" />
+                android:layout_marginRight="15dp"
+                android:text="~~~~" />
 
             <!--ROW: WEEK-->
             <TextView
@@ -67,27 +70,27 @@
 
             <TextView
                 android:id="@+id/txtWk1Set1"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk2Set1"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk3Set1"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk4Set1"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <!--ROW: SET 2-->
             <TextView
@@ -98,27 +101,27 @@
 
             <TextView
                 android:id="@+id/txtWk1Set2"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk2Set2"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk3Set2"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk4Set2"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <!--ROW: SET 3-->
             <TextView
@@ -129,27 +132,27 @@
 
             <TextView
                 android:id="@+id/txtWk1Set3"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk2Set3"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk3Set3"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/txtWk4Set3"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
         </GridLayout>
     </TableLayout>
 </merge>

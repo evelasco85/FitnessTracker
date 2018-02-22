@@ -3,6 +3,7 @@ package com.codeflowcrafter.FitnessTracker.Services;
 import android.app.Activity;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -183,6 +184,7 @@ public class ViewService {
 
     public static void Set_WorkoutSet(TextView txtSet, String week, String set, double oneRM)
     {
+        txtSet.setTextSize(TypedValue.COMPLEX_UNIT_SP,10);
         txtSet
                 .setText(
                         RepMaxService
