@@ -293,6 +293,8 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
 
             ViewService.SetSpinnerValue(spinExercise, exercise);
         }
+
+        SetRoutines(view);
     }
 
     private void SetRoutines(View view)
@@ -316,6 +318,9 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
             repetitions = Integer.parseInt(repetitionsStr);
 
         double oneRM = RepMaxService.GetInstance().Get_1RM(weightLbs, repetitions);
+
+        ActivityService.GetConcreteView(TextView.class, view, R.id.txtRM)
+                .setText(String.format("%.2f", oneRM));
 
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set1),

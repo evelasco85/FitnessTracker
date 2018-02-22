@@ -105,7 +105,7 @@ public class RepMaxService {
         String reps = GetRepetitions(week, set);
         int percentage = GetPercent(week, set);
         double weightLbs = ((double)percentage / (double) 100) * oneRM;
-        String description = String.format("Weight(lbs.):%.2f\nReps:%s", weightLbs, reps);
+        String description = String.format("%.2f x %s", weightLbs, reps);
 
         return description;
     }
