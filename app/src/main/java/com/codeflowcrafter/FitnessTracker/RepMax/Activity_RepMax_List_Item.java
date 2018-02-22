@@ -9,9 +9,12 @@ import android.widget.PopupMenu;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.BaseListItem;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.IDataContainer;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.RepMax.Implementation.Domain.RepMax;
 import com.codeflowcrafter.FitnessTracker.RepMax.Implementation.MVP.IRequests;
+
+import java.util.List;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
 
@@ -22,11 +25,16 @@ import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetCon
 public class Activity_RepMax_List_Item extends BaseListItem<RepMax, IRequests> {
     private final static int _resource = R.layout.activity_repmax_listitem;
 
+    private List<Exercise> _exercises;
+
     public Activity_RepMax_List_Item(Context activityContext,
                                   IRequests viewRequest,
-                                  IDataContainer<RepMax> container)
+                                  IDataContainer<RepMax> container,
+                                  List<Exercise> exercises)
     {
         super(activityContext, _resource, viewRequest, container);
+
+        _exercises = exercises;
     }
 
     public void SetItemViewHandler(Context activityContext, LinearLayout itemLayout,

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Main;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.DataContainer;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.RepMax.Implementation.Domain.RepMax;
 import com.codeflowcrafter.FitnessTracker.RepMax.Implementation.MVP.IRequests;
@@ -31,6 +32,7 @@ public class Activity_RepMax_Main extends Base_Activity_Main<
 
     private Presenter _presenter;
     private int _profileId = 0;
+    private List<Exercise> _exercises;
 
     public Activity_RepMax_Main()
     {
@@ -40,6 +42,7 @@ public class Activity_RepMax_Main extends Base_Activity_Main<
         );
 
         _presenter = new Presenter(this);
+        _exercises = GetViewRequest().GetStrengtheningExercisesData();
     }
 
     @Override
@@ -58,7 +61,7 @@ public class Activity_RepMax_Main extends Base_Activity_Main<
     @Override
     public Activity_RepMax_List_Item GetListItem(DataContainer<RepMax> container)
     {
-        return new Activity_RepMax_List_Item(this, GetViewRequest(), container);
+        return new Activity_RepMax_List_Item(this, GetViewRequest(), container, _exercises);
     }
 
     @Override
@@ -88,21 +91,21 @@ public class Activity_RepMax_Main extends Base_Activity_Main<
         Activity_RepMax_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
                 Activity_RepMax_Dialog_ReadAddEdit.ACTION_READ, entity,
-                _profileId);
+                _profileId, _exercises);
     }
 
     public void OnPromptExecution_AddEntry(){
         Activity_RepMax_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
                 Activity_RepMax_Dialog_ReadAddEdit.ACTION_ADD, null,
-                _profileId);
+                _profileId, _exercises);
     }
 
     public void OnPromptExecution_EditEntry(RepMax entity){
         Activity_RepMax_Dialog_ReadAddEdit.Show(
                 getFragmentManager(), GetViewRequest(),
                 Activity_RepMax_Dialog_ReadAddEdit.ACTION_EDIT, entity,
-                _profileId);
+                _profileId, _exercises);
     }
 
     public void OnPromptExecution_DeleteEntry(final RepMax entity){

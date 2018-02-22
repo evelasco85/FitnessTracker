@@ -8,6 +8,7 @@ import com.codeflowcrafter.DatabaseAccess.ContentProviderTemplate;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Mapper;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAll;
+import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.QueryObjects.QueryAllStrengthening;
 import com.codeflowcrafter.FitnessTracker.FitnessTrackerContentProviders;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseQueryObjectInterfaces.IBaseQueryObjectConcrete;
 import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
@@ -38,6 +39,7 @@ public class Provider extends ContentProviderTemplate {
         List<IBaseQueryObjectConcrete<Exercise>> queryObjects = new ArrayList<>();
 
         queryObjects.add(new QueryAll(context, uri));
+        queryObjects.add(new QueryAllStrengthening(context, uri));
         dsManager.RegisterEntity(
                 Exercise.class,
                 mapper,

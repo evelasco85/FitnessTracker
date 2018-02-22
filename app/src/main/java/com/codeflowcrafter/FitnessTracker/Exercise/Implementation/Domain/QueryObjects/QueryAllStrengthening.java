@@ -37,7 +37,7 @@ public class QueryAllStrengthening extends BaseQueryObject<Exercise, QueryAllStr
 
     @Override
     public List<Exercise> PerformSearchOperation(QueryAllStrengthening.Criteria criteria) {
-        String where = Exercise.COLUMN_TYPE + "=" +  ExerciseType.TYPE_STRENGTHENING;
+        String where = Exercise.COLUMN_TYPE + "='" +  ExerciseType.TYPE_STRENGTHENING + "'";
         String sortOrder = Exercise.COLUMN_ID + " DESC";
 
         CursorLoader loader = new CursorLoader(_context, _uri,

@@ -32,7 +32,7 @@ public class Presenter extends Crud_Presenter<RepMax, IRequests, IView>
         super(view,
                 new MapperInvocationDelegate(_slc));
 
-        _slc.SetComponent("Exercise Heart Rate");
+        _slc.SetComponent("RepMax");
         view.SetViewRequest(this);
 
         _view = view;

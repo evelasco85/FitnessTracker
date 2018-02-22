@@ -32,6 +32,10 @@ public class RepMax extends DomainObject
     private String _startDate;
     public String GetStartDate() {return _startDate;}
 
+    public static final String COLUMN_EXERCISE = "exercise";
+    private String _exercise;
+    public String GetExercise() {return _exercise;}
+
     public static final String COLUMN_WEIGHT_LBS = "weightLbs";
     private double _weightLbs;
     public double GetWeightLbs() {return _weightLbs;}
@@ -46,6 +50,7 @@ public class RepMax extends DomainObject
             int id,
             int profileId,
             String startDate,
+            String exercise,
             double weightLbs,
             int repititions) {
         super(mapper);
@@ -53,6 +58,7 @@ public class RepMax extends DomainObject
         _id = id;
         _profileId = profileId;
         _startDate = startDate;
+        _exercise = exercise;
         _weightLbs = weightLbs;
         _repititions = repititions;
     }
@@ -67,6 +73,7 @@ public class RepMax extends DomainObject
                 cursor.getInt(ordinals.get(COLUMN_ID)),
                 cursor.getInt(ordinals.get(COLUMN_PROFILE_ID)),
                 cursor.getString(ordinals.get(COLUMN_START_DATE)),
+                cursor.getString(ordinals.get(COLUMN_EXERCISE)),
                 cursor.getDouble(ordinals.get(COLUMN_WEIGHT_LBS)),
                 cursor.getInt(ordinals.get(COLUMN_REPITITIONS))
         );
@@ -79,6 +86,7 @@ public class RepMax extends DomainObject
         tableColumns.put(COLUMN_ID, "integer primary key autoincrement");
         tableColumns.put(COLUMN_PROFILE_ID, "integer");
         tableColumns.put(COLUMN_START_DATE, "DATETIME");
+        tableColumns.put(COLUMN_EXERCISE, "TEXT");
         tableColumns.put(COLUMN_WEIGHT_LBS, "REAL");
         tableColumns.put(COLUMN_REPITITIONS, "integer");
 
@@ -93,6 +101,7 @@ public class RepMax extends DomainObject
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_ID);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_PROFILE_ID);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_START_DATE);
+        DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_EXERCISE);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_WEIGHT_LBS);
         DomainService.SetColumnOrdinal(cursor, ordinals, COLUMN_REPITITIONS);
 
@@ -108,6 +117,7 @@ public class RepMax extends DomainObject
 
         values.put(COLUMN_PROFILE_ID, _profileId);
         values.put(COLUMN_START_DATE, _startDate);
+        values.put(COLUMN_EXERCISE, _exercise);
         values.put(COLUMN_WEIGHT_LBS, _weightLbs);
         values.put(COLUMN_REPITITIONS, _repititions);
 
