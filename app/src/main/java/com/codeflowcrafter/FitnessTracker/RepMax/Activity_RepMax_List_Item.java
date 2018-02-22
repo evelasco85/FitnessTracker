@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.BaseListItem;
 import com.codeflowcrafter.FitnessTracker.Base.Activity.IDataContainer;
@@ -75,5 +76,14 @@ public class Activity_RepMax_List_Item extends BaseListItem<RepMax, IRequests> {
                 fViewRequest.Prompt_Detail(fItem);
             }
         });
+
+        GetConcreteView(TextView.class, itemLayout, R.id.txtStartDate)
+                .setText(item.GetStartDate());
+        GetConcreteView(TextView.class, itemLayout, R.id.txtExercise)
+                .setText(item.GetExercise());
+        GetConcreteView(TextView.class, itemLayout, R.id.txtWeight)
+                .setText(String.valueOf(item.GetWeightLbs()));
+        GetConcreteView(TextView.class, itemLayout, R.id.txtRepititions)
+                .setText(String.valueOf(item.GetRepititions()));
     }
 }
