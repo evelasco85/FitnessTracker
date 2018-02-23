@@ -126,10 +126,10 @@ public class RepMaxService {
         Date currentDate =  GetCurrentDate();
         List<Pair<String, Date>> weekSet = new ArrayList<>();
 
-        weekSet.add(new Pair<String, Date>(WEEK1, GetEndDate(date, 7)));
-        weekSet.add(new Pair<String, Date>(WEEK2, GetEndDate(date, 14)));
-        weekSet.add(new Pair<String, Date>(WEEK3, GetEndDate(date, 21)));
-        weekSet.add(new Pair<String, Date>(WEEK4, GetEndDate(date, 28)));
+        weekSet.add(new Pair<String, Date>(WEEK1, GetEndDate(date, 7 - 1)));
+        weekSet.add(new Pair<String, Date>(WEEK2, GetEndDate(date, 14 - 1)));
+        weekSet.add(new Pair<String, Date>(WEEK3, GetEndDate(date, 21 - 1)));
+        weekSet.add(new Pair<String, Date>(WEEK4, GetEndDate(date, 28 - 1)));
 
         for(int index = 0 ; index < weekSet.size(); index++)
         {
