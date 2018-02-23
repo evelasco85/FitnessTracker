@@ -75,7 +75,9 @@ public class Activity_BMI_List_Item extends BaseListItem<BodyMassIndex, IRequest
 
         int height = item.GetHeightInches();
         double weight = item.GetWeightLbs();
-        double idealWeight = fViewRequest.GetIdealWeightLbs(height);
+        double idealWeight =  BMICategoryService
+                .GetInstance()
+                .IdealNormalWeightLbs(height);
         double ideaWeightToLose = weight - idealWeight;
 
         GetConcreteView(TextView.class, itemLayout, R.id.txtBmiId)
@@ -97,7 +99,7 @@ public class Activity_BMI_List_Item extends BaseListItem<BodyMassIndex, IRequest
         ViewService.DisableConcreteView(GetConcreteView(TextView.class, itemLayout, R.id.txtDate));
         ViewService.SetHeight(height, txtFeet, txtInches);
 
-        double bmiScore = fViewRequest.GetBMI(weight, height);
+        double bmiScore = CalculatorService.GetBMI(weight, height);
 
         GetConcreteView(TextView.class, itemLayout, R.id.txtBmi)
                 .setText(String.format("%.2f", bmiScore));

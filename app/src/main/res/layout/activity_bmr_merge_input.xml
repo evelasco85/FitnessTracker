@@ -5,7 +5,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TableRow
-            android:padding="5dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
             <TextView
@@ -20,12 +19,15 @@
                 android:layout_height="wrap_content"
                 />
         </TableRow>
-        <TableRow android:padding="5dp">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
             <TextView
-                android:text="Weight (lbs.):"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:text="Weight (lbs.):" />
 
             <EditText
                 android:id="@+id/txtWeight"
@@ -35,13 +37,11 @@
                 android:inputType="numberDecimal" />
         </TableRow>
         <TableRow
-            android:padding="5dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
             <include layout="@layout/merge_height"/>
         </TableRow>
         <TableRow
-            android:padding="5dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
             <TextView
@@ -56,7 +56,6 @@
                 />
         </TableRow>
         <TableRow
-            android:padding="5dp"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
 
@@ -75,13 +74,11 @@
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:padding="5dp">
+            android:gravity="left">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:text="Level of Activity (per week)" />
 
         </TableRow>
@@ -90,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="35dp">
+
             <Spinner
                 android:id="@+id/spinLevelOfActivity"
                 android:layout_width="match_parent"
@@ -97,30 +95,31 @@
                 android:prompt="@string/prompt_levelOfActivity" />
         </TableRow>
 
-        <TableRow android:padding="5dp">
+        <TableRow>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Basal Metabolic Rate" />
+
             <TextView
                 android:id="@+id/txtBmr"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </TableRow>
 
-        <TableRow android:padding="5dp">
+        <TableRow>
+
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingTop="15dp"
+                android:layout_height="wrap_content"
                 android:text="Daily calories needed\nto maintain your weight" />
 
             <TextView
                 android:id="@+id/txtTotalCalories"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
         </TableRow>
     </TableLayout>
 </merge>

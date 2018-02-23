@@ -270,29 +270,6 @@ public class Activity_BMI_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .toString();
         if(!TextUtils.isEmpty(weight)) weightLbs = Double.parseDouble(weight);
 
-        double bmiScore = GetViewRequest().GetBMI(weightLbs, heightInches);
-
-        GetConcreteView(TextView.class, view, R.id.txtBmi)
-                .setText(String.format("%.2f", bmiScore));
-        ViewService.SetClassification(
-                GetConcreteView(TextView.class, view, R.id.txtClassification),
-                bmiScore
-        );
-
-        double idealWeight = GetViewRequest().GetIdealWeightLbs(heightInches);
-        double idealWeightToLose = weightLbs - idealWeight;
-
-        GetConcreteView(TextView.class, view, R.id.txtIdealWeight)
-                .setText(String.format("%.2f", idealWeight));
-        GetConcreteView(TextView.class, view, R.id.txtIdealWeightToLose)
-                .setText(String.format("%.2f", idealWeightToLose));
-
-        DecimalFormat formatter = new DecimalFormat("#,###,###.##");
-        double caloriesToLose = GetViewRequest().GetCaloriesToBurn(idealWeightToLose);
-
-        GetConcreteView(TextView.class, view, R.id.txtCaloriesToBurn)
-                .setText(
-                        formatter.format(caloriesToLose)
-                );
+        ViewService.SetBmiInfo(view, weightLbs, heightInches);
     }
 }

@@ -1,18 +1,22 @@
 package com.codeflowcrafter.FitnessTracker.BMR;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +29,7 @@ import com.codeflowcrafter.FitnessTracker.R;
 import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
+import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
 import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivity;
 import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivityService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
@@ -33,6 +38,7 @@ import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -106,6 +112,26 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         return view;
     }
 
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+
+        final ViewGroup content = (ViewGroup) dialog.findViewById(android.R.id.content);
+        content.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                content.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                View inner = content.getChildAt(0);
+                content.removeViewAt(0);
+                ScrollView scrollView = new ScrollView(getActivity().getApplicationContext());
+                scrollView.addView(inner);
+                content.addView(scrollView);
+            }
+        });
+
+        return dialog;
+    }
+
     private void LoadDefaultData(View view)
     {
          /*QUERY BMI (WEIGHT AND HEIGHT) HERE*/
@@ -137,6 +163,7 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .GetConcreteView(TextView.class, view, R.id.txtGender)
                 .setText(_gender);
         /************************************/
+        SetComputedViews(view);
     }
 
     public void SetConcreteViews(final View fView, final String selectedAction) {
@@ -369,6 +396,29 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtTotalCalories)
                 .setText(String.format("%.2f", totalCalories));
+
+        ViewService.SetBmiInfo(view, weightLbs, heightInches);
+
+        double idealWeightLbs = BMICategoryService
+                .GetInstance()
+                .IdealNormalWeightLbs(heightInches);
+        double idealBmr = CalculatorService.GetBMR(_gender, age, idealWeightLbs, heightInches);
+        double idealDailyCaloriesNeeded = CalculatorService
+                .CalculateCaloriesByHarrisBenedictEquation(idealBmr, multiplier);
+        double idealWeightToLose = weightLbs - idealWeightLbs;
+        double caloriesToLose = CalculatorService.GetCaloriesToBurn(idealWeightToLose);
+        int idealDaysToBurnCalories = (int)caloriesToLose / (int)idealDailyCaloriesNeeded;
+
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtIdealBmr)
+                .setText(String.format("%.2f", idealBmr));
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtIdealCaloriesNeeded)
+                .setText(String.format("-->%.2f", idealDailyCaloriesNeeded));
+
+        GetConcreteView(TextView.class, view, R.id.txtIdealCaloriesToBurn)
+                .setText(String.format("-->%s", idealDaysToBurnCalories)
+                );
     }
 
     private int GetAge(View view)

@@ -21,6 +21,7 @@ import com.codeflowcrafter.FitnessTracker.Shared.IntensityOfExerciseService;
 import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivityService;
 import com.codeflowcrafter.FitnessTracker.Shared.RepMaxService;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -196,6 +197,36 @@ public class ViewService {
                         RepMaxService
                                 .GetInstance()
                                 .WorkoutSetDescription(week, set, oneRM)
+                );
+    }
+
+    public static void SetBmiInfo(View view, double weightLbs, int heightInches)
+    {
+        double bmiScore = CalculatorService.GetBMI(weightLbs, heightInches);
+
+        GetConcreteView(TextView.class, view, R.id.txtBmi)
+                .setText(String.format("%.2f", bmiScore));
+        ViewService.SetClassification(
+                GetConcreteView(TextView.class, view, R.id.txtClassification),
+                bmiScore
+        );
+
+        double idealWeight =  BMICategoryService
+                .GetInstance()
+                .IdealNormalWeightLbs(heightInches);
+        double idealWeightToLose = weightLbs - idealWeight;
+
+        GetConcreteView(TextView.class, view, R.id.txtIdealWeight)
+                .setText(String.format("%.2f", idealWeight));
+        GetConcreteView(TextView.class, view, R.id.txtIdealWeightToLose)
+                .setText(String.format("%.2f", idealWeightToLose));
+
+        DecimalFormat formatter = new DecimalFormat("#,###,###.##");
+        double caloriesToLose = CalculatorService.GetCaloriesToBurn(idealWeightToLose);
+
+        GetConcreteView(TextView.class, view, R.id.txtCaloriesToBurn)
+                .setText(
+                        formatter.format(caloriesToLose)
                 );
     }
 }

@@ -118,13 +118,6 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
                 .EmitLog(Priority.Info, Status.Success);
     }
 
-    public double GetIdealWeightLbs(int heightInches)
-    {
-        return BMICategoryService
-                .GetInstance()
-                .IdealNormalWeightLbs(heightInches);
-    }
-
     public List<BodyMassIndex> GetData(int profileId)
     {
         IDataSynchronizationManager manager= DataSynchronizationManager.GetInstance();
@@ -132,15 +125,5 @@ public class Presenter extends Crud_Presenter<BodyMassIndex, IRequests, IView>
         QueryByProfileId.Criteria criteria = new QueryByProfileId.Criteria(profileId);
 
         return repository.Matching(criteria);
-    }
-
-    public double GetBMI(double weightsLbs, int heightInches)
-    {
-        return CalculatorService.GetBMI(weightsLbs, heightInches);
-    }
-
-    public double GetCaloriesToBurn(double idealWeightToLoseLbs)
-    {
-        return CalculatorService.GetCaloriesToBurn(idealWeightToLoseLbs);
     }
 }
