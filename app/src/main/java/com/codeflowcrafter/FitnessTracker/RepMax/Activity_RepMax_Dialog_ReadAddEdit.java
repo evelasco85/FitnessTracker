@@ -185,6 +185,8 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
                         String dateOfBirth = (new SimpleDateFormat(CalculatorService.DateFormat))
                                 .format(calendar.getTime());
                         txtStartDate.setText(dateOfBirth);
+
+                        SetRoutines(fView);
                     }
                 });
                 dialog.show(getFragmentManager(), "datePicker");
@@ -318,6 +320,10 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
             repetitions = Integer.parseInt(repetitionsStr);
 
         double oneRM = RepMaxService.GetInstance().Get_1RM(weightLbs, repetitions);
+        String date = ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtStartDate)
+                .getText().toString();
+        String currentWeek = RepMaxService.GetInstance().GetWeek(date);
 
         ActivityService.GetConcreteView(TextView.class, view, R.id.txtRM)
                 .setText(String.format("%.2f", oneRM));
@@ -326,64 +332,76 @@ public class Activity_RepMax_Dialog_ReadAddEdit extends Base_Activity_Dialog_Rea
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set1),
                 RepMaxService.WEEK1,
                 RepMaxService.SET1,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set2),
                 RepMaxService.WEEK1,
                 RepMaxService.SET2,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk1Set3),
                 RepMaxService.WEEK1,
                 RepMaxService.SET3,
-                oneRM);
+                oneRM,
+                currentWeek);
 
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk2Set1),
                 RepMaxService.WEEK2,
                 RepMaxService.SET1,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk2Set2),
                 RepMaxService.WEEK2,
                 RepMaxService.SET2,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk2Set3),
                 RepMaxService.WEEK2,
                 RepMaxService.SET3,
-                oneRM);
+                oneRM,
+                currentWeek);
 
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk3Set1),
                 RepMaxService.WEEK3,
                 RepMaxService.SET1,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk3Set2),
                 RepMaxService.WEEK3,
                 RepMaxService.SET2,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk3Set3),
                 RepMaxService.WEEK3,
                 RepMaxService.SET3,
-                oneRM);
+                oneRM,
+                currentWeek);
 
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk4Set1),
                 RepMaxService.WEEK4,
                 RepMaxService.SET1,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk4Set2),
                 RepMaxService.WEEK4,
                 RepMaxService.SET2,
-                oneRM);
+                oneRM,
+                currentWeek);
         Set_WorkoutSet(
                 ActivityService.GetConcreteView(TextView.class, view, R.id.txtWk4Set3),
                 RepMaxService.WEEK4,
                 RepMaxService.SET3,
-                oneRM);
+                oneRM,
+                currentWeek);
     }
 }

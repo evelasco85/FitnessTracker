@@ -2,7 +2,16 @@ package com.codeflowcrafter.FitnessTracker.Shared;
 
 import android.util.Pair;
 
+import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by enric on 22/02/2018.
@@ -108,5 +117,64 @@ public class RepMaxService {
         String description = String.format("%.2f x %s", weightLbs, reps);
 
         return description;
+    }
+
+    public String GetWeek(String date)
+    {
+        String week = "N/A";
+
+        Date currentDate =  GetCurrentDate();
+        List<Pair<String, Date>> weekSet = new ArrayList<>();
+
+        weekSet.add(new Pair<String, Date>(WEEK1, GetEndDate(date, 7)));
+        weekSet.add(new Pair<String, Date>(WEEK2, GetEndDate(date, 14)));
+        weekSet.add(new Pair<String, Date>(WEEK3, GetEndDate(date, 21)));
+        weekSet.add(new Pair<String, Date>(WEEK4, GetEndDate(date, 28)));
+
+        for(int index = 0 ; index < weekSet.size(); index++)
+        {
+            Pair<String, Date> set = weekSet.get(index);
+
+            if(set == null) return week;
+
+            String selectedWeek = set.first;
+            Date endDateOfWeek = set.second;
+
+            if(endDateOfWeek == null) return week;
+
+            if(currentDate.getTime() <= endDateOfWeek.getTime())
+            {
+                return selectedWeek;
+            }
+        }
+
+        return week;
+    }
+
+    private Date GetCurrentDate()
+    {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(CalculatorService.DateFormat);
+        String date = sdf.format(calendar.getTime());
+
+        return GetEndDate(date, 0);
+    }
+
+    private Date GetEndDate(String date, int days)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(CalculatorService.DateFormat);
+        Calendar calendar = Calendar.getInstance();
+
+        try {
+            calendar.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+            return null;
+        }
+
+        calendar.add(Calendar.DATE, days);
+
+        return new Date(calendar.getTimeInMillis());
     }
 }

@@ -1,6 +1,7 @@
 package com.codeflowcrafter.FitnessTracker.Services;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -182,8 +183,13 @@ public class ViewService {
         txtClassification.setText(classification);
     }
 
-    public static void Set_WorkoutSet(TextView txtSet, String week, String set, double oneRM)
+    public static void Set_WorkoutSet(TextView txtSet, String week, String set, double oneRM, String currentWeek)
     {
+        if((!TextUtils.isEmpty(week)) && (week.equals(currentWeek)))
+            txtSet.setTextColor(Color.RED);
+        else
+            txtSet.setTextColor(Color.BLUE);
+
         txtSet.setTextSize(TypedValue.COMPLEX_UNIT_SP,11);
         txtSet
                 .setText(
