@@ -36,10 +36,12 @@
                 android:hint="Weight"
                 android:inputType="numberDecimal" />
         </TableRow>
+
         <TableRow
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
-            <include layout="@layout/merge_height"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/merge_height" />
         </TableRow>
         <TableRow
             android:layout_height="wrap_content"
@@ -116,7 +118,7 @@
                 android:text="Daily calories needed\nto maintain your weight" />
 
             <TextView
-                android:id="@+id/txtTotalCalories"
+                android:id="@+id/txtDailyCalories"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical" />

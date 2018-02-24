@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -30,7 +29,6 @@ import com.codeflowcrafter.FitnessTracker.Services.ActivityService;
 import com.codeflowcrafter.FitnessTracker.Services.CalculatorService;
 import com.codeflowcrafter.FitnessTracker.Services.ViewService;
 import com.codeflowcrafter.FitnessTracker.Shared.BMICategoryService;
-import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivity;
 import com.codeflowcrafter.FitnessTracker.Shared.LevelOfActivityService;
 import com.codeflowcrafter.PEAA.DataManipulation.BaseMapperInterfaces.IBaseMapper;
 import com.codeflowcrafter.PEAA.DataSynchronizationManager;
@@ -38,7 +36,6 @@ import com.codeflowcrafter.PEAA.Interfaces.IDataSynchronizationManager;
 import com.codeflowcrafter.PEAA.Interfaces.IRepository;
 import com.codeflowcrafter.UI.Date.Dialog_DatePicker;
 
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -387,15 +384,15 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .GetMultiplier(levelOfActivity);
         int age = GetAge(view);
         double bmrValue = CalculatorService.GetBMR(_gender, age, weightLbs, heightInches);
-        double totalCalories = CalculatorService
+        double dailyCalories = CalculatorService
                 .CalculateCaloriesByHarrisBenedictEquation(bmrValue, multiplier);
 
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtBmr)
                 .setText(String.format("%.2f", bmrValue));
         ActivityService
-                .GetConcreteView(TextView.class, view, R.id.txtTotalCalories)
-                .setText(String.format("%.2f", totalCalories));
+                .GetConcreteView(TextView.class, view, R.id.txtDailyCalories)
+                .setText(String.format("%.2f", dailyCalories));
 
         ViewService.SetBmiInfo(view, weightLbs, heightInches);
 
@@ -407,7 +404,8 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 .CalculateCaloriesByHarrisBenedictEquation(idealBmr, multiplier);
         double idealWeightToLose = weightLbs - idealWeightLbs;
         double caloriesToLose = CalculatorService.GetCaloriesToBurn(idealWeightToLose);
-        int idealDaysToBurnCalories = (int)caloriesToLose / (int)idealDailyCaloriesNeeded;
+        double idealDailyCaloriesToBurn = dailyCalories - idealDailyCaloriesNeeded;
+        int idealDaysToBurnCalories = (int)(caloriesToLose / idealDailyCaloriesToBurn);
 
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtIdealBmr)
@@ -415,8 +413,10 @@ public class Activity_BMR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
         ActivityService
                 .GetConcreteView(TextView.class, view, R.id.txtIdealCaloriesNeeded)
                 .setText(String.format("-->%.2f", idealDailyCaloriesNeeded));
-
-        GetConcreteView(TextView.class, view, R.id.txtIdealCaloriesToBurn)
+        ActivityService
+                .GetConcreteView(TextView.class, view, R.id.txtIdealCaloriesToBurnDaily)
+                .setText(String.format("-->%.2f", idealDailyCaloriesToBurn));
+        GetConcreteView(TextView.class, view, R.id.txtIdealDaysToBurnCalories)
                 .setText(String.format("-->%s", idealDaysToBurnCalories)
                 );
     }

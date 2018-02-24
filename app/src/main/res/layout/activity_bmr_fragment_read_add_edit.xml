@@ -60,9 +60,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:text="Min. daily calories to burn: " />
+            <TextView
+                android:id="@+id/txtIdealCaloriesToBurnDaily"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@android:color/holo_red_dark" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:text="Ideal days to burn calories: " />
             <TextView
-                android:id="@+id/txtIdealCaloriesToBurn"
+                android:id="@+id/txtIdealDaysToBurnCalories"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@android:color/holo_red_dark" />
