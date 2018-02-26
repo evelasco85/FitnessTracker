@@ -283,7 +283,9 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                         final CountDownTimer timer = new CountDownTimer(totalSeconds, millisPerSecond) {
                             @Override
                             public void onTick(long millisUntilFinished) {
-                                text.setText(String.format("%d", millisUntilFinished/millisPerSecond));
+
+//                                text.setText(String.format("%d", millisUntilFinished/millisPerSecond));
+                                ViewService.SetTime(text, millisUntilFinished/millisPerSecond);
                             }
 
                             @Override

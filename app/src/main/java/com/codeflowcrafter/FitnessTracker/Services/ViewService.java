@@ -229,4 +229,11 @@ public class ViewService {
                         formatter.format(caloriesToLose)
                 );
     }
+
+    public static void SetTime(TextView txtTime, long seconds)
+    {
+        if(txtTime == null) return;
+
+        txtTime.setText(String.format("%02d:%02d", seconds / 60, seconds % 60));
+    }
 }

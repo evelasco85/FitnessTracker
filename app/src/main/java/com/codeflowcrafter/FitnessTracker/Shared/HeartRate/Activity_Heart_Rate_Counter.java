@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.codeflowcrafter.FitnessTracker.R;
+import com.codeflowcrafter.FitnessTracker.Services.ViewService;
 import com.codeflowcrafter.FitnessTracker.Shared.HeartRateService;
 
 import static com.codeflowcrafter.FitnessTracker.Services.ActivityService.GetConcreteView;
@@ -89,9 +90,10 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
         ) {
             @Override
             public void onTick(long millisUntilFinished) {
-                _txtSeconds.setText(String.valueOf(
-                        millisUntilFinished / 1000
-                ));
+//                _txtSeconds.setText(String.valueOf(
+//                        millisUntilFinished / 1000
+//                ));
+                ViewService.SetTime(_txtSeconds, millisUntilFinished / 1000);
             }
 
             @Override
