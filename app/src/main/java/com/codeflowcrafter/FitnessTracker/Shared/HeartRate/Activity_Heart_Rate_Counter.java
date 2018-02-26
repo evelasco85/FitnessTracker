@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.codeflowcrafter.FitnessTracker.R;
@@ -22,7 +26,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
 
     private View _view;
     private TextView _txtHeartRatePerMinute;
-    private TextView _txtHeartRate;
+    private EditText _txtHeartRate;
     private TextView _txtSeconds;
     private Button _btnStart_Increment;
     private Button _btnFinish;
@@ -38,7 +42,7 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
 
         _view = findViewById(android.R.id.content);
         _txtHeartRatePerMinute = GetConcreteView(TextView.class, _view, R.id.txtHeartRatePerMinute);
-        _txtHeartRate = GetConcreteView(TextView.class, _view, R.id.txtHeartRate);
+        _txtHeartRate = GetConcreteView(EditText.class, _view, R.id.txtHeartRate);
         _txtSeconds = GetConcreteView(TextView.class, _view, R.id.txtSeconds);
         _btnStart_Increment = GetConcreteView(Button.class, _view, R.id.btnStart_Increment);
         _btnFinish = GetConcreteView(Button.class, _view, R.id.btnFinish);
@@ -98,6 +102,27 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
                 _btnCancel.setEnabled(true);
             }
         };
+        _txtHeartRate.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(TextUtils.isEmpty(s)) return;
+
+                _currentHeartRate = Integer.parseInt(s.toString());
+
+                UpdateViews();
+            }
+        });
     }
 
     private void Finish()
@@ -183,7 +208,13 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
 
     private void UpdateViews()
     {
-        _txtHeartRate.setText(String.valueOf(_currentHeartRate));
+        String rate = _txtHeartRate.getText().toString();
+
+        if(!String.valueOf(_currentHeartRate).contentEquals(rate))
+        {
+            _txtHeartRate.setText(String.valueOf(_currentHeartRate));
+        }
+
         _txtHeartRatePerMinute.setText(
                 String.valueOf(GetHeartRatePerMinute())
         );
