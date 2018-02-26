@@ -1,13 +1,19 @@
 package com.codeflowcrafter.FitnessTracker.ExerciseHeartRate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +21,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codeflowcrafter.FitnessTracker.Base.Activity.Base_Activity_Dialog_ReadAddEdit;
 import com.codeflowcrafter.FitnessTracker.Exercise.Implementation.Domain.Exercise;
@@ -56,6 +64,7 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
     private int _id = 0;
     private int _profileId = 0;
     private int _age = 0;
+//    private Toast countdownToast = null;
 
     private List<Exercise> _exercises;
     public void SetExercises(List<Exercise> exercises) {
@@ -257,6 +266,53 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                 OpenHeartRateCounter(REQUEST_CODE_RECOVERY_HEART_RATE);
             }
         });
+
+        Button btnRest = ActivityService
+                .GetConcreteView(Button.class, fView, R.id.btnRest);
+
+        btnRest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final AlertDialog.Builder countdownDialog =  new AlertDialog
+                                .Builder(getActivity());
+                        final TextView text = new TextView(getActivity());
+                        final int millisPerSecond = 1000;
+                        final int minutes = 2;
+                        final int secondsPerMinutes = 60;
+                        final long totalSeconds = minutes * secondsPerMinutes * millisPerSecond;
+                        final CountDownTimer timer = new CountDownTimer(totalSeconds, millisPerSecond) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                text.setText(String.format("%d", millisUntilFinished/millisPerSecond));
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                text.setText("REST COMPLETE!");
+                            }
+                        };
+
+                        text.setTextColor(Color.RED);
+                        text.setTextSize(17);
+                        countdownDialog.setTitle("Recovery Period");
+                        text.setGravity(Gravity.CENTER);
+                        countdownDialog.setMessage("Recovery Countdown(seconds)");
+                        countdownDialog.setView(text);
+                        countdownDialog.setCancelable(false);
+                        countdownDialog.setPositiveButton(
+                                "Terminate Countdown",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int arg) {
+                                        timer.cancel();
+                                        dialog.dismiss();
+                                    }
+                                }
+                        );
+
+                        timer.start();
+                        countdownDialog.show();
+                    }
+                });
     }
 
     private void InvokeActionBasedPersistency(View view, String selectedAction)
