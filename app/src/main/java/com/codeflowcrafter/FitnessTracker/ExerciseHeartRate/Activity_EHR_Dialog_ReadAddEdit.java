@@ -291,6 +291,7 @@ public class Activity_EHR_Dialog_ReadAddEdit extends Base_Activity_Dialog_ReadAd
                             @Override
                             public void onFinish() {
                                 text.setText("REST COMPLETE!");
+                                ActivityService.Beep();
                             }
                         };
 

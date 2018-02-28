@@ -2,6 +2,8 @@ package com.codeflowcrafter.FitnessTracker.Services;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.view.View;
 
 /**
@@ -23,5 +25,11 @@ public class ActivityService {
         verify.setMessage("You are about to delete this item");
 
         return verify;
+    }
+
+    public static void Beep()
+    {
+        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
+        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
     }
 }
