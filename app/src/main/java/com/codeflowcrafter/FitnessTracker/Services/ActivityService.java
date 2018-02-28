@@ -11,6 +11,8 @@ import android.view.View;
  */
 
 public class ActivityService {
+    private static final ToneGenerator _measurementCompletionTone = new ToneGenerator(
+            AudioManager.STREAM_ALARM, 100);;
     public static <TConcreteView> TConcreteView GetConcreteView(Class<TConcreteView> type,
                                                                 View view, int concreteViewId)
     {
@@ -29,7 +31,6 @@ public class ActivityService {
 
     public static void Beep()
     {
-        ToneGenerator toneG = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
-        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+        _measurementCompletionTone.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
     }
 }
