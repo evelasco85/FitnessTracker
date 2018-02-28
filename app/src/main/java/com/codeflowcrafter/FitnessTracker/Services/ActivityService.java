@@ -12,7 +12,7 @@ import android.view.View;
 
 public class ActivityService {
     private static final ToneGenerator _measurementCompletionTone = new ToneGenerator(
-            AudioManager.STREAM_ALARM, 100);;
+            AudioManager.STREAM_ALARM, 100);
     public static <TConcreteView> TConcreteView GetConcreteView(Class<TConcreteView> type,
                                                                 View view, int concreteViewId)
     {

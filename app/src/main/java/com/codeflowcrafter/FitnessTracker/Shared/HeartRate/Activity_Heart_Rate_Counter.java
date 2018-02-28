@@ -96,11 +96,11 @@ public class Activity_Heart_Rate_Counter extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                ActivityService.Beep();
                 _txtSeconds.setText("Done");
                 _btnStart_Increment.setEnabled(false);
                 _btnFinish.setEnabled(true);
                 _btnCancel.setEnabled(true);
-                ActivityService.Beep();
             }
         };
         _txtHeartRate.addTextChangedListener(new TextWatcher() {
